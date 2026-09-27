@@ -1,0 +1,32 @@
+{
+  "nav": {
+    "home": "بریس",
+    "shopName": "صنایع دستی بریس",
+    "products": "محصولات",
+    "categories": "دسته بندی",
+    "about": "درباره ما",
+    "contact": "تماس با ما",
+    "blog": "وبلاگ",
+    "search": "جستجو",
+    "searchPlaceholder": "جستجوی محصولات...",
+    "closeSearch": "بستن جستجو",
+    "recentSearches": "جستجوهای اخیر",
+    "trendingNow": "ترندهای بازار",
+    "cart": "سبد خرید",
+    "login": "ورود / ثبت نام",
+    "loginShort": "ورود",
+    "user": "کاربر",
+    "logout": "خروج",
+    "all": "مشاهده همه",
+    "profile": "پروفایل",
+    "openMenu": "باز کردن منو",
+    "closeMenu": "بستن منو",
+    "menuTitle": "بریس",
+    "navigationLabel": "ناوبری اصلی",
+    "faq": "پرسش‌های متداول",
+    "returnPolicy": "شرایط بازگشت کالا",
+    "switchToEnglish": "تغییر به انگلیسی",
+    "switchToPersian": "تغییر به فارسی",
+    "mobileBarLabel": "ناوبری سریع موبایل"
+  }
+}

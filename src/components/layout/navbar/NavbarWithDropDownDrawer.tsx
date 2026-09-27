@@ -1,0 +1,861 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+import {
+  ChevronDown,
+  CircleHelp,
+  Info,
+  LogIn,
+  LogOut,
+  Menu,
+  PackageSearch,
+  Phone,
+  ScrollText,
+  Search,
+  ShoppingCart,
+  User2,
+  X,
+} from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+
+import MainLogo from '@/assets/Images/Logo/logo-nav.png';
+import MainLogoMobile from '@/assets/Images/Logo/MainLogo.png';
+import { LanguageToggle } from './LanguageWithClick';
+import { ThemeToggleButton } from '@/components/ui/ThemeToggleButton';
+import { useAuth } from '@/context/AuthContext';
+import useCategories from '@/hooks/useCategories';
+import { useLocalizedPath } from '@/hooks/useLocalizedPath';
+import { useLangStore } from '@/stores/languageStore';
+import useCartStore from '@/stores/cartStore';
+import { useShopStore } from '@/stores/productsFilterStore';
+import { stripLangPrefix } from '@/utils/langRouting';
+import { cn } from '@/utils/cn';
+import { usePageScrollLock } from '@/hooks/usePageScrollLock';
+
+type CategoryItem = {
+  id: string | number;
+  name: string;
+  children?: CategoryItem[];
+};
+
+const actionButtonClass =
+  'relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-color-theme bg-color-for-layer-on-body first-text-color-for-paragraph transition-colors hover:border-secound/40 hover:bg-secound/10 hover:text-secound';
+
+export function NavbarWithDropDownDrawer() {
+  const { t } = useTranslation();
+  const { isAuthenticated, user, logout } = useAuth();
+  const { data: categories } = useCategories();
+  const dir = useLangStore((store) => store.dir);
+  const localizedPath = useLocalizedPath();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const cartCount = useCartStore((store) => store.itemCount);
+  const setSearchText = useShopStore((store) => store.setSearch);
+  const setCategoryIds = useShopStore((store) => store.setCategoryIds);
+  const categoryList = (categories ?? []) as CategoryItem[];
+  const basePath = stripLangPrefix(location.pathname);
+  const isHomeRoute = basePath === '/';
+  const isCategoryRoute = basePath.startsWith('/categories');
+
+  const [searchValue, setSearchValue] = useState('');
+  const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
+  const [isDesktopCategoryOpen, setIsDesktopCategoryOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [drawerDirection, setDrawerDirection] = useState<'rtl' | 'ltr'>(dir);
+  const [isMobileCategoryOpen, setIsMobileCategoryOpen] = useState(false);
+  const [openMobileCategoryId, setOpenMobileCategoryId] = useState<string | number | null>(null);
+
+  usePageScrollLock(isDrawerOpen);
+
+  const desktopCategoryRef = useRef<HTMLLIElement>(null);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const drawerCloseButtonRef = useRef<HTMLButtonElement>(null);
+  const drawerRef = useRef<HTMLElement>(null);
+
+  const labels = {
+    home: t('nav.home'),
+    shopName: t('nav.shopName'),
+    products: t('nav.products'),
+    categories: t('nav.categories'),
+    blog: t('nav.blog'),
+    about: t('nav.about'),
+    contact: t('nav.contact'),
+    faq: t('nav.faq'),
+    returnPolicy: t('nav.returnPolicy'),
+    login: t('nav.login'),
+    loginShort: t('nav.loginShort'),
+    profile: t('nav.profile'),
+    logout: t('nav.logout'),
+    cart: t('nav.cart'),
+    search: t('nav.searchPlaceholder') || t('nav.search'),
+    all: t('nav.all'),
+    openMenu: t('nav.openMenu'),
+    closeMenu: t('nav.closeMenu'),
+    menuTitle: t('nav.menuTitle'),
+    navigationLabel: t('nav.navigationLabel'),
+  };
+
+  const activeCategory = categoryList[activeCategoryIndex] ?? categoryList[0];
+  const userAvatar = user?.avatar?.filePath;
+  const userName =
+    [user?.firstName, user?.lastName].filter(Boolean).join(' ') || user?.username || labels.profile;
+
+  const navLinks = [
+    { label: labels.home, to: localizedPath('/'), matches: (path: string) => path === '/' },
+    {
+      label: labels.products,
+      to: localizedPath('/products'),
+      matches: (path: string) => path.startsWith('/products'),
+    },
+    {
+      label: labels.blog,
+      to: localizedPath('/blogs'),
+      matches: (path: string) => path.startsWith('/blogs'),
+    },
+    {
+      label: labels.about,
+      to: localizedPath('/about-us'),
+      matches: (path: string) => path.startsWith('/about-us'),
+    },
+    {
+      label: labels.contact,
+      to: localizedPath('/contact-us'),
+      matches: (path: string) => path.startsWith('/contact-us'),
+    },
+  ];
+
+  const drawerLinks = [
+    { label: labels.products, to: localizedPath('/products'), icon: PackageSearch },
+    { label: labels.about, to: localizedPath('/about-us'), icon: Info },
+    { label: labels.contact, to: localizedPath('/contact-us'), icon: Phone },
+    { label: labels.faq, to: localizedPath('/faq'), icon: CircleHelp },
+    { label: labels.returnPolicy, to: localizedPath('/return-policy'), icon: ScrollText },
+  ];
+
+  const navLinkClass =
+    'inline-flex h-11 items-center gap-1.5 rounded-xl px-3 text-sm font-f-normal transition-colors hover:bg-first/10 hover:text-first focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first xl:px-4 xl:text-base';
+
+  const closeDrawer = useCallback(() => {
+    setIsDrawerOpen(false);
+    setIsMobileCategoryOpen(false);
+    setOpenMobileCategoryId(null);
+  }, []);
+
+  useEffect(() => {
+    if (activeCategoryIndex >= categoryList.length) {
+      setActiveCategoryIndex(0);
+    }
+  }, [activeCategoryIndex, categoryList.length]);
+
+  useEffect(() => {
+    setIsDesktopCategoryOpen(false);
+    setIsProfileMenuOpen(false);
+    closeDrawer();
+  }, [closeDrawer, location.hash, location.key, location.pathname, location.search]);
+
+  useEffect(() => {
+    if (!isDrawerOpen) return;
+
+    const focusTimer = window.setTimeout(() => drawerCloseButtonRef.current?.focus(), 0);
+
+    return () => {
+      window.clearTimeout(focusTimer);
+    };
+  }, [isDrawerOpen]);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      if (
+        isDesktopCategoryOpen &&
+        desktopCategoryRef.current &&
+        !desktopCategoryRef.current.contains(target)
+      ) {
+        setIsDesktopCategoryOpen(false);
+      }
+
+      if (isProfileMenuOpen && profileMenuRef.current && !profileMenuRef.current.contains(target)) {
+        setIsProfileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [isDesktopCategoryOpen, isProfileMenuOpen]);
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+
+      setIsDesktopCategoryOpen(false);
+      setIsProfileMenuOpen(false);
+      closeDrawer();
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [closeDrawer]);
+
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value);
+    setSearchText(value.trim() || undefined);
+  };
+
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const normalizedSearch = searchValue.trim() || undefined;
+    setSearchText(normalizedSearch);
+
+    const params = new URLSearchParams();
+    if (normalizedSearch) {
+      params.set('search', normalizedSearch);
+    }
+
+    navigate(localizedPath(params.toString() ? `/products?${params.toString()}` : '/products'));
+  };
+
+  const categoryHref = (id: string | number) =>
+    localizedPath(`/products?categoryIds=${String(id)}`);
+
+  const handleCategoryClick = (id: string | number) => {
+    setCategoryIds([String(id)]);
+    setIsDesktopCategoryOpen(false);
+    closeDrawer();
+  };
+
+  const openDrawer = () => {
+    setDrawerDirection(dir);
+    setIsDrawerOpen(true);
+  };
+
+  const handleLogout = () => {
+    setIsProfileMenuOpen(false);
+    closeDrawer();
+    logout();
+    navigate(localizedPath('/'));
+  };
+
+  const handleDrawerKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (event.key !== 'Tab') return;
+
+    const focusableElements = Array.from(
+      event.currentTarget.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ),
+    ).filter((element) => element.getClientRects().length > 0);
+
+    if (focusableElements.length === 0) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (event.shiftKey && document.activeElement === firstElement) {
+      event.preventDefault();
+      lastElement.focus();
+    } else if (!event.shiftKey && document.activeElement === lastElement) {
+      event.preventDefault();
+      firstElement.focus();
+    }
+  };
+
+  const renderSearchForm = (id: string, mobile = false) => (
+    <form
+      className={cn(
+        'flex w-full items-center overflow-hidden rounded-xl border border-color-theme bg-color-for-layer-on-body transition-colors focus-within:border-first/50',
+        mobile ? 'h-12' : 'h-12 max-w-3xl',
+      )}
+      role="search"
+      aria-label={labels.search}
+      onSubmit={handleSearchSubmit}
+    >
+      <label className="sr-only" htmlFor={id}>
+        {labels.search}
+      </label>
+      <input
+        id={id}
+        dir={dir}
+        type="search"
+        value={searchValue}
+        placeholder={labels.search}
+        autoComplete="off"
+        className="h-full min-w-0 flex-1 bg-color-for-layer-sec px-4 text-sm first-text-color outline-none placeholder:first-text-color-for-paragraph-low"
+        onChange={(event) => handleSearchChange(event.target.value)}
+      />
+      <button
+        type="submit"
+        className="inline-flex h-full w-12 shrink-0 items-center justify-center border-s border-color-theme bg-color-for-layer-sec first-text-color-for-paragraph transition-colors hover:bg-first/10 hover:text-first"
+        aria-label={t('nav.search')}
+      >
+        <Search className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+      </button>
+    </form>
+  );
+
+  const renderCartLink = () => (
+    <Link
+      to={localizedPath('/cart')}
+      className={cn(actionButtonClass, 'w-auto gap-2 px-3')}
+      aria-label={`${labels.cart}: ${cartCount}`}
+    >
+      <ShoppingCart className="h-5 w-5 " strokeWidth={1.8} aria-hidden="true" />
+      <span className=" absolute -top-1.75 -right-2 min-w-5 rounded-full bg-secound px-1.5 py-1 text-center text-[11px] font-f-sbold leading-none text-white">
+        {cartCount > 99 ? '99+' : cartCount}
+      </span>
+    </Link>
+  );
+
+  const renderAccountControl = () => {
+    if (!isAuthenticated) {
+      return (
+        <Link
+          to={localizedPath('/auth')}
+          className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-first px-4 text-sm font-f-sbold text-white transition-colors hover:bg-first-600"
+        >
+          <span>{labels.login}</span>
+        </Link>
+      );
+    }
+
+    return (
+      <div className="relative" ref={profileMenuRef}>
+        <button
+          type="button"
+          className={cn(actionButtonClass, 'overflow-hidden')}
+          aria-label={labels.profile}
+          aria-expanded={isProfileMenuOpen}
+          aria-controls="desktop-profile-menu"
+          onClick={() => setIsProfileMenuOpen((previous) => !previous)}
+        >
+          {userAvatar ? (
+            <img src={userAvatar} alt="" className="h-full w-full object-cover" />
+          ) : (
+            <User2 className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+          )}
+        </button>
+
+        <AnimatePresence>
+          {isProfileMenuOpen && (
+            <motion.div
+              id="desktop-profile-menu"
+              initial={{ opacity: 0, y: 8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.98 }}
+              transition={{ duration: 0.16 }}
+              className="absolute left-0 top-full z-50 mt-3 w-64 overflow-hidden rounded-2xl border border-secound/20 bg-color-for-layer-on-body p-2 shadow-dark-sm"
+            >
+              <Link
+                to={localizedPath('/profile')}
+                className="flex items-center gap-3 rounded-xl px-3 py-3 transition-colors hover:bg-secound/10"
+                onClick={() => setIsProfileMenuOpen(false)}
+              >
+                <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-secound text-white">
+                  {userAvatar ? (
+                    <img src={userAvatar} alt="" className="h-full w-full object-cover" />
+                  ) : (
+                    <User2 className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+                  )}
+                </span>
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-f-sbold first-text-color">{userName}</p>
+                  <p className="mt-0.5 text-xs text-secound">{labels.profile}</p>
+                </div>
+              </Link>
+              <button
+                type="button"
+                className="mt-1 flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-start text-sm text-status-danger transition-colors hover:bg-status-danger"
+                onClick={handleLogout}
+              >
+                <LogOut className="h-4 w-4" strokeWidth={1.8} aria-hidden="true" />
+                {labels.logout}
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  };
+
+  return (
+    <>
+      <header
+        dir={dir}
+        data-navbar-root
+        className={cn(
+          'navbar-shell top-0 z-40 w-full lg:bg-transparent',
+          isHomeRoute ? 'absolute' : 'relative',
+        )}
+      >
+        <div className="mx-auto max-w-376 px-3 py-3 sm:px-6 lg:py-7">
+          <div className="hidden overflow-visible rounded-3xl border border-color-theme bg-color-for-layer-on-body shadow-dark-sm lg:block">
+            <div className="grid grid-cols-[auto_minmax(20rem,1fr)_auto] items-center gap-5 px-5 py-4 xl:gap-8 xl:px-7">
+              <Link
+                to={localizedPath('/')}
+                className="flex min-w-0 items-center gap-3 rounded-xl"
+                aria-label={labels.shopName}
+              >
+                <img className="h-14 w-14 shrink-0 object-contain" src={MainLogo} alt="" />
+                <span className="max-w-40 text-base font-f-bold leading-6 text-secound xl:max-w-52 xl:text-lg">
+                  {labels.shopName}
+                </span>
+              </Link>
+
+              <div className="flex min-w-0 justify-center">
+                {renderSearchForm('desktop-navbar-search')}
+              </div>
+
+              <div className="flex shrink-0 items-center gap-2">
+                <ThemeToggleButton className={actionButtonClass} />
+                <LanguageToggle className={actionButtonClass} />
+                {renderCartLink()}
+                <div dir={dir}>{renderAccountControl()}</div>
+              </div>
+            </div>
+
+            <nav
+              className="border-t border-color-theme px-5 py-2 xl:px-7"
+              aria-label={labels.navigationLabel}
+            >
+              <ul className="flex items-center gap-1">
+                {navLinks.slice(0, 2).map((link) => {
+                  const isActive = link.matches(basePath);
+                  return (
+                    <li key={link.to}>
+                      <NavLink
+                        to={link.to}
+                        className={cn(
+                          navLinkClass,
+                          isActive
+                            ? 'bg-first/10 font-f-sbold text-first'
+                            : 'first-text-color-for-paragraph',
+                        )}
+                        aria-current={isActive ? 'page' : undefined}
+                      >
+                        {link.label}
+                      </NavLink>
+                    </li>
+                  );
+                })}
+
+                <li className="relative" ref={desktopCategoryRef}>
+                  <button
+                    type="button"
+                    className={cn(
+                      navLinkClass,
+                      isCategoryRoute
+                        ? 'bg-first/10 font-f-sbold text-first'
+                        : 'first-text-color-for-paragraph',
+                    )}
+                    aria-haspopup="true"
+                    aria-expanded={isDesktopCategoryOpen}
+                    aria-controls="desktop-category-menu"
+                    onClick={() => setIsDesktopCategoryOpen((previous) => !previous)}
+                  >
+                    <span>{labels.categories}</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform',
+                        isDesktopCategoryOpen && 'rotate-180',
+                      )}
+                      strokeWidth={1.8}
+                      aria-hidden="true"
+                    />
+                  </button>
+
+                  <AnimatePresence>
+                    {isDesktopCategoryOpen && (
+                      <motion.div
+                        id="desktop-category-menu"
+                        initial={{ opacity: 0, y: 10, scale: 0.99 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.99 }}
+                        transition={{ duration: 0.16 }}
+                        className={cn(
+                          'absolute top-full z-50 mt-3 w-[min(60rem,calc(100vw-3rem))] overflow-hidden rounded-3xl border border-color-theme bg-color-for-layer-on-body shadow-dark-sm',
+                          dir === 'rtl' ? 'right-0' : 'left-0',
+                        )}
+                      >
+                        <div className="grid grid-cols-[20rem_minmax(0,1fr)]">
+                          <div className="border-e border-color-theme bg-color-for-layer-sec p-4">
+                            <p className="mb-3 px-2 text-xs font-f-sbold uppercase tracking-wide first-text-color-for-paragraph-low">
+                              {labels.categories}
+                            </p>
+                            <ul className="navbar-category-scroll max-h-[min(24rem,calc(100dvh-10rem))] space-y-1.5 overflow-y-auto pe-1">
+                              {categoryList.length > 0 ? (
+                                categoryList.map((category, index) => (
+                                  <li key={category.id}>
+                                    <button
+                                      type="button"
+                                      className={cn(
+                                        'flex min-h-11 w-full items-center rounded-xl px-3 py-2 text-start text-sm transition-colors',
+                                        activeCategoryIndex === index
+                                          ? 'bg-secound/10 font-f-sbold text-secound'
+                                          : 'bg-color-for-layer-on-body first-text-color-for-paragraph hover:bg-secound/10 hover:text-secound',
+                                      )}
+                                      aria-pressed={activeCategoryIndex === index}
+                                      onClick={() => setActiveCategoryIndex(index)}
+                                      onMouseEnter={() => setActiveCategoryIndex(index)}
+                                      onFocus={() => setActiveCategoryIndex(index)}
+                                    >
+                                      <span className="line-clamp-2">{category.name}</span>
+                                    </button>
+                                  </li>
+                                ))
+                              ) : (
+                                <li className="rounded-xl bg-color-for-layer-on-body px-3 py-4 text-sm first-text-color-for-paragraph">
+                                  {labels.categories}
+                                </li>
+                              )}
+                            </ul>
+                          </div>
+
+                          <div className="min-h-72 p-5 xl:p-6">
+                            <div className="mb-4 flex items-center justify-between gap-4 border-b border-color-theme pb-4">
+                              <h2 className="text-lg font-f-sbold first-text-color">
+                                {activeCategory?.name || labels.categories}
+                              </h2>
+                              {activeCategory && (
+                                <Link
+                                  className="inline-flex h-10 shrink-0 items-center rounded-xl bg-secound px-4 text-sm font-f-sbold text-white transition-colors hover:bg-secound-600"
+                                  to={categoryHref(activeCategory.id)}
+                                  onClick={() => handleCategoryClick(activeCategory.id)}
+                                >
+                                  {labels.all}
+                                </Link>
+                              )}
+                            </div>
+
+                            {activeCategory?.children?.length ? (
+                              <ul className="grid grid-cols-2 gap-2 xl:grid-cols-3">
+                                {activeCategory.children.map((subCategory) => (
+                                  <li key={subCategory.id}>
+                                    <Link
+                                      className="flex min-h-11 items-center rounded-xl border border-transparent bg-color-for-layer-sec px-3 py-2 text-sm first-text-color-for-paragraph transition-colors hover:border-secound/30 hover:bg-secound/10 hover:text-secound"
+                                      to={categoryHref(subCategory.id)}
+                                      onClick={() => handleCategoryClick(subCategory.id)}
+                                    >
+                                      {subCategory.name}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <div className="flex min-h-40 items-center justify-center rounded-2xl border border-dashed border-color-theme bg-color-for-layer-sec px-4 text-center text-sm first-text-color-for-paragraph">
+                                {labels.categories}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </li>
+
+                {navLinks.slice(2).map((link) => {
+                  const isActive = link.matches(basePath);
+                  return (
+                    <li key={link.to}>
+                      <NavLink
+                        to={link.to}
+                        className={cn(
+                          navLinkClass,
+                          isActive
+                            ? 'bg-first/10 font-f-sbold text-first'
+                            : 'first-text-color-for-paragraph',
+                        )}
+                        aria-current={isActive ? 'page' : undefined}
+                      >
+                        {link.label}
+                      </NavLink>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </div>
+
+          <div className="space-y-3 rounded-2xl border border-color-theme bg-color-for-layer-on-body p-3 shadow-dark-sm lg:hidden">
+            <div className="grid min-w-0 grid-cols-[5.875rem_minmax(0,1fr)_5.875rem] items-center gap-2">
+              <div className="flex justify-start">
+                <button
+                  ref={menuButtonRef}
+                  type="button"
+                  className={actionButtonClass}
+                  aria-label={labels.openMenu}
+                  aria-expanded={isDrawerOpen}
+                  aria-controls="mobile-navigation-drawer"
+                  onClick={openDrawer}
+                >
+                  <Menu className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+                </button>
+              </div>
+
+              <Link
+                to={localizedPath('/')}
+                className="flex min-w-0 items-center justify-center rounded-xl"
+                aria-label={labels.shopName}
+              >
+                <img
+                  className="h-14 w-auto max-w-full object-contain"
+                  src={MainLogoMobile}
+                  alt={labels.shopName}
+                />
+              </Link>
+
+              <div className="flex items-center justify-end gap-1.5" dir="ltr">
+                <ThemeToggleButton className={actionButtonClass} />
+                <LanguageToggle className={actionButtonClass} />
+              </div>
+            </div>
+
+            {renderSearchForm('mobile-navbar-search', true)}
+          </div>
+        </div>
+      </header>
+
+      {isDrawerOpen && (
+        <motion.div
+          className="navbar-shell fixed inset-0 z-70 lg:hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+        >
+          <button
+            type="button"
+            className="absolute inset-0 z-0 bg-color-for-overlay"
+            aria-label={labels.closeMenu}
+            onClick={closeDrawer}
+          />
+
+          <motion.aside
+            ref={drawerRef}
+            id="mobile-navigation-drawer"
+            dir={drawerDirection}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="mobile-navigation-title"
+            onKeyDown={handleDrawerKeyDown}
+            className={cn(
+              'absolute top-0 z-10 flex h-full w-[min(88vw,24rem)] flex-col bg-color-for-layer-on-body shadow-2xl',
+              drawerDirection === 'rtl' ? 'right-0' : 'left-0',
+            )}
+            initial={{ x: drawerDirection === 'rtl' ? '100%' : '-100%' }}
+            animate={{ x: 0 }}
+            transition={{ type: 'tween', duration: 0.24, ease: 'easeOut' }}
+          >
+            <div className="flex items-center justify-between gap-3 border-b border-color-theme p-4">
+              <Link
+                to={localizedPath('/')}
+                className="flex min-w-0 items-center gap-2 rounded-xl"
+                onClick={closeDrawer}
+              >
+                <img className="h-12 w-12 shrink-0 object-contain" src={MainLogo} alt="" />
+                <span
+                  id="mobile-navigation-title"
+                  className="truncate text-base font-f-bold text-secound"
+                >
+                  {labels.menuTitle}
+                </span>
+              </Link>
+              <button
+                ref={drawerCloseButtonRef}
+                type="button"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-secound text-white transition-colors hover:bg-secound-600"
+                aria-label={labels.closeMenu}
+                onClick={closeDrawer}
+              >
+                <X className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-4">
+              <section className="rounded-2xl border border-color-theme bg-color-for-layer-sec p-2">
+                <button
+                  type="button"
+                  className="flex min-h-11 w-full items-center justify-between rounded-xl px-3 text-start text-sm font-f-sbold first-text-color transition-colors hover:bg-color-for-layer-on-body"
+                  aria-expanded={isMobileCategoryOpen}
+                  aria-controls="mobile-category-list"
+                  onClick={() => setIsMobileCategoryOpen((previous) => !previous)}
+                >
+                  <span>{labels.categories}</span>
+                  <ChevronDown
+                    className={cn(
+                      'h-4 w-4 transition-transform',
+                      isMobileCategoryOpen && 'rotate-180',
+                    )}
+                    strokeWidth={1.8}
+                    aria-hidden="true"
+                  />
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isMobileCategoryOpen && (
+                    <motion.ul
+                      id="mobile-category-list"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.18 }}
+                      className="space-y-1 overflow-hidden pt-1"
+                    >
+                      {categoryList.map((category) => {
+                        const isOpen = openMobileCategoryId === category.id;
+                        const hasChildren = Boolean(category.children?.length);
+
+                        return (
+                          <li key={category.id} className="rounded-xl bg-color-for-layer-on-body">
+                            {hasChildren ? (
+                              <>
+                                <button
+                                  type="button"
+                                  className="flex min-h-11 w-full items-center justify-between gap-3 rounded-xl px-3 text-start text-sm first-text-color-for-paragraph"
+                                  aria-expanded={isOpen}
+                                  onClick={() =>
+                                    setOpenMobileCategoryId((previous) =>
+                                      previous === category.id ? null : category.id,
+                                    )
+                                  }
+                                >
+                                  <span>{category.name}</span>
+                                  <ChevronDown
+                                    className={cn(
+                                      'h-4 w-4 shrink-0 transition-transform',
+                                      isOpen && 'rotate-180',
+                                    )}
+                                    strokeWidth={1.8}
+                                    aria-hidden="true"
+                                  />
+                                </button>
+
+                                <AnimatePresence initial={false}>
+                                  {isOpen && (
+                                    <motion.div
+                                      initial={{ height: 0, opacity: 0 }}
+                                      animate={{ height: 'auto', opacity: 1 }}
+                                      exit={{ height: 0, opacity: 0 }}
+                                      transition={{ duration: 0.18 }}
+                                      className="overflow-hidden"
+                                    >
+                                      <ul className="space-y-1 border-t border-color-theme px-2 py-2">
+                                        {category.children?.map((subCategory) => (
+                                          <li key={subCategory.id}>
+                                            <Link
+                                              className="block rounded-lg px-3 py-2 text-sm first-text-color-for-paragraph transition-colors hover:bg-secound/10 hover:text-secound"
+                                              to={categoryHref(subCategory.id)}
+                                              onClick={() => handleCategoryClick(subCategory.id)}
+                                            >
+                                              {subCategory.name}
+                                            </Link>
+                                          </li>
+                                        ))}
+                                        <li>
+                                          <Link
+                                            className="mt-1 flex min-h-10 items-center justify-center rounded-lg bg-secound px-3 text-sm font-f-sbold text-white"
+                                            to={categoryHref(category.id)}
+                                            onClick={() => handleCategoryClick(category.id)}
+                                          >
+                                            {labels.all}
+                                          </Link>
+                                        </li>
+                                      </ul>
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
+                              </>
+                            ) : (
+                              <Link
+                                className="flex min-h-11 items-center rounded-xl px-3 text-sm first-text-color-for-paragraph transition-colors hover:bg-secound/10 hover:text-secound"
+                                to={categoryHref(category.id)}
+                                onClick={() => handleCategoryClick(category.id)}
+                              >
+                                {category.name}
+                              </Link>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
+              </section>
+
+              <nav className="mt-4" aria-label={labels.menuTitle}>
+                <ul className="space-y-1">
+                  {drawerLinks.map((link) => {
+                    const Icon = link.icon;
+                    return (
+                      <li key={link.to}>
+                        <NavLink
+                          to={link.to}
+                          className={({ isActive }) =>
+                            cn(
+                              'flex min-h-12 items-center gap-3 rounded-xl px-3 text-sm transition-colors',
+                              isActive
+                                ? 'bg-first/10 font-f-sbold text-first'
+                                : 'first-text-color-for-paragraph hover:bg-secound/10 hover:text-secound',
+                            )
+                          }
+                          onClick={closeDrawer}
+                        >
+                          <Icon className="h-5 w-5 shrink-0" strokeWidth={1.7} aria-hidden="true" />
+                          {link.label}
+                        </NavLink>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+            </div>
+
+            <div className="border-t border-color-theme p-4">
+              {isAuthenticated ? (
+                <div className="space-y-2">
+                  <Link
+                    to={localizedPath('/profile')}
+                    className="flex items-center gap-3 rounded-xl px-3 py-3 transition-colors hover:bg-secound/10"
+                    onClick={closeDrawer}
+                  >
+                    <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-secound text-white">
+                      {userAvatar ? (
+                        <img src={userAvatar} alt="" className="h-full w-full object-cover" />
+                      ) : (
+                        <User2 className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+                      )}
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block truncate text-sm font-f-sbold first-text-color">
+                        {userName}
+                      </span>
+                      <span className="mt-0.5 block text-xs text-secound">{labels.profile}</span>
+                    </span>
+                  </Link>
+                  <button
+                    type="button"
+                    className="flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-status-danger px-3 text-sm text-status-danger transition-colors hover:bg-status-danger"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="h-4 w-4" strokeWidth={1.8} aria-hidden="true" />
+                    {labels.logout}
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  to={localizedPath('/auth')}
+                  className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-first px-4 text-sm font-f-sbold text-white transition-colors hover:bg-first-600"
+                  onClick={closeDrawer}
+                >
+                  <LogIn className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+                  {labels.login}
+                </Link>
+              )}
+            </div>
+          </motion.aside>
+        </motion.div>
+      )}
+    </>
+  );
+}

@@ -1,0 +1,295 @@
+{
+  "site": {
+    "url": "https://berishandicrafts.com",
+    "image": "/og-image.png",
+    "imageWidth": 952,
+    "imageHeight": 500,
+    "themeColor": "#36566a",
+    "defaultLanguage": "fa",
+    "languages": ["fa", "en"],
+    "name": {
+      "fa": "صنایع دستی بریس",
+      "en": "Beris Handicrafts"
+    }
+  },
+  "routes": [
+    {
+      "id": "home",
+      "path": "",
+      "sitemap": true,
+      "priority": 1,
+      "changefreq": "weekly",
+      "meta": {
+        "fa": {
+          "title": "بریس | فروشگاه آنلاین صنایع دستی و سوزن‌دوزی بلوچی",
+          "description": "خرید آنلاین صنایع دستی اصیل ایرانی و محصولات دست‌ساز سوزن‌دوزی بلوچی از بریس؛ آثاری باکیفیت که با حمایت از بانوان هنرمند بلوچ تولید می‌شوند."
+        },
+        "en": {
+          "title": "Beris Handicrafts | Authentic Balochi Embroidery",
+          "description": "Shop authentic Iranian handicrafts and handmade Balochi embroidery from Beris, crafted with care while supporting women artisans across Balochistan."
+        }
+      }
+    },
+    {
+      "id": "products",
+      "path": "products",
+      "sitemap": true,
+      "priority": 0.9,
+      "changefreq": "weekly",
+      "meta": {
+        "fa": {
+          "title": "محصولات صنایع دستی و سوزن‌دوزی بلوچی | بریس",
+          "description": "محصولات دست‌ساز بریس را ببینید و از میان صنایع دستی ایرانی و آثار اصیل سوزن‌دوزی بلوچی، محصولی ماندگار و منحصربه‌فرد انتخاب کنید."
+        },
+        "en": {
+          "title": "Handmade Products & Balochi Embroidery | Beris",
+          "description": "Browse Beris handmade products and discover authentic Iranian handicrafts and distinctive Balochi embroidery created by skilled women artisans."
+        }
+      }
+    },
+    {
+      "id": "product-detail",
+      "path": "products/:slug",
+      "sitemap": false,
+      "priority": 0.8,
+      "changefreq": "weekly",
+      "meta": {
+        "fa": {
+          "title": "محصول دست‌ساز | صنایع دستی بریس",
+          "description": "تصاویر، مشخصات، قیمت و موجودی این محصول دست‌ساز بریس را بررسی کنید و با اطمینان از هنر اصیل ایرانی حمایت کنید."
+        },
+        "en": {
+          "title": "Handmade Product | Beris Handicrafts",
+          "description": "View photos, details, price, and availability for this handmade Beris product and support authentic Iranian craftsmanship."
+        }
+      }
+    },
+    {
+      "id": "categories",
+      "path": "categories",
+      "sitemap": true,
+      "priority": 0.75,
+      "changefreq": "weekly",
+      "meta": {
+        "fa": {
+          "title": "دسته‌بندی صنایع دستی ایرانی | بریس",
+          "description": "دسته‌بندی محصولات بریس را مرور کنید و سریع‌تر به صنایع دستی، محصولات دست‌ساز و آثار سوزن‌دوزی بلوچی مورد نظر خود برسید."
+        },
+        "en": {
+          "title": "Iranian Handicraft Categories | Beris",
+          "description": "Explore Beris product categories to find authentic Iranian handicrafts, handmade pieces, and Balochi embroidery more easily."
+        }
+      }
+    },
+    {
+      "id": "blogs",
+      "path": "blogs",
+      "sitemap": true,
+      "priority": 0.7,
+      "changefreq": "weekly",
+      "meta": {
+        "fa": {
+          "title": "مجله بریس | صنایع دستی و هنر سوزن‌دوزی بلوچی",
+          "description": "در مجله بریس درباره صنایع دستی ایرانی، سوزن‌دوزی بلوچی، داستان هنرمندان و روش نگهداری و انتخاب محصولات دست‌ساز بخوانید."
+        },
+        "en": {
+          "title": "Beris Journal | Handicrafts & Balochi Embroidery",
+          "description": "Read stories and guides about Iranian handicrafts, Balochi embroidery, artisan communities, and caring for handmade products."
+        }
+      }
+    },
+    {
+      "id": "blog-detail",
+      "path": "blogs/:slug",
+      "sitemap": false,
+      "priority": 0.65,
+      "changefreq": "monthly",
+      "meta": {
+        "fa": {
+          "title": "مقاله صنایع دستی | مجله بریس",
+          "description": "مقاله‌های بریس درباره هنر دست ایرانی، سوزن‌دوزی بلوچی، هنرمندان محلی و فرهنگ غنی بلوچستان را بخوانید."
+        },
+        "en": {
+          "title": "Handicraft Article | Beris Journal",
+          "description": "Read Beris articles about Iranian handmade art, Balochi embroidery, local artisans, and the cultural heritage of Balochistan."
+        }
+      }
+    },
+    {
+      "id": "about-us",
+      "path": "about-us",
+      "sitemap": true,
+      "priority": 0.8,
+      "changefreq": "monthly",
+      "meta": {
+        "fa": {
+          "title": "درباره بریس | حمایت از هنر و بانوان هنرمند بلوچ",
+          "description": "با داستان بریس، فعالیت ما از سال ۱۳۹۷ و همکاری با بیش از ۶۰ بانوی هنرمند بلوچ برای حفظ سوزن‌دوزی اصیل و ایجاد درآمد پایدار آشنا شوید."
+        },
+        "en": {
+          "title": "About Beris | Supporting Balochi Women Artisans",
+          "description": "Learn how Beris has worked since 2018 with more than 60 Balochi women artisans to preserve embroidery traditions and support sustainable incomes."
+        }
+      }
+    },
+    {
+      "id": "contact-us",
+      "path": "contact-us",
+      "sitemap": true,
+      "priority": 0.65,
+      "changefreq": "yearly",
+      "meta": {
+        "fa": {
+          "title": "تماس با بریس | پشتیبانی فروشگاه صنایع دستی",
+          "description": "برای راهنمایی خرید، پیگیری سفارش یا ارتباط با مجموعه صنایع دستی بریس، از راه‌های تماس و پشتیبانی با ما در ارتباط باشید."
+        },
+        "en": {
+          "title": "Contact Beris | Handicraft Store Support",
+          "description": "Contact Beris for product guidance, order support, and questions about our handmade Iranian handicrafts and Balochi embroidery."
+        }
+      }
+    },
+    {
+      "id": "faq",
+      "path": "faq",
+      "sitemap": true,
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "meta": {
+        "fa": {
+          "title": "سوالات متداول بریس | خرید، ارسال و بازگشت کالا",
+          "description": "پاسخ سوالات متداول درباره خرید از بریس، پرداخت، ارسال سفارش، بازگشت کالا و پشتیبانی فروشگاه صنایع دستی را ببینید."
+        },
+        "en": {
+          "title": "Beris FAQ | Shopping, Delivery & Returns",
+          "description": "Find answers to common questions about shopping at Beris, payment, order delivery, returns, and customer support."
+        }
+      }
+    },
+    {
+      "id": "return-policy",
+      "path": "return-policy",
+      "sitemap": true,
+      "priority": 0.5,
+      "changefreq": "yearly",
+      "meta": {
+        "fa": {
+          "title": "شرایط بازگشت کالا | صنایع دستی بریس",
+          "description": "شرایط بازگشت و بررسی سفارش‌های بریس را بخوانید و در صورت نیاز برای راهنمایی بیشتر با پشتیبانی فروشگاه در ارتباط باشید."
+        },
+        "en": {
+          "title": "Return Policy | Beris Handicrafts",
+          "description": "Read the Beris return policy and order review conditions, and contact our support team if you need further assistance."
+        }
+      }
+    },
+    {
+      "id": "auth",
+      "path": "auth",
+      "noIndex": true,
+      "sitemap": false,
+      "priority": 0,
+      "changefreq": "yearly",
+      "meta": {
+        "fa": {
+          "title": "ورود یا ثبت‌نام | بریس",
+          "description": "ورود یا ایجاد حساب کاربری در فروشگاه بریس."
+        },
+        "en": {
+          "title": "Sign In or Register | Beris",
+          "description": "Sign in to your Beris account or create a new account."
+        }
+      }
+    },
+    {
+      "id": "cart",
+      "path": "cart",
+      "noIndex": true,
+      "sitemap": false,
+      "priority": 0,
+      "changefreq": "yearly",
+      "meta": {
+        "fa": { "title": "سبد خرید | بریس", "description": "محصولات انتخاب‌شده در سبد خرید بریس." },
+        "en": {
+          "title": "Shopping Cart | Beris",
+          "description": "Review the products in your Beris shopping cart."
+        }
+      }
+    },
+    {
+      "id": "checkout",
+      "path": "checkout",
+      "noIndex": true,
+      "sitemap": false,
+      "priority": 0,
+      "changefreq": "yearly",
+      "meta": {
+        "fa": { "title": "تکمیل سفارش | بریس", "description": "تکمیل اطلاعات ارسال و سفارش بریس." },
+        "en": {
+          "title": "Checkout | Beris",
+          "description": "Complete delivery details for your Beris order."
+        }
+      }
+    },
+    {
+      "id": "payment",
+      "path": "payment",
+      "noIndex": true,
+      "sitemap": false,
+      "priority": 0,
+      "changefreq": "yearly",
+      "meta": {
+        "fa": { "title": "پرداخت سفارش | بریس", "description": "پرداخت امن سفارش بریس." },
+        "en": {
+          "title": "Order Payment | Beris",
+          "description": "Secure payment for your Beris order."
+        }
+      }
+    },
+    {
+      "id": "payment-success",
+      "path": "payment/success",
+      "noIndex": true,
+      "sitemap": false,
+      "priority": 0,
+      "changefreq": "yearly",
+      "meta": {
+        "fa": { "title": "پرداخت موفق | بریس", "description": "تأیید پرداخت سفارش بریس." },
+        "en": {
+          "title": "Payment Successful | Beris",
+          "description": "Confirmation of your successful Beris order payment."
+        }
+      }
+    },
+    {
+      "id": "payment-failure",
+      "path": "payment/failure",
+      "noIndex": true,
+      "sitemap": false,
+      "priority": 0,
+      "changefreq": "yearly",
+      "meta": {
+        "fa": { "title": "پرداخت ناموفق | بریس", "description": "بررسی نتیجه پرداخت سفارش بریس." },
+        "en": {
+          "title": "Payment Unsuccessful | Beris",
+          "description": "Review the result of your Beris order payment."
+        }
+      }
+    },
+    {
+      "id": "profile",
+      "path": "profile",
+      "noIndex": true,
+      "sitemap": false,
+      "priority": 0,
+      "changefreq": "yearly",
+      "meta": {
+        "fa": { "title": "حساب کاربری | بریس", "description": "مدیریت حساب و سفارش‌های بریس." },
+        "en": {
+          "title": "Your Account | Beris",
+          "description": "Manage your Beris account and orders."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "footer": {
+    "brand": {
+      "title": "Beris",
+      "description": "Since 2018, Beris has been preserving the art of Baluchi needlework. More than 60 Baluchi women artisans work with Beris, and every purchase helps support the artisans and the cultural heritage of Baluchistan."
+    },
+    "social": {
+      "instagram": "Beris on Instagram",
+      "whatsapp": "Beris on WhatsApp",
+      "email": "Email Beris",
+      "phone": "Call Beris"
+    },
+    "trust": {
+      "title": "Trust marks",
+      "enamad": "Electronic trust mark",
+      "samandehi": "Samandehi registration mark"
+    },
+    "columns": {
+      "services": {
+        "title": "Services",
+        "shipping": "Shipping and delivery",
+        "returns": "Returns",
+        "faq": "Frequently asked questions",
+        "offers": "Special offers"
+      },
+      "shop": {
+        "title": "Shop",
+        "categories": "Categories",
+        "products": "All products",
+        "blogs": "Beris blog",
+        "specialOffers": "Featured products"
+      },
+      "contact": {
+        "title": "Contact",
+        "about": "About us",
+        "contact": "Contact details",
+        "support": "Support",
+        "faq": "Frequently asked questions"
+      }
+    },
+    "copyright": "© {{year}} Beris. All rights reserved. Made for Iranian craft."
+  }
+}

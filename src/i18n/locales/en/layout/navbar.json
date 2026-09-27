@@ -1,0 +1,32 @@
+{
+  "nav": {
+    "home": "Beris",
+    "shopName": "Beris Handicrafts",
+    "products": "Products",
+    "categories": "Categories",
+    "about": "About us",
+    "contact": "Contact us",
+    "blog": "Blog",
+    "search": "Search",
+    "searchPlaceholder": "Search products...",
+    "closeSearch": "Close search",
+    "recentSearches": "Recent Searches",
+    "trendingNow": "Trending Now",
+    "cart": "Cart",
+    "login": "Login / Register",
+    "loginShort": "Sign in",
+    "user": "User",
+    "logout": "Logout",
+    "all": "View all",
+    "profile": "Profile",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menuTitle": "Beris",
+    "navigationLabel": "Main navigation",
+    "faq": "Frequently asked questions",
+    "returnPolicy": "Return policy",
+    "switchToEnglish": "Switch to English",
+    "switchToPersian": "Switch to Persian",
+    "mobileBarLabel": "Mobile quick navigation"
+  }
+}

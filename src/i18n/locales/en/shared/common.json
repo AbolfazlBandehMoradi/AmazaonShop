@@ -1,0 +1,34 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "tryAgain": "Try Again",
+    "retry": "Retry",
+    "back": "Back",
+    "backToShop": "Back to Shop",
+    "cancel": "Cancel",
+    "continueShopping": "Continue Shopping",
+    "toggleTheme": "Toggle theme",
+    "product": "Product",
+    "products": "Products",
+    "viewProduct": "View Product",
+    "addToCart": "Add to Cart",
+    "outOfStock": "Out of Stock"
+  },
+  "share": {
+    "title": "Share product",
+    "open": "Share",
+    "copy": "Copy link",
+    "copied": "Copied",
+    "toast": {
+      "copySuccess": "Link copied to clipboard",
+      "copyError": "Could not copy the link",
+      "added": "Added to wishlist",
+      "removed": "Removed from wishlist",
+      "error": "Could not update wishlist",
+      "addedCompare": "Added to compare",
+      "removedCompare": "Removed from compare",
+      "errorCompare": "Could not update compare"
+    }
+  }
+}

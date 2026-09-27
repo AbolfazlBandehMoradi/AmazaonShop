@@ -1,0 +1,169 @@
+{
+  "hero": {
+    "badge": "Traditional Iranian needlework",
+    "titleAccent": "Authentic craft",
+    "titleMain": "shaped by generations",
+    "description": "Every Beris product tells the story of authentic Baluchi craftsmanship, lovingly handcrafted by skilled women artisans.",
+    "cta": "Shop products",
+    "imageAlt": "Handwoven Persian textiles with colorful thread",
+    "featureLabel": "New collection",
+    "featureValue": "Handmade textile art",
+    "shippingCard": "Quality guarantee and fast shipping",
+    "handmadeCard": "Made slowly by skilled Iranian hands",
+    "stats": {
+      "rating": "customer rating",
+      "stitches": "hand stitches",
+      "artists": "local artists"
+    },
+    "slides": [
+      {
+        "title": "Fast delivery from Pulak Beauty Paradise"
+      },
+      {
+        "title": "Beauty and personal care products from Pulak Beauty Paradise"
+      },
+      {
+        "title": "Professional products from Pulak Beauty Paradise"
+      }
+    ]
+  },
+  "categories": {
+    "titlePrefix": "Product",
+    "titleAccent": "Categories",
+    "titleSuffix": "",
+    "description": "Browse product categories for easier access",
+    "more": "More categories",
+    "moreInPhone": "More",
+    "see": "See",
+    "productCountSuffix": "items",
+    "empty": "No categories found."
+  },
+  "about": {
+    "title": "Iranian craft, made for your home by Beris",
+    "description": "We began in 2019 with a simple belief: Iranian handmade art deserves to be seen. Today we work with more than 200 artists across the country, and every piece carries a life, a skill, and a culture.",
+    "cta": "Learn more",
+    "images": {
+      "artist": "Artist stitching traditional Iranian needlework",
+      "needlework": "Colorful Iranian needlework",
+      "workshop": "Handicraft workshop with colorful threads"
+    },
+    "features": {
+      "handmade": {
+        "title": "Genuinely handmade",
+        "description": "Every piece is made by a local artist."
+      },
+      "quality": {
+        "title": "Quality guaranteed",
+        "description": "Return your order if it does not feel right."
+      },
+      "artists": {
+        "title": "Artist support",
+        "description": "Revenue goes directly to the maker."
+      }
+    }
+  },
+  "promos": {
+    "label": "Beris featured collections",
+    "cta": "Explore more",
+    "needlework": {
+      "title": "Authentic needlework woven into everyday life",
+      "description": "Discover hand-stitched designs inspired by the color and culture of Iran."
+    },
+    "handmade": {
+      "title": "Delicacy created by hand",
+      "description": "Shop distinctive needlework pieces designed to remain beautiful for years."
+    }
+  },
+  "landingBlogs": {
+    "title": "beris",
+    "blog": "Beris ",
+    "more": "All articles",
+    "readMore": "Read article",
+    "previous": "Previous articles",
+    "next": "Next articles"
+  },
+  "testimonials": {
+    "title": "Customer stories",
+    "previous": "Previous reviews",
+    "next": "Next reviews",
+    "rating": "{{rating}} out of 5 stars"
+  },
+  "showcaseTabs": {
+    "title": "Beris products",
+    "more": "View all products",
+    "previous": "Previous products",
+    "next": "Next products",
+    "tabsLabel": "Product showcases",
+    "empty": "No products are available in this showcase."
+  },
+  "specials": {
+    "titlePrefix": "",
+    "titleAccent": "Professional",
+    "titleSuffix": "Products",
+    "description": "Pulak with the highest quality",
+    "more": "More products...",
+    "moreInPhone": "More",
+    "discountBadge": "Discount",
+    "ratingOutOf": "of",
+    "viewProduct": "View product"
+  },
+  "featured": {
+    "titlePrefix": "",
+    "titleAccent": "Featured",
+    "titleSuffix": "Products",
+    "cardTitle": "Featured products",
+    "more": "More products...",
+    "discountBadge": "Discount",
+    "ratingOutOf": "of",
+    "viewProduct": "View product"
+  },
+  "discount": {
+    "remainingTime": "Time left",
+    "title": "Deals ",
+    "subtitle": "You can't miss",
+    "buy": "Buy",
+    "save": "Save",
+    "limitedOffer": "Limited Offer",
+    "buyThisProduct": "Buy this product"
+  },
+  "bestProducts": {
+    "titlePrefix": "A list of",
+    "titleAccent": "best",
+    "titleSuffix": "Pulak picks",
+    "more": "More products"
+  },
+  "blogs": {
+    "titlePrefix": "Latest",
+    "titleAccent": "Blog",
+    "titleSuffix": "posts",
+    "description": "Read the latest stories and updates from Pulak",
+    "more": "More posts...",
+    "imageAlt": "Blog image"
+  },
+  "banner": {
+    "firstAlt": "Promotional banner 1",
+    "secondAlt": "Promotional banner 2"
+  },
+  "whyUs": {
+    "title": "Why Pulak Beauty Paradise",
+    "imageAlt": "Pulak beauty and personal care products",
+    "features": {
+      "production": {
+        "title": "A complete beauty lineup",
+        "description": "Discover beauty and personal care essentials from trusted brands in one place."
+      },
+      "certification": {
+        "title": "Authenticity and quality you can trust",
+        "description": "Every product is selected carefully so you can shop with more confidence."
+      },
+      "delivery": {
+        "title": "Fast and reliable delivery",
+        "description": "Your order is packed securely and shipped as quickly as possible."
+      },
+      "experience": {
+        "title": "Special offers with real support",
+        "description": "Great prices, useful offers, and responsive support make shopping easier."
+      }
+    }
+  }
+}

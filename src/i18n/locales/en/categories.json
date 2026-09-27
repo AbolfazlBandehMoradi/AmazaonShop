@@ -1,0 +1,10 @@
+{
+  "title": "Product Categories",
+  "productLabel": "Products",
+  "viewMore": "View more",
+  "moreCategories": "More categories",
+  "viewAllProducts": "View all products",
+  "noProductsInCategory": "There are no products in this category",
+  "loadError": "There was an error loading categories.",
+  "empty": "No categories were found."
+}
