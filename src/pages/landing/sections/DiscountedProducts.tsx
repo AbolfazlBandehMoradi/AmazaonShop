@@ -57,7 +57,7 @@ const DiscountedProductSlide = ({ product }: DiscountedProductSlideProps) => {
       dir="ltr"
       className="grid overflow-hidden rounded-3xl border border-secound/10 bg-color-for-layer-on-body lg:min-h-118 lg:grid-cols-[minmax(0,40fr)_minmax(0,60fr)]"
     >
-      <div className="relative flex min-h-68 items-center justify-center overflow-hidden bg-[linear-gradient(145deg,rgba(192,57,43,0.08),rgba(253,125,36,0.16))] p-6 sm:min-h-84 sm:p-9 lg:min-h-118 lg:p-10">
+      <div className="relative flex min-h-68 items-center justify-center overflow-hidden bg-[linear-gradient(145deg,color-mix(in_srgb,var(--color-secound)_8%,var(--bg-color-for-layer-sec)),color-mix(in_srgb,var(--color-secound)_16%,var(--bg-color-for-layer-sec)))] p-6 sm:min-h-84 sm:p-9 lg:min-h-118 lg:p-10">
         <span
           aria-hidden="true"
           className="absolute size-60 rounded-full bg-third/25 blur-3xl sm:size-80"
@@ -105,7 +105,7 @@ const DiscountedProductSlide = ({ product }: DiscountedProductSlideProps) => {
             </p>
           ) : null}
 
-          <div className="mt-7 overflow-hidden rounded-2xl border border-secound/15 bg-[linear-gradient(135deg,rgba(192,57,43,0.06),rgba(253,125,36,0.12))] p-4 sm:p-5">
+          <div className="mt-7 overflow-hidden rounded-2xl border border-secound/15 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--color-secound)_6%,var(--bg-color-for-layer-sec)),color-mix(in_srgb,var(--color-secound)_12%,var(--bg-color-for-layer-sec)))] p-4 sm:p-5">
             <div className="mb-4 flex items-center gap-3">
               <span className="flex size-10 items-center justify-center rounded-xl bg-secound text-white shadow-sm shadow-secound/20">
                 <Clock3 className="size-5" strokeWidth={1.8} aria-hidden="true" />

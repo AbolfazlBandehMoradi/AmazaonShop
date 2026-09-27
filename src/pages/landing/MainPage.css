@@ -109,7 +109,7 @@
 }
 
 .all-categories .swiper-pagination-bullet {
-  background-color: #ebf2fa;
+  background-color: var(--color-first-100);
   width: 8px;
   opacity: 0.7;
   height: 8px;

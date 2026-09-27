@@ -80,10 +80,10 @@ const BlogsSlider = ({ blogs }: BlogsSliderProps) => {
                     />
                   </span>
                   <span className="absolute bottom-28 start-4 flex min-h-44 w-[72%] max-w-86 translate-y-1/2 flex-col rounded-2xl bg-color-for-layer-on-body p-5 pb-14 text-start sm:w-3/4 sm:max-w-none">
-                    <strong className="line-clamp-2 text-[18px] leading-7 font-s-sbold text-[#141d26]">
+                    <strong className="line-clamp-2 text-[18px] leading-7 font-s-sbold first-text-color">
                       {title}
                     </strong>
-                    <span className="mt-2 line-clamp-2 text-base leading-7 text-[#141d26cc]">
+                    <span className="mt-2 line-clamp-2 text-base leading-7 first-text-color-for-paragraph">
                       {cleanText(excerpt)}
                     </span>
                     <span className="absolute start-5 bottom-5 inline-flex items-center gap-2 text-sm font-s-medium text-first">

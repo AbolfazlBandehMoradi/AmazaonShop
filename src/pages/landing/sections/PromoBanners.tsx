@@ -19,17 +19,17 @@ const PromoBanners = () => {
     {
       key: 'handmade',
       image: RightPromoImage,
-      bannerClassName: 'bg-[linear-gradient(92.31deg,#C0392B_0.14%,#5A1B14_99.86%)]',
+      bannerClassName: 'bg-[linear-gradient(92deg,var(--color-first)_0%,var(--color-first-800)_100%)]',
       imageClassName:
         'sm:top-1/2 sm:left-0 sm:h-[92%] sm:w-auto sm:pl-4 sm:-translate-y-1/2 sm:object-center',
-      buttonClassName: 'border-transparent bg-[#A73226] hover:bg-[#922b21]',
+      buttonClassName: 'border-transparent bg-first-700 hover:bg-first-800',
     },
     {
       key: 'needlework',
       image: LeftPromoImage,
-      bannerClassName: 'bg-[linear-gradient(99.99deg,#DC6616_2.17%,#76370C_98.46%)]',
+      bannerClassName: 'bg-[linear-gradient(100deg,var(--color-secound-600)_0%,var(--color-secound-900)_100%)]',
       imageClassName: 'sm:left-0 sm:h-[92%] sm:w-[44%] sm:object-left-top',
-      buttonClassName: 'border-transparent bg-[#BD5813] hover:bg-[#a94e10]',
+      buttonClassName: 'border-transparent bg-secound-700 hover:bg-secound-800 dark:bg-secound-600 dark:hover:bg-secound-800',
     },
   ] as const;
 

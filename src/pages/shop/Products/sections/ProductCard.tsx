@@ -311,7 +311,7 @@ export default function ProductCard({ product, lang, getImageUrl }: ProductCardP
           className={cn(
             'relative m-2 flex aspect-3/2 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-color-for-layer-three',
             showOfferTimer &&
-              'bg-[linear-gradient(145deg,rgba(192,57,43,0.08),rgba(253,125,36,0.16))]',
+              'bg-[linear-gradient(145deg,color-mix(in_srgb,var(--color-secound)_8%,var(--bg-color-for-layer-sec)),color-mix(in_srgb,var(--color-secound)_16%,var(--bg-color-for-layer-sec)))]',
           )}
         >
           {showImage ? (

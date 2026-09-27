@@ -10,44 +10,51 @@ button {
   cursor: pointer;
 }
 
-@theme {
+@theme static {
   --breakpoint-xs: 360px;
   --breakpoint-3xl: 1792px;
-  --color-first-50: #eef8ff;
-  --color-first-100: #dee4e1;
-  --color-first-200: #becac3;
-  --color-first-300: #9dafa6;
-  --color-first-400: #7d9588;
-  --color-first-500: #5c7a6a;
-  --color-first: #5c7a6a;
-  --color-first-600: #4a6255;
-  --color-first-700: #374940;
-  --color-first-800: #25312a;
-  --color-first-900: #122b59;
-  --color-first-950: #121815;
-  --color-secound-50: #fff9ed;
-  --color-secound-100: #f2d7d5;
-  --color-secound-200: #e6b0aa;
-  --color-secound-300: #d98880;
-  --color-secound-400: #cd6155;
-  --color-secound: #c0392b;
-  --color-secound-600: #9a2e22;
-  --color-secound-700: #73221a;
-  --color-secound-800: #9e440e;
-  --color-secound-900: #260b09;
-  --color-secound-950: #451b05;
-  --color-third-50: #ecfdf8;
-  --color-third-100: #ffe5d3;
-  --color-third-200: #fecba7;
-  --color-third-300: #feb17c;
-  --color-third-400: #fd9750;
-  --color-third: #fd7d24;
-  --color-third-600: #ca641d;
-  --color-third-700: #984b16;
-  --color-third-800: #65320e;
-  --color-third-900: #331907;
-  --color-third-950: #331907;
-  --color-background: #f4f4f4;
+  /* Existing first/secound/third utilities share these brand colors. */
+  --color-first-50: #eff4fc;
+  --color-first-100: #dce8f8;
+  --color-first-200: #bed2ef;
+  --color-first-300: #94b4e4;
+  --color-first-400: #6892d0;
+  --color-first-500: #3f6fb5;
+  --color-first: #163f87;
+  --color-first-600: #123773;
+  --color-first-700: #102e61;
+  --color-first-800: #0b234a;
+  --color-first-900: #071a39;
+  --color-first-950: #041125;
+  --color-secound-50: #fdf4ed;
+  --color-secound-100: #fae6d5;
+  --color-secound-200: #f5cbaa;
+  --color-secound-300: #eda97a;
+  --color-secound-400: #e48a52;
+  --color-secound-500: #dc7939;
+  --color-secound: #d66d2b;
+  --color-secound-600: #ad521d;
+  --color-secound-700: #884018;
+  --color-secound-800: #633014;
+  --color-secound-900: #43200f;
+  --color-secound-950: #2d160b;
+  --color-third-50: var(--color-secound-50);
+  --color-third-100: var(--color-secound-100);
+  --color-third-200: var(--color-secound-200);
+  --color-third-300: var(--color-secound-300);
+  --color-third-400: var(--color-secound-400);
+  --color-third: var(--color-secound);
+  --color-third-600: var(--color-secound-600);
+  --color-third-700: var(--color-secound-700);
+  --color-third-800: var(--color-secound-800);
+  --color-third-900: var(--color-secound-900);
+  --color-third-950: var(--color-secound-950);
+  --color-background: #ffffff;
+  --color-surface: #f4f7f9;
+  --color-text: #1c1c1c;
+  --color-text-muted: #656464;
+  --color-border: #d9d9d9;
+  --shadow-surface: 0px 8px 8px 2px #0000001a;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -150,14 +157,16 @@ button {
 }
 
 ::selection {
-  background: #c0392b;
+  background: var(--color-first);
   color: white;
 }
 
 body.light {
   color-scheme: light;
-  --color-secound-theme-950: rgb(255, 97, 6);
-  --color-secound-theme-50: rgba(255, 97, 6, 0.1);
+  --brand-primary: var(--color-first);
+  --brand-secondary: var(--color-secound);
+  --color-secound-theme-950: var(--color-secound);
+  --color-secound-theme-50: color-mix(in srgb, var(--color-secound) 10%, transparent);
   /* BoxShadow */
   --box-shadow-dark-sm:
     -2px 2px 8px -8px rgba(4, 4, 5, 0.04), 2px 2px 8px -6px rgba(0, 0, 0, 0.04),
@@ -179,32 +188,33 @@ body.light {
   --rt-transition-closing-delay: 0.3s;
   /* End  Color For Theme Raect Tooltip */
   /* Start Bg Color For Theme */
-  --bg-color-for-body: #f4f4f4;
-  --bg-color-for-layer-on-body: #ffffff;
-  --bg-color-for-layer-sec: #f4f4f4;
-  --bg-color-for-layer-three: #f0f0f1;
-  --bg-color-for-layer-on-body-rotate: #f2f6fc;
-  --bg-color-for-layer-sec-return: #ffffff;
-  --bg-color-for-layer-sec-prev: #f2f6fc;
-  --bg-color-for-layer-sec-fill: #ffffff;
+  --bg-color-for-body: var(--color-background);
+  --bg-color-for-layer-on-body: var(--color-surface);
+  --bg-color-for-layer-sec: var(--color-surface);
+  --bg-color-for-layer-three: #eaf0f5;
+  --bg-color-for-layer-on-body-rotate: #eaf0f5;
+  --bg-color-for-layer-sec-return: var(--color-background);
+  --bg-color-for-layer-sec-prev: #eaf0f5;
+  --bg-color-for-layer-sec-fill: var(--color-background);
   --bg-color-for-red: #ed1d24;
   /* End Bg Color For Theme */
-  --first-text-color: #141d26;
-  --first-text-color-const: #141d26;
-  --first-text-color-svg: #606060;
+  --first-text-color: var(--color-text);
+  --first-text-color-const: var(--color-text);
+  --first-text-color-svg: var(--color-text-muted);
   --first-text-color-hr: #f2f6fc;
   --first-text-color-hr-on-secound-layer: #60606040;
   --first-text-color-red: #ed1d24;
   --text-color-svg-white: #ffffff;
-  --first-text-color-svg-const: #252525;
+  --first-text-color-svg-const: var(--color-text);
   --first-text-color-svg-first: var(--color-first);
-  --first-text-color-for-paragraph: #141d26cc;
-  --first-text-color-for-paragraph-low: #606060;
-  --first-text-color-for-paragraph-const: #141d26cc;
+  --first-text-color-for-paragraph: var(--color-text-muted);
+  --first-text-color-for-paragraph-low: var(--color-text-muted);
+  --first-text-color-for-paragraph-const: var(--color-text-muted);
   /* Start Section Button */
   --first-style-button-bg: var(--color-first);
   --first-style-button-bg-hover: var(--color-first-600);
-  --button-style-icon-first-bg: #eef2ee;
+  --button-style-icon-first-bg: var(--color-first-50);
+  --offer-background: linear-gradient(115deg, var(--color-first) 0%, var(--color-first-700) 100%);
   --first-bg-gradiant-for-section-one: linear-gradient(180deg,
       #ffffff 0%,
       color-mix(in srgb, var(--color-first) 7%, #ffffff) 100%);
@@ -212,21 +222,35 @@ body.light {
 
 body.dark {
   color-scheme: dark;
-  --color-first-50: #132019;
-  --color-first-100: #1a2a22;
-  --color-first-200: #244131;
-  --color-first-300: #315943;
-  --color-first-400: #6d9d81;
-  --color-first-500: #5f8f72;
-  --color-first: #527f65;
-  --color-first-600: #436b55;
-  --color-first-700: #375744;
-  --color-first-800: #294234;
-  --color-first-900: #1d3025;
-  --color-first-950: #132018;
+  --color-first-50: #24344e;
+  --color-first-100: #2a3f5c;
+  --color-first-200: #36557c;
+  --color-first-300: #a9c7ee;
+  --color-first-400: #719cd6;
+  --color-first-500: #5c88c9;
+  --color-first: #4474ba;
+  --color-first-600: #3465ab;
+  --color-first-700: #28518e;
+  --color-first-800: #1d3d6d;
+  --color-first-900: #152c50;
+  --color-first-950: #101f38;
+  --color-secound-50: #302722;
+  --color-secound-100: #432e25;
+  --color-secound-700: #e9a474;
+  --color-third-50: var(--color-secound-50);
+  --color-third-100: var(--color-secound-100);
+  --color-third-700: var(--color-secound-700);
+  --color-background: #181e29;
+  --color-surface: #222b39;
+  --color-text: #f1f4f8;
+  --color-text-muted: #b6bfcc;
+  --color-border: #465264;
+  --shadow-surface: 0px 8px 8px 2px #00000033;
+  --brand-primary: var(--color-first);
+  --brand-secondary: var(--color-secound);
   /* BoxShadow */
-  --color-secound-theme-950: rgb(255, 97, 6);
-  --color-secound-theme-50: rgba(255, 97, 6, 0.1);
+  --color-secound-theme-950: var(--color-secound);
+  --color-secound-theme-50: color-mix(in srgb, var(--color-secound) 14%, transparent);
   --box-shadow-dark-sm:
     0 18px 40px -32px rgba(0, 0, 0, 0.9),
     inset 1px 1px 0 rgba(255, 255, 255, 0.04);
@@ -236,33 +260,34 @@ body.dark {
     0px 12px 32px color-mix(in srgb, var(--color-first) 22%, transparent),
     inset 2px 2px 5px rgba(255, 255, 255, 0.05);
   /* Start Bg Color For Theme */
-  --bg-color-for-body: #0f1411;
-  --bg-color-for-layer-on-body: #18211c;
-  --bg-color-for-layer-sec: #121813;
-  --bg-color-for-layer-three: #202a23;
-  --bg-color-for-layer-on-body-rotate: #1c271f;
-  --bg-color-for-layer-sec-return: #0a0f0c;
-  --bg-color-for-layer-sec-prev: #17221b;
-  --bg-color-for-layer-sec-fill: #19231d;
+  --bg-color-for-body: var(--color-background);
+  --bg-color-for-layer-on-body: var(--color-surface);
+  --bg-color-for-layer-sec: #273242;
+  --bg-color-for-layer-three: #303d4f;
+  --bg-color-for-layer-on-body-rotate: #2a3648;
+  --bg-color-for-layer-sec-return: #1d2532;
+  --bg-color-for-layer-sec-prev: #303d4f;
+  --bg-color-for-layer-sec-fill: var(--color-surface);
 
   --bg-color-for-red: #ed1d24;
   /* End Bg Color For Theme */
-  --first-text-color: #f3f6f1;
+  --first-text-color: var(--color-text);
   --first-text-color-red: #ed1d24;
-  --first-text-color-const: #141d26;
-  --first-text-color-svg: #a4afa7;
+  --first-text-color-const: #1c1c1c;
+  --first-text-color-svg: var(--color-text-muted);
   --first-text-color-svg-first: var(--color-first);
-  --first-text-color-hr: #2c362f;
-  --first-text-color-hr-on-secound-layer: rgba(223, 232, 223, 0.16);
-  --first-text-color-svg-const: #1d1d35;
-  --first-text-color-for-paragraph: #dce5dc;
-  --first-text-color-for-paragraph-low: #98a59b;
-  --first-text-color-for-paragraph-const: #141d26cc;
+  --first-text-color-hr: #344252;
+  --first-text-color-hr-on-secound-layer: #dfe8f229;
+  --first-text-color-svg-const: #1c1c1c;
+  --first-text-color-for-paragraph: var(--color-text-muted);
+  --first-text-color-for-paragraph-low: var(--color-text-muted);
+  --first-text-color-for-paragraph-const: #656464;
   /* Start Section Button */
   --first-style-button-bg: var(--color-first);
   --first-style-button-bg-hover: var(--color-first-600);
-  --button-style-icon-first-bg: #101711;
-  --first-bg-gradiant-for-section-one: linear-gradient(180deg, #18211c 0%, #111813 100%);
+  --button-style-icon-first-bg: #24344e;
+  --offer-background: linear-gradient(115deg, #28518e 0%, #1d3d6d 100%);
+  --first-bg-gradiant-for-section-one: linear-gradient(180deg, #222b39 0%, #181e29 100%);
 }
 
 body.light section[aria-labelledby='landing-hero-title'] {

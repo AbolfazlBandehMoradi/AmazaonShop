@@ -1,0 +1,1148 @@
+.amazon-loading {
+  --loader-blue: var(--brand-primary);
+  --loader-orange: var(--brand-secondary);
+  --loader-text: var(--first-text-color);
+  --loader-muted: var(--first-text-color-for-paragraph-low);
+  --loader-line: color-mix(
+    in srgb,
+    var(--brand-primary) 18%,
+    transparent
+  );
+
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  isolation: isolate;
+  overflow: hidden;
+
+  background: var(--bg-color-for-body);
+  color: var(--loader-text);
+}
+
+.amazon-loading__scene {
+  position: relative;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+
+  min-height: 100dvh;
+
+  padding:
+    max(1.75rem, env(safe-area-inset-top))
+    max(2rem, env(safe-area-inset-right))
+    max(1.75rem, env(safe-area-inset-bottom))
+    max(2rem, env(safe-area-inset-left));
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   ATMOSPHERE
+   ========================================================= */
+
+.amazon-loading__atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+
+  background:
+    radial-gradient(
+      circle at 50% 47%,
+      color-mix(
+        in srgb,
+        var(--loader-blue) 9%,
+        transparent
+      ),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 50% 47%,
+      color-mix(
+        in srgb,
+        var(--loader-orange) 4%,
+        transparent
+      ),
+      transparent 52%
+    );
+}
+
+.amazon-loading__grid {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+
+  opacity: 0.2;
+
+  background-image:
+    linear-gradient(
+      var(--loader-line) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      var(--loader-line) 1px,
+      transparent 1px
+    );
+
+  background-size: 48px 48px;
+
+  mask-image: radial-gradient(
+    ellipse at center,
+    black 10%,
+    transparent 72%
+  );
+}
+
+/* =========================================================
+   FRAME
+   ========================================================= */
+
+.amazon-loading__frame {
+  position: absolute;
+  inset: 5.5rem 2rem;
+
+  pointer-events: none;
+
+  border-inline: 1px solid var(--loader-line);
+
+  opacity: 0.7;
+}
+
+.amazon-loading__frame span {
+  position: absolute;
+
+  width: 18px;
+  height: 18px;
+
+  border-color: var(--loader-blue);
+  border-style: solid;
+
+  opacity: 0.55;
+}
+
+.amazon-loading__frame span:nth-child(1) {
+  top: -1px;
+  left: -1px;
+
+  border-width: 1px 0 0 1px;
+}
+
+.amazon-loading__frame span:nth-child(2) {
+  top: -1px;
+  right: -1px;
+
+  border-width: 1px 1px 0 0;
+}
+
+.amazon-loading__frame span:nth-child(3) {
+  bottom: -1px;
+  left: -1px;
+
+  border-width: 0 0 1px 1px;
+}
+
+.amazon-loading__frame span:nth-child(4) {
+  right: -1px;
+  bottom: -1px;
+
+  border-width: 0 1px 1px 0;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.amazon-loading__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 1rem;
+}
+
+.amazon-loading__brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+
+  color: var(--loader-text);
+}
+
+.amazon-loading__brand-symbol {
+  display: grid;
+  place-items: center;
+
+  width: 2rem;
+  height: 2rem;
+
+  border: 1px solid var(--loader-blue);
+
+  color: var(--loader-blue);
+
+  font-family: Georgia, serif;
+  font-size: 0.9rem;
+
+  transform: rotate(45deg);
+}
+
+.amazon-loading__brand-symbol::first-letter {
+  display: block;
+}
+
+.amazon-loading__brand-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+}
+
+.amazon-loading__header-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  color: var(--loader-muted);
+
+  font-size: 0.55rem;
+  line-height: 1.8;
+  letter-spacing: 0.16em;
+}
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.amazon-loading__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: min(100%, 42rem);
+
+  margin-inline: auto;
+
+  padding-block: 1rem;
+}
+
+.amazon-loading__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+
+  margin: 0;
+
+  color: var(--loader-orange);
+
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+
+  animation: amazon-loading-reveal 700ms
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+.amazon-loading__eyebrow span {
+  width: 1.8rem;
+  height: 1px;
+
+  background: var(--loader-orange);
+
+  opacity: 0.65;
+}
+
+/* =========================================================
+   DEVICE SYSTEM
+   ========================================================= */
+
+.amazon-loading__device {
+  position: relative;
+
+  width: min(82vw, 24rem);
+  aspect-ratio: 1;
+
+  margin-block: 0.2rem 0;
+}
+
+/* Halo */
+
+.amazon-loading__halo {
+  position: absolute;
+  inset: 20%;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    color-mix(
+      in srgb,
+      var(--loader-blue) 12%,
+      transparent
+    ),
+    transparent 68%
+  );
+
+  animation: amazon-loading-breathe 4s ease-in-out infinite;
+}
+
+/* Rings */
+
+.amazon-loading__ring {
+  position: absolute;
+
+  border-radius: 50%;
+
+  border: 1px solid var(--loader-line);
+}
+
+.amazon-loading__ring--outer {
+  inset: 3%;
+
+  border-color: color-mix(
+    in srgb,
+    var(--loader-blue) 24%,
+    transparent
+  );
+
+  animation: amazon-loading-rotate 22s linear infinite;
+}
+
+.amazon-loading__ring--middle {
+  inset: 12%;
+
+  border-style: dashed;
+
+  border-color: color-mix(
+    in srgb,
+    var(--loader-orange) 22%,
+    transparent
+  );
+
+  animation: amazon-loading-rotate-reverse 15s linear infinite;
+}
+
+.amazon-loading__ring--inner {
+  inset: 23%;
+
+  border-color: color-mix(
+    in srgb,
+    var(--loader-blue) 30%,
+    transparent
+  );
+}
+
+/* Ring ticks */
+
+.amazon-loading__marks {
+  position: absolute;
+  inset: 3%;
+
+  border-radius: 50%;
+
+  animation: amazon-loading-rotate 25s linear infinite;
+}
+
+.amazon-loading__marks span {
+  position: absolute;
+  top: 0;
+  left: 50%;
+
+  width: 1px;
+  height: 7px;
+
+  transform-origin: 50% calc(12rem - 7px);
+
+  background: var(--loader-blue);
+
+  opacity: 0.35;
+}
+
+/* =========================================================
+   SCANNER
+   ========================================================= */
+
+.amazon-loading__scanner {
+  position: absolute;
+  inset: 8%;
+
+  border-radius: 50%;
+
+  animation: amazon-loading-rotate 8s linear infinite;
+}
+
+.amazon-loading__scanner span {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+
+  width: 5px;
+  height: 5px;
+
+  margin-left: -2.5px;
+
+  border-radius: 50%;
+
+  background: var(--loader-orange);
+
+  box-shadow:
+    0 0 8px
+      color-mix(
+        in srgb,
+        var(--loader-orange) 65%,
+        transparent
+      ),
+    0 0 18px
+      color-mix(
+        in srgb,
+        var(--loader-orange) 30%,
+        transparent
+      );
+}
+
+/* =========================================================
+   SIGNAL WAVES
+   ========================================================= */
+
+.amazon-loading__signals {
+  position: absolute;
+
+  top: 7%;
+  right: 14%;
+
+  width: 2rem;
+  height: 2rem;
+
+  transform: rotate(-45deg);
+}
+
+.amazon-loading__signals span {
+  position: absolute;
+
+  right: 0;
+  bottom: 0;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50% 50% 0 50%;
+
+  border: 1px solid var(--loader-orange);
+
+  opacity: 0;
+
+  animation: amazon-loading-signal 1.8s ease-out infinite;
+}
+
+/* =========================================================
+   PHONE
+   ========================================================= */
+
+.amazon-loading__phone {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 7.2rem;
+  height: 14.2rem;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(-7deg);
+
+  animation: amazon-loading-phone 4s ease-in-out infinite;
+}
+
+.amazon-loading__phone-frame {
+  position: absolute;
+  inset: 0;
+
+  padding: 4px;
+
+  border-radius: 1.25rem;
+
+  background: linear-gradient(
+    145deg,
+    var(--loader-blue),
+    color-mix(
+      in srgb,
+      var(--loader-blue) 45%,
+      var(--loader-orange)
+    ),
+    var(--loader-orange)
+  );
+
+  box-shadow:
+    0 22px 45px
+      color-mix(
+        in srgb,
+        var(--loader-blue) 18%,
+        transparent
+      ),
+    0 0 35px
+      color-mix(
+        in srgb,
+        var(--loader-blue) 10%,
+        transparent
+      );
+}
+
+.amazon-loading__phone-screen {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  border-radius: 1.05rem;
+
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      color-mix(
+        in srgb,
+        var(--loader-blue) 14%,
+        transparent
+      ),
+      transparent 45%
+    ),
+    var(--bg-color-for-layer-sec);
+
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--loader-blue) 35%,
+      transparent
+    );
+}
+
+/* Screen glow */
+
+.amazon-loading__screen-glow {
+  position: absolute;
+  inset: 15% 10%;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    color-mix(
+      in srgb,
+      var(--loader-orange) 15%,
+      transparent
+    ),
+    transparent 65%
+  );
+
+  animation: amazon-loading-breathe 2.5s ease-in-out infinite;
+}
+
+/* Camera */
+
+.amazon-loading__camera {
+  position: absolute;
+  top: 0.45rem;
+  left: 50%;
+
+  display: flex;
+  gap: 3px;
+
+  padding: 3px 6px;
+
+  transform: translateX(-50%);
+
+  border-radius: 10px;
+
+  background: var(--bg-color-for-body);
+}
+
+.amazon-loading__camera span {
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: var(--loader-blue);
+
+  opacity: 0.7;
+}
+
+.amazon-loading__camera span:nth-child(2) {
+  background: var(--loader-orange);
+}
+
+/* Screen scan */
+
+.amazon-loading__screen-scan {
+  position: absolute;
+  inset-inline: 0;
+
+  top: -20%;
+
+  height: 25%;
+
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(
+      in srgb,
+      var(--loader-blue) 14%,
+      transparent
+    ),
+    transparent
+  );
+
+  animation: amazon-loading-scan 2.8s ease-in-out infinite;
+}
+
+/* Interface */
+
+.amazon-loading__screen-interface {
+  position: absolute;
+  top: 32%;
+  left: 50%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  width: 45%;
+
+  transform: translateX(-50%);
+}
+
+.amazon-loading__screen-interface span {
+  height: 3px;
+
+  border-radius: 4px;
+
+  background: var(--loader-blue);
+
+  opacity: 0.45;
+}
+
+.amazon-loading__screen-interface span:nth-child(2) {
+  width: 70%;
+  align-self: center;
+
+  background: var(--loader-orange);
+}
+
+.amazon-loading__screen-interface span:nth-child(3) {
+  width: 85%;
+}
+
+/* Home indicator */
+
+.amazon-loading__home-indicator {
+  position: absolute;
+  bottom: 0.55rem;
+  left: 50%;
+
+  width: 2.2rem;
+  height: 3px;
+
+  transform: translateX(-50%);
+
+  border-radius: 10px;
+
+  background: var(--loader-text);
+
+  opacity: 0.35;
+}
+
+/* Side buttons */
+
+.amazon-loading__button {
+  position: absolute;
+  left: -3px;
+
+  width: 3px;
+
+  border-radius: 3px;
+
+  background: var(--loader-blue);
+}
+
+.amazon-loading__button--one {
+  top: 3.3rem;
+  height: 1.6rem;
+}
+
+.amazon-loading__button--two {
+  top: 5.4rem;
+  height: 2rem;
+}
+
+/* =========================================================
+   DATA LABELS
+   ========================================================= */
+
+.amazon-loading__data {
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  color: var(--loader-muted);
+
+  font-size: 0.46rem;
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+}
+
+.amazon-loading__data strong {
+  color: var(--loader-blue);
+
+  font-size: 0.52rem;
+  font-weight: 600;
+}
+
+.amazon-loading__data::before {
+  position: absolute;
+
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: var(--loader-orange);
+
+  content: '';
+}
+
+.amazon-loading__data--top {
+  top: 22%;
+  left: 12%;
+  align-items: flex-start;
+}
+
+.amazon-loading__data--top::before {
+  top: 0;
+  right: -0.7rem;
+}
+
+.amazon-loading__data--right {
+  right: 4%;
+  bottom: 28%;
+  align-items: flex-end;
+}
+
+.amazon-loading__data--right::before {
+  bottom: 0;
+  left: -0.7rem;
+}
+
+.amazon-loading__data--left {
+  bottom: 17%;
+  left: 10%;
+}
+
+.amazon-loading__data--left::before {
+  top: 0;
+  right: -0.7rem;
+}
+
+/* Accent point */
+
+.amazon-loading__accent-point {
+  position: absolute;
+  right: 17%;
+  bottom: 15%;
+
+  width: 8px;
+  height: 8px;
+
+  border: 1px solid var(--loader-orange);
+
+  transform: rotate(45deg);
+
+  animation: amazon-loading-pulse 2s ease-in-out infinite;
+}
+
+.amazon-loading__accent-point span {
+  position: absolute;
+  inset: 2px;
+
+  background: var(--loader-orange);
+}
+
+/* =========================================================
+   IDENTITY
+   ========================================================= */
+
+.amazon-loading__identity {
+  margin-top: -0.3rem;
+
+  text-align: center;
+
+  animation: amazon-loading-reveal 800ms 150ms
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+.amazon-loading__identity h1 {
+  margin: 0;
+
+  color: var(--loader-text);
+
+  font-family:
+    firstFont-sbold,
+    sans-serif;
+
+  font-size: clamp(1.65rem, 4vw, 2.3rem);
+
+  line-height: 1.4;
+
+  letter-spacing: 0.02em;
+}
+
+.amazon-loading__identity p {
+  margin: 0.45rem 0 0;
+
+  color: var(--loader-muted);
+
+  font-size: 0.72rem;
+
+  line-height: 1.9;
+}
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.amazon-loading__status {
+  width: min(100%, 15rem);
+
+  margin-top: 1.7rem;
+
+  animation: amazon-loading-reveal 800ms 280ms
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+.amazon-loading__status-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 0.55rem;
+
+  color: var(--loader-muted);
+
+  font-size: 0.56rem;
+}
+
+.amazon-loading__percentage {
+  display: flex;
+  gap: 3px;
+}
+
+.amazon-loading__percentage i {
+  width: 3px;
+  height: 3px;
+
+  border-radius: 50%;
+
+  background: var(--loader-blue);
+
+  animation: amazon-loading-dot 1.3s ease-in-out infinite;
+}
+
+.amazon-loading__percentage i:nth-child(2) {
+  animation-delay: 160ms;
+}
+
+.amazon-loading__percentage i:nth-child(3) {
+  animation-delay: 320ms;
+}
+
+.amazon-loading__progress {
+  position: relative;
+
+  height: 2px;
+
+  overflow: hidden;
+
+  background: repeating-linear-gradient(
+    90deg,
+    var(--loader-line) 0 4px,
+    transparent 4px 8px
+  );
+}
+
+.amazon-loading__progress span {
+  position: absolute;
+  inset-block: 0;
+
+  left: -40%;
+
+  width: 40%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--loader-blue) 45%,
+    var(--loader-orange)
+  );
+
+  animation: amazon-loading-progress 2.2s
+    cubic-bezier(0.4, 0, 0.2, 1)
+    infinite;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.amazon-loading__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.9rem;
+
+  color: var(--loader-muted);
+
+  font-size: 0.52rem;
+
+  letter-spacing: 0.16em;
+}
+
+.amazon-loading__footer-line {
+  width: 2.2rem;
+  height: 1px;
+
+  background: var(--loader-line);
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes amazon-loading-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes amazon-loading-phone {
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      rotate(-7deg)
+      translateY(2px);
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      rotate(-5deg)
+      translateY(-5px);
+  }
+}
+
+@keyframes amazon-loading-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes amazon-loading-rotate-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes amazon-loading-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes amazon-loading-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: rotate(45deg) scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: rotate(45deg) scale(1);
+  }
+}
+
+@keyframes amazon-loading-signal {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  25% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(4);
+  }
+}
+
+@keyframes amazon-loading-scan {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(500%);
+    opacity: 0;
+  }
+}
+
+@keyframes amazon-loading-progress {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(350%);
+  }
+}
+
+@keyframes amazon-loading-dot {
+  0%,
+  70%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+
+  35% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .amazon-loading__scene {
+    padding-inline: 1.25rem;
+  }
+
+  .amazon-loading__frame {
+    inset-inline: 1rem;
+  }
+
+  .amazon-loading__header-meta {
+    font-size: 0.48rem;
+  }
+
+  .amazon-loading__brand-name {
+    font-size: 0.68rem;
+  }
+
+  .amazon-loading__device {
+    width: min(84vw, 21rem);
+  }
+
+  .amazon-loading__phone {
+    width: 6.4rem;
+    height: 12.7rem;
+  }
+
+  .amazon-loading__data {
+    font-size: 0.4rem;
+  }
+}
+
+@media (max-height: 700px) {
+  .amazon-loading__content {
+    padding-block: 0;
+  }
+
+  .amazon-loading__device {
+    width: min(52vh, 19rem);
+  }
+
+  .amazon-loading__phone {
+    width: 5.8rem;
+    height: 11.5rem;
+  }
+
+  .amazon-loading__status {
+    margin-top: 1rem;
+  }
+}
+
+/* =========================================================
+   RTL
+   ========================================================= */
+
+.amazon-loading[dir='rtl'] .amazon-loading__status-top {
+  direction: rtl;
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .amazon-loading *,
+  .amazon-loading *::before,
+  .amazon-loading *::after {
+    animation: none !important;
+  }
+
+  .amazon-loading__progress span {
+    left: 25%;
+    width: 50%;
+  }
+}
+
+/* =========================================================
+   FORCED COLORS
+   ========================================================= */
+
+@media (forced-colors: active) {
+  .amazon-loading {
+    --loader-blue: CanvasText;
+    --loader-orange: CanvasText;
+    --loader-text: CanvasText;
+    --loader-muted: CanvasText;
+    --loader-line: CanvasText;
+  }
+
+  .amazon-loading__phone-frame {
+    background: CanvasText;
+  }
+
+  .amazon-loading__progress span {
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+}

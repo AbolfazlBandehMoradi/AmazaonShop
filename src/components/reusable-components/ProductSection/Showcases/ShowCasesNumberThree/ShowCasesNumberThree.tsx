@@ -130,7 +130,7 @@ const ShowCasesNumberThree = ({ showCase }: Props) => {
                 >
                   <path
                     d="M10 17L15 12L10 7"
-                    stroke="#1b7efb"
+                    stroke="currentColor"
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -152,7 +152,7 @@ const ShowCasesNumberThree = ({ showCase }: Props) => {
                 >
                   <path
                     d="M14 7L9 12L14 17"
-                    stroke="#1b7efb"
+                    stroke="currentColor"
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"

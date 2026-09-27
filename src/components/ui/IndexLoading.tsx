@@ -1,111 +1,201 @@
-import { useLangStore } from '@/stores/languageStore';
+import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 
-const IndexLoading = () => {
-  const lang = useLangStore((s) => s.lang);
-  const isFa = lang === 'fa';
+import './IndexLoading.css';
 
-  const title = isFa
-    ? 'به فروشگاه صنایع دستی بریس خوش آمدید'
-    : ' Welcome to Bris Handicrafts Store';
+const ORBIT_MARKS = Array.from({ length: 36 }, (_, index) => index);
+const SIGNALS = Array.from({ length: 3 }, (_, index) => index);
 
-  const subtitle = isFa
-    ? ' ساخته‌شده برای هنر ایران'
-    : 'Crafted for Iranian Art';
+export default function IndexLoading() {
+  const { t, i18n } = useTranslation();
+
+  const id = useId();
+  const gradientId = `${id}-gradient`;
+  const glowId = `${id}-glow`;
+
+  const language = i18n.resolvedLanguage ?? 'fa';
 
   return (
     <div
-      dir={isFa ? 'rtl' : 'ltr'}
-      className="fixed inset-0 z-60 flex items-center justify-center bg-color-for-body"
+      className="amazon-loading"
+      dir={i18n.dir(language)}
+      lang={language}
       role="status"
       aria-live="polite"
+      aria-atomic="true"
     >
-      <div className="flex flex-col items-center px-6 text-center">
-        {/* Woven handmade mark */}
-        <div className="relative h-16 w-16">
-          <span className="weave-line weave-line-1" />
-          <span className="weave-line weave-line-2" />
-          <span className="weave-line weave-line-3" />
+      <span className="sr-only">
+        {t('mainpage.loading.accessibleLabel')}
+      </span>
 
-          <span className="weave-thread weave-thread-1" />
-          <span className="weave-thread weave-thread-2" />
-          <span className="weave-thread weave-thread-3" />
+      <div className="amazon-loading__scene" aria-hidden="true">
+        {/* Background atmosphere */}
+        <div className="amazon-loading__atmosphere" />
+        <div className="amazon-loading__grid" />
+
+        {/* Technical frame */}
+        <div className="amazon-loading__frame">
+          <span />
+          <span />
+          <span />
+          <span />
         </div>
 
-        <h1 className="mt-6 text-base font-s-sbold first-text-color">
-          {title}
-        </h1>
+        {/* Header */}
+        <header className="amazon-loading__header">
+          <div className="amazon-loading__brand-mark">
+            <span className="amazon-loading__brand-symbol">
+              A
+            </span>
 
-        <p className="mt-2 text-sm first-text-color-for-paragraph-low">
-          {subtitle}
-        </p>
+            <span className="amazon-loading__brand-name">
+              AMAZON
+            </span>
+          </div>
 
-        <style>
-          {`
-            .weave-line {
-              position: absolute;
-              left: 10px;
-              right: 10px;
-              height: 3px;
-              border-radius: 999px;
-              background: var(--first-color, #8b5e34);
-              opacity: 0.9;
-              animation: weaveSoft 1.6s ease-in-out infinite;
-            }
+          <div className="amazon-loading__header-meta">
+            <span>EST. 2026</span>
+            <span>ZAHDAN / IR</span>
+          </div>
+        </header>
 
-            .weave-line-1 {
-              top: 16px;
-              animation-delay: 0ms;
-            }
+        {/* Main */}
+        <main className="amazon-loading__content">
+          <p className="amazon-loading__eyebrow">
+            <span />
+            {t('mainpage.loading.eyebrow')}
+            <span />
+          </p>
 
-            .weave-line-2 {
-              top: 31px;
-              background: var(--secound-color, #c49a6c);
-              animation-delay: 160ms;
-            }
+          <div className="amazon-loading__device">
+            <div className="amazon-loading__halo" />
 
-            .weave-line-3 {
-              top: 46px;
-              background: var(--third-color, #e7d3b1);
-              animation-delay: 320ms;
-            }
+            {/* Outer technical rings */}
+            <div className="amazon-loading__ring amazon-loading__ring--outer" />
+            <div className="amazon-loading__ring amazon-loading__ring--middle" />
+            <div className="amazon-loading__ring amazon-loading__ring--inner" />
 
-            .weave-thread {
-              position: absolute;
-              top: 8px;
-              bottom: 8px;
-              width: 3px;
-              border-radius: 999px;
-              background: #ece7df;
-            }
+            {/* Ring markings */}
+            <div className="amazon-loading__marks">
+              {ORBIT_MARKS.map((mark) => (
+                <span
+                  key={mark}
+                  style={{
+                    transform: `rotate(${mark * 10}deg)`,
+                  }}
+                />
+              ))}
+            </div>
 
-            .weave-thread-1 {
-              left: 18px;
-            }
+            {/* Orbiting scanner */}
+            <div className="amazon-loading__scanner">
+              <span />
+            </div>
 
-            .weave-thread-2 {
-              left: 31px;
-            }
+            {/* Signal waves */}
+            <div className="amazon-loading__signals">
+              {SIGNALS.map((signal) => (
+                <span
+                  key={signal}
+                  style={{
+                    animationDelay: `${signal * 350}ms`,
+                  }}
+                />
+              ))}
+            </div>
 
-            .weave-thread-3 {
-              left: 44px;
-            }
+            {/* Phone */}
+            <div className="amazon-loading__phone">
+              <div className="amazon-loading__phone-frame">
+                <div className="amazon-loading__phone-screen">
+                  {/* Dynamic screen glow */}
+                  <div className="amazon-loading__screen-glow" />
 
-            @keyframes weaveSoft {
-              0%, 100% {
-                transform: scaleX(0.75);
-                opacity: 0.45;
-              }
+                  {/* Camera */}
+                  <div className="amazon-loading__camera">
+                    <span />
+                    <span />
+                    <span />
+                  </div>
 
-              50% {
-                transform: scaleX(1);
-                opacity: 1;
-              }
-            }
-          `}
-        </style>
+                  {/* Screen scan */}
+                  <div className="amazon-loading__screen-scan" />
+
+                  {/* Minimal interface */}
+                  <div className="amazon-loading__screen-interface">
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+
+                  {/* Home indicator */}
+                  <div className="amazon-loading__home-indicator" />
+                </div>
+              </div>
+
+              {/* Side buttons */}
+              <span className="amazon-loading__button amazon-loading__button--one" />
+              <span className="amazon-loading__button amazon-loading__button--two" />
+            </div>
+
+            {/* Floating data points */}
+            <div className="amazon-loading__data amazon-loading__data--top">
+              <span>DEVICE</span>
+              <strong>ONLINE</strong>
+            </div>
+
+            <div className="amazon-loading__data amazon-loading__data--right">
+              <span>NETWORK</span>
+              <strong>READY</strong>
+            </div>
+
+            <div className="amazon-loading__data amazon-loading__data--left">
+              <span>STORE</span>
+              <strong>2026</strong>
+            </div>
+
+            {/* Orange accent point */}
+            <div className="amazon-loading__accent-point">
+              <span />
+            </div>
+          </div>
+
+          {/* Brand message */}
+          <div className="amazon-loading__identity">
+            <h1>{t('mainpage.loading.brandName')}</h1>
+
+            <p>{t('mainpage.loading.tagline')}</p>
+          </div>
+
+          {/* Loading progress */}
+          <div className="amazon-loading__status">
+            <div className="amazon-loading__status-top">
+              <span>{t('mainpage.loading.preparing')}</span>
+
+              <span className="amazon-loading__percentage">
+                <i />
+                <i />
+                <i />
+              </span>
+            </div>
+
+            <div className="amazon-loading__progress">
+              <span />
+            </div>
+          </div>
+        </main>
+
+        {/* Footer */}
+        <footer className="amazon-loading__footer">
+          <span className="amazon-loading__footer-line" />
+
+          <span>
+            {t('mainpage.loading.footer')}
+          </span>
+
+          <span className="amazon-loading__footer-line" />
+        </footer>
       </div>
     </div>
   );
-};
-
-export default IndexLoading;
+}

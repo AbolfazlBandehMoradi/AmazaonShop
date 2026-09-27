@@ -135,7 +135,7 @@ const AllCategoriesIndex = ({ categories }: Props) => {
                   >
                     <path
                       d="M7 12L17 12M7 12L11 8M7 12L11 16"
-                      stroke="#1B9A9D"
+                      stroke="currentColor"
                       strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"

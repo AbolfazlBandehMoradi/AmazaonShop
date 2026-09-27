@@ -68,7 +68,7 @@ const ProductsSliderTwo = ({ showcase }: Props) => {
           <div className="w-full lg:w-16/48 xl:w-10/48 rounded-xl rounded-b-none lg:rounded-xl relative  bg-linear-to-bl from-first-100 to-first-200  flex flex-col justify-center">
             <div className=" w-full flex flex-col justify-center   p-8 h-full rounded-xl mt-0 ">
               <div className="flex gap-2 mt-3  lg:mt-0 items-center ">
-                <span className="first-text-color-svg-const">
+                <span className="first-text-color-svg">
                   <svg
                     width="24"
                     height="24"
@@ -86,12 +86,12 @@ const ProductsSliderTwo = ({ showcase }: Props) => {
                   </svg>
                 </span>
                 <div>
-                  <h3 className="text-base font-font-f-light first-text-color-const">
+                  <h3 className="text-base font-font-f-light first-text-color">
                     {t('mainpage.featured.cardTitle')}
                   </h3>
                 </div>
               </div>
-              <p className="text-sm/6 first-text-color-for-paragraph-const  mb-2 lg:mb-0 mt-2">
+              <p className="text-sm/6 first-text-color-for-paragraph mb-2 lg:mb-0 mt-2">
                 {showcase?.translation.description}
               </p>
               <div className="flex justify-center mt-4 gap-2 ">
@@ -110,7 +110,7 @@ const ProductsSliderTwo = ({ showcase }: Props) => {
                   >
                     <path
                       d="M10 17L15 12L10 7"
-                      stroke="#1b7efb"
+                      stroke="currentColor"
                       strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -132,7 +132,7 @@ const ProductsSliderTwo = ({ showcase }: Props) => {
                   >
                     <path
                       d="M14 7L9 12L14 17"
-                      stroke="#1b7efb"
+                      stroke="currentColor"
                       strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
