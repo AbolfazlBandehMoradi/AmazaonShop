@@ -73,7 +73,7 @@ const Hero = () => {
           />
           <SlideBackground />
           {isPending || isError || slides.length === 0 ? (
-            <div className="relative z-10 flex min-h-[300px] items-center justify-center px-8 text-center sm:min-h-[402px] lg:min-h-[452px]">
+            <div className="relative z-10 flex min-h-[300px] items-center justify-center px-8 text-center sm:min-h-[402px]">
               {isPending ? (
                 <div
                   role="status"
@@ -133,16 +133,16 @@ const Hero = () => {
                     <SwiperSlide key={slide.id} className="!h-auto">
                       <article
                         dir="ltr"
-                        className="relative flex min-h-[510px] flex-col-reverse pb-14 sm:min-h-[560px] md:min-h-[590px] lg:min-h-[452px] lg:flex-row lg:pb-0"
+                        className="relative flex min-h-[510px] flex-col-reverse pb-14 sm:min-h-[560px] md:min-h-[590px] lg:h-[402px] lg:min-h-0 lg:flex-row lg:pb-0"
                       >
-                        <div className="relative flex h-[190px] w-full shrink-0 items-end justify-center px-6 sm:h-[240px] sm:px-9 md:h-[280px] lg:h-auto lg:w-[52%] lg:px-11 xl:px-12">
+                        <div className="relative flex h-[190px] w-full shrink-0 items-end justify-center px-6 sm:h-[240px] sm:px-9 md:h-[280px] lg:h-[402px] lg:w-[52%] lg:px-11 lg:pb-[30px] xl:px-12">
                           {image && (
                             <img
                               src={image}
                               alt={title || caption || ''}
                               loading={index === 0 ? 'eager' : 'lazy'}
                               fetchPriority={index === 0 ? 'high' : undefined}
-                              className="max-h-[190px] w-full object-contain object-bottom sm:max-h-[240px] md:max-h-[280px] lg:max-h-[430px]"
+                              className="max-h-[190px] w-full object-contain object-bottom sm:max-h-[240px] md:max-h-[280px] lg:max-h-[350px] xl:max-h-[360px]"
                             />
                           )}
                         </div>
