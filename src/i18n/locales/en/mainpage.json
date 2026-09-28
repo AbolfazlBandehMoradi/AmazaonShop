@@ -9,6 +9,13 @@
     "error": "Highlights could not be loaded.",
     "retry": "Try again"
   },
+  "heroCategories": {
+    "caption": "Product categories",
+    "title": "Quick access to categories",
+    "intro": "Choose a product category to find what you need faster.",
+    "viewProducts": "View products",
+    "stockMessage": "All products and stock information are kept up to date."
+  },
   "categories": {
     "titlePrefix": "Product",
     "titleAccent": "Categories",

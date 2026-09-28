@@ -8,7 +8,6 @@ import DiscountedProducts from './sections/DiscountedProducts';
 import Hero from './sections/Hero';
 import AboutBeris from './sections/AboutBeris';
 import BlogsSlider from './sections/BlogsSlider';
-import LandingCategories from './sections/LandingCategories';
 import PromoBanners from './sections/PromoBanners';
 import TestimonialsSlider from './sections/TestimonialsSlider';
 
@@ -25,9 +24,8 @@ const MainPage = () => {
   }
 
   return (
-    <main >
-      <Hero />
-      <LandingCategories categories={index?.categories ?? []} />
+    <main>
+      <Hero categories={index?.categories ?? []} />
       <ProductSliderWithTab showcases={showcases ?? []} />
       <AboutBeris />
       <DiscountedProducts discountedProduct={index?.discountProducts ?? []} />

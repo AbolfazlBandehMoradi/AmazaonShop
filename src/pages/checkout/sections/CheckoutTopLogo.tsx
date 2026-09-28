@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import MainLogo from '@/assets/Images/Logo/MainLogo.png';
+import MainLogo from '@/assets/Images/Logo/MainLogo.webp';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 
 export function CheckoutTopLogo() {

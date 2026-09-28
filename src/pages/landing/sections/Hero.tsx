@@ -10,7 +10,9 @@ import 'swiper/swiper.css';
 import useHeroSliders, { type HeroSlider } from '@/hooks/useHeroSliders';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useLangStore } from '@/stores/languageStore';
+import type { Category } from '@/types';
 import getImageUrl from '@/utils/getImageUrl';
+import HeroCategories from './HeroCategories';
 
 const slideShape =
   'M1248 338.999C1248 356.672 1233.67 370.999 1216 370.999H1156.42C1139.6 370.999 1126.08 386.527 1112.24 396.1C1106.87 399.82 1100.34 402 1093.31 402H999.938C992.905 402 986.382 399.82 981.006 396.1C967.172 386.527 953.648 370.999 936.825 370.999H32C14.3269 370.999 0 356.672 0 338.999V32C0 14.3269 14.3269 0 32 0H1216C1233.67 0 1248 14.3269 1248 32V338.999Z';
@@ -50,7 +52,7 @@ function getSlideLink(slide: HeroSlider) {
   return null;
 }
 
-const Hero = () => {
+const Hero = ({ categories }: { categories: Category[] }) => {
   const { t } = useTranslation();
   const { dir } = useLangStore();
   const localizedPath = useLocalizedPath();
@@ -212,6 +214,7 @@ const Hero = () => {
           )}
         </div>
         <div className="mt-6 border-b border-dashed border-[#D9D9D9]" aria-hidden="true" />
+        <HeroCategories categories={categories} />
       </div>
     </section>
   );
