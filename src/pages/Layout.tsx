@@ -59,7 +59,7 @@ const Layout = ({ children }: LayoutProps) => {
         {children ?? <Outlet />}
       </div>
 
-      <GoftinoWidget isHidden={hideGoftinoWidget} />
+      {/* <GoftinoWidget isHidden={hideGoftinoWidget} /> */}
 
       {!hideNavAndFooter && <Footer />}
 

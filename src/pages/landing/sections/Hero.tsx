@@ -1,132 +1,217 @@
+import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import type { Swiper as SwiperType } from 'swiper';
+import { A11y } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.css';
 
-import HeroBg from '@/assets/Images/Hero/Hero-bg.png';
-import HeroImg from '@/assets/Images/Hero/Hero-img.webp';
+import useHeroSliders, { type HeroSlider } from '@/hooks/useHeroSliders';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useLangStore } from '@/stores/languageStore';
-import { cn } from '@/utils/cn';
+import getImageUrl from '@/utils/getImageUrl';
+
+const slideShape =
+  'M1248 338.999C1248 356.672 1233.67 370.999 1216 370.999H1156.42C1139.6 370.999 1126.08 386.527 1112.24 396.1C1106.87 399.82 1100.34 402 1093.31 402H999.938C992.905 402 986.382 399.82 981.006 396.1C967.172 386.527 953.648 370.999 936.825 370.999H32C14.3269 370.999 0 356.672 0 338.999V32C0 14.3269 14.3269 0 32 0H1216C1233.67 0 1248 14.3269 1248 32V338.999Z';
+
+function SlideBackground() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-x-0 top-0 hidden h-[402px] w-full lg:block"
+      viewBox="0 0 1248 402"
+      preserveAspectRatio="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d={slideShape} className="fill-white dark:fill-[#273242]" />
+    </svg>
+  );
+}
+
+function getSlideImage(slide: HeroSlider) {
+  const path =
+    slide.imageUrl ||
+    slide.mediaUrl ||
+    slide.image ||
+    slide.previewUrl ||
+    slide.externalLink ||
+    slide.mediaFile?.filePath;
+  if (!path) return null;
+  return getImageUrl(/^https?:\/\//i.test(path) ? path : `/${path.replace(/^\/+/, '')}`);
+}
+
+function getSlideLink(slide: HeroSlider) {
+  const target = (slide.targetUrl || slide.url || '').trim();
+  if (/^https?:\/\//i.test(target)) return { href: target, external: true };
+  if (target && !target.startsWith('//') && !/^[a-z][a-z\d+.-]*:/i.test(target)) {
+    return { href: target.startsWith('/') ? target : `/${target}`, external: false };
+  }
+  return null;
+}
 
 const Hero = () => {
   const { t } = useTranslation();
-  const localizedPath = useLocalizedPath();
   const { dir } = useLangStore();
-  const isRtl = dir === 'rtl';
-  const ForwardIcon = isRtl ? ArrowLeft : ArrowRight;
-
-  const stats = [
-    { value: '4.8', label: t('mainpage.hero.stats.rating') },
-    { value: '+12000', label: t('mainpage.hero.stats.stitches') },
-    { value: '+500', label: t('mainpage.hero.stats.artists') },
-  ];
+  const localizedPath = useLocalizedPath();
+  const { data: slides = [], isPending, isError, refetch } = useHeroSliders();
+  const swiperRef = useRef<SwiperType | null>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const ForwardIcon = dir === 'rtl' ? ArrowLeft : ArrowRight;
 
   return (
     <section
       dir={dir}
-      className="relative isolate overflow-hidden bg-color-for-layer-on-body"
-      aria-labelledby="landing-hero-title"
+      className="bg-white px-3 pt-2 pb-5 dark:bg-background sm:px-6 lg:px-8 lg:pb-8"
+      aria-label={t('mainpage.hero.label')}
     >
-      <img
-        src={HeroBg}
-        alt=""
-        loading="eager"
-        aria-hidden="true"
-        className="pointer-events-none absolute top-0 left-0 z-0 hidden h-auto w-[58vw] max-w-200 select-none object-contain opacity-95 lg:block  xl:max-w-250"
-      />
-
-      <div
-        dir="ltr"
-        className="relative z-10 mx-auto grid max-w-376 gap-8 px-3 pt-4 pb-8 sm:gap-10 sm:px-6 sm:pb-10 lg:min-h-[clamp(50rem,56vw,58rem)] lg:grid-cols-2 lg:items-center lg:gap-8 lg:pt-8 lg:pb-14 xl:min-h-[clamp(53rem,54vw,62rem)] xl:grid-cols-[minmax(0,55fr)_minmax(0,45fr)] xl:items-start xl:gap-6"
-      >
-        <div className="relative order-2 mt-5 flex min-w-0 items-center justify-center sm:mt-7 lg:order-1 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:-translate-y-12 lg:justify-start xl:-translate-y-20">
-          <div className="relative w-full max-w-176 lg:translate-y-8 lg:max-w-none xl:max-w-210 xl:translate-y-25">
-            <img
-              src={HeroImg}
-              alt={t('mainpage.hero.imageAlt')}
-              loading="eager"
-              fetchpriority="high"
-              className="relative z-10 block h-auto w-full object-contain"
-            />
-
-            <div className="absolute right-[1%] top-[32%] z-20 max-w-34 rounded-xl border border-color-theme bg-[color-mix(in_srgb,var(--bg-color-for-layer-on-body)_86%,transparent)] px-2.5 py-2 text-center shadow-md backdrop-blur-md sm:right-[8%] lg:hidden">
-              <p
-                dir={dir}
-                className="text-[0.65rem] leading-4 font-f-sbold first-text-color sm:text-xs sm:leading-5"
-              >
-                {t('mainpage.hero.shippingCard')}
-              </p>
-            </div>
-
-            <div className="absolute bottom-[14%] left-[4%] z-20 max-w-34 rounded-xl border border-color-theme bg-[color-mix(in_srgb,var(--bg-color-for-layer-on-body)_86%,transparent)] px-2.5 py-2 text-center shadow-md backdrop-blur-md sm:bottom-[18%] sm:left-[8%] lg:hidden">
-              <p
-                dir={dir}
-                className="text-[0.65rem] leading-4 font-f-sbold first-text-color sm:text-xs sm:leading-5"
-              >
-                {t('mainpage.hero.handmadeCard')}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div
-          dir={dir}
-          className={cn(
-            'relative px-2 z-20 order-1 flex min-w-0 lg:max-w-150 flex-col gap-5 sm:gap-6 lg:order-2 lg:col-start-2 lg:row-start-1 lg:px-2 xl:w-full xl:translate-y-5 xl:justify-self-end',
-            isRtl ? ' text-right' : 'items-start text-left',
-          )}
-        >
-          <span className="inline-flex w-fit rounded-full bg-first/10 px-4 py-2 text-sm font-f-light text-first">
-            - {t('mainpage.hero.badge')}
-          </span>
-
-          <h1
-            id="landing-hero-title"
-            className="max-w-2xl text-3xl leading-[1.35] font-f-bold tracking-normal first-text-color sm:text-4xl md:text-5xl lg:text-[32px]"
-          >
-            <span className="text-secound">{t('mainpage.hero.titleAccent')}</span>{' '}
-            <span>{t('mainpage.hero.titleMain')}</span>
-          </h1>
-
-          <p className="max-w-xl text-base leading-8 first-text-color-for-paragraph  md:text-xl">
-            {t('mainpage.hero.description')}
-          </p>
-
-          <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row sm:items-center">
-            <Link
-              to={localizedPath('/products')}
-              className="group inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-first px-6  text-white  transition-all duration-200 hover:bg-first-600 sm:h-14 text-base"
-            >
-              <span>{t('mainpage.hero.cta')}</span>
-              <ForwardIcon
-                className={cn(
-                  'h-4 w-6 transition-transform duration-200',
-                  isRtl ? 'group-hover:-translate-x-1' : 'group-hover:translate-x-1',
-                )}
-                aria-hidden="true"
-              />
-            </Link>
-          </div>
-
+      <div className="mx-auto max-w-376 rounded-[32px] bg-surface p-6">
+        <div className="relative isolate">
           <div
-            dir="ltr"
-            className="-mx-3 grid w-[calc(100%+1.5rem)] grid-cols-3 gap-2 px-3 pt-2 sm:-mx-6 sm:w-[calc(100%+3rem)] sm:gap-3 sm:px-6 lg:mx-0 lg:w-full lg:max-w-xl lg:px-0"
-          >
-            {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="rounded-xl border border-color-theme bg-[color-mix(in_srgb,var(--bg-color-for-layer-on-body)_72%,transparent)] px-2.5 py-3 text-center shadow-sm backdrop-blur sm:rounded-2xl sm:px-4 sm:py-4"
+            className="pointer-events-none absolute inset-0 rounded-[28px] bg-white dark:bg-[#273242] lg:hidden"
+            aria-hidden="true"
+          />
+          <SlideBackground />
+          {isPending || isError || slides.length === 0 ? (
+            <div className="relative z-10 flex min-h-[300px] items-center justify-center px-8 text-center sm:min-h-[402px] lg:min-h-[452px]">
+              {isPending ? (
+                <div
+                  role="status"
+                  className="relative z-10 w-full max-w-md animate-pulse space-y-5"
+                  aria-label={t('mainpage.hero.loading')}
+                >
+                  <div className="mx-auto h-4 w-24 rounded-full bg-surface" />
+                  <div className="mx-auto h-8 w-3/4 rounded-full bg-surface" />
+                  <div className="mx-auto h-4 w-full rounded-full bg-surface" />
+                </div>
+              ) : (
+                <div className="relative z-10 flex flex-col items-center gap-4 first-text-color-for-paragraph">
+                  <p>{t(isError ? 'mainpage.hero.error' : 'mainpage.hero.empty')}</p>
+                  {isError && (
+                    <button
+                      type="button"
+                      onClick={() => void refetch()}
+                      className="rounded-xl bg-first px-5 py-2.5 text-sm font-f-bold text-white hover:bg-first-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first"
+                    >
+                      {t('mainpage.hero.retry')}
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="relative z-10">
+              <Swiper
+                key={dir}
+                dir={dir}
+                className="relative"
+                modules={[A11y]}
+                slidesPerView={1}
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                  setActiveSlide(swiper.realIndex);
+                }}
+                onSlideChange={(swiper) => setActiveSlide(swiper.realIndex)}
+                aria-label={t('mainpage.hero.label')}
               >
-                <p className="text-lg font-f-bold tabular-nums first-text-color sm:text-2xl">
-                  {stat.value}
-                </p>
-                <p className="mt-1 text-[0.68rem] leading-5 first-text-color-for-paragraph sm:text-sm">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </div>
+                {slides.map((slide, index) => {
+                  const title = slide.translation?.title || slide.title || '';
+                  const caption = slide.translation?.caption || slide.caption;
+                  const description = slide.translation?.description || slide.description;
+                  const image = getSlideImage(slide);
+                  const destination = getSlideLink(slide);
+                  const ctaContent = (
+                    <>
+                      {t('mainpage.hero.cta')}
+                      <ForwardIcon className="h-5 w-5" aria-hidden="true" />
+                    </>
+                  );
+                  const ctaClass =
+                    'inline-flex min-h-12 w-fit items-center justify-center gap-3 rounded-2xl bg-first px-6 text-sm font-f-bold text-white transition-colors hover:bg-first-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first';
+
+                  return (
+                    <SwiperSlide key={slide.id} className="!h-auto">
+                      <article
+                        dir="ltr"
+                        className="relative flex min-h-[510px] flex-col-reverse pb-14 sm:min-h-[560px] md:min-h-[590px] lg:min-h-[452px] lg:flex-row lg:pb-0"
+                      >
+                        <div className="relative flex h-[190px] w-full shrink-0 items-end justify-center px-6 sm:h-[240px] sm:px-9 md:h-[280px] lg:h-auto lg:w-[52%] lg:px-11 xl:px-12">
+                          {image && (
+                            <img
+                              src={image}
+                              alt={title || caption || ''}
+                              loading={index === 0 ? 'eager' : 'lazy'}
+                              fetchPriority={index === 0 ? 'high' : undefined}
+                              className="max-h-[190px] w-full object-contain object-bottom sm:max-h-[240px] md:max-h-[280px] lg:max-h-[430px]"
+                            />
+                          )}
+                        </div>
+                        <div
+                          dir={dir}
+                          className="flex min-w-0 flex-1 flex-col justify-center gap-3 px-6 pt-8 pb-4 text-start sm:gap-4 sm:px-9 md:px-11 lg:w-[48%] lg:gap-4 lg:px-11 lg:pt-8 lg:pb-16 xl:gap-5 xl:px-12"
+                        >
+                          {caption && (
+                            <div className="flex items-center gap-2 text-xs font-f-bold text-first">
+                              <span
+                                className="h-0.5 w-8 shrink-0 rounded-lg bg-secound"
+                                aria-hidden="true"
+                              />
+                              <span>{caption}</span>
+                            </div>
+                          )}
+                          {title && (
+                            <h1 className="text-[22px] leading-[1.35] font-f-bold first-text-color sm:text-[28px] lg:text-[26px] xl:text-[32px]">
+                              {title}
+                            </h1>
+                          )}
+                          {description && (
+                            <p className="max-w-lg text-sm leading-6 first-text-color-for-paragraph sm:text-base sm:leading-7 lg:text-[15px] xl:text-base">
+                              {description}
+                            </p>
+                          )}
+                          {destination &&
+                            (destination.external ? (
+                              <a href={destination.href} className={ctaClass}>
+                                {ctaContent}
+                              </a>
+                            ) : (
+                              <Link to={localizedPath(destination.href)} className={ctaClass}>
+                                {ctaContent}
+                              </Link>
+                            ))}
+                        </div>
+                      </article>
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+              {slides.length > 1 && (
+                <div
+                  dir={dir}
+                  className="absolute bottom-3 left-1/2 z-20 flex max-w-full -translate-x-1/2 items-center justify-center gap-0.5 px-2 lg:top-[370px] lg:bottom-auto lg:left-[84%] lg:gap-0 xl:gap-0.5"
+                  role="group"
+                  aria-label={t('mainpage.hero.pagination')}
+                >
+                  {slides.map((slide, index) => (
+                    <button
+                      key={slide.id}
+                      type="button"
+                      onClick={() => swiperRef.current?.slideTo(index)}
+                      className="flex h-8 items-center justify-center px-1 focus-visible:rounded-full focus-visible:outline-2 focus-visible:outline-first lg:px-0.5 xl:px-1"
+                      aria-label={t('mainpage.hero.goToSlide', { number: index + 1 })}
+                      aria-current={index === activeSlide ? 'true' : undefined}
+                    >
+                      <span
+                        className={`block h-2.5 rounded-full bg-[#18183E] transition-all duration-200 dark:bg-white ${index === activeSlide ? 'w-8 opacity-100' : 'w-2.5 opacity-20 hover:opacity-50'}`}
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
+        <div className="mt-6 border-b border-dashed border-[#D9D9D9]" aria-hidden="true" />
       </div>
     </section>
   );

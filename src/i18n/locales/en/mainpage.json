@@ -1,31 +1,13 @@
 {
   "hero": {
-    "badge": "Traditional Iranian needlework",
-    "titleAccent": "Authentic craft",
-    "titleMain": "shaped by generations",
-    "description": "Every Beris product tells the story of authentic Baluchi craftsmanship, lovingly handcrafted by skilled women artisans.",
-    "cta": "Shop products",
-    "imageAlt": "Handwoven Persian textiles with colorful thread",
-    "featureLabel": "New collection",
-    "featureValue": "Handmade textile art",
-    "shippingCard": "Quality guarantee and fast shipping",
-    "handmadeCard": "Made slowly by skilled Iranian hands",
-    "stats": {
-      "rating": "customer rating",
-      "stitches": "hand stitches",
-      "artists": "local artists"
-    },
-    "slides": [
-      {
-        "title": "Fast delivery from Pulak Beauty Paradise"
-      },
-      {
-        "title": "Beauty and personal care products from Pulak Beauty Paradise"
-      },
-      {
-        "title": "Professional products from Pulak Beauty Paradise"
-      }
-    ]
+    "label": "Amazon store highlights",
+    "cta": "View and shop",
+    "pagination": "Choose a slide",
+    "goToSlide": "Show slide {{number}}",
+    "loading": "Loading highlights",
+    "empty": "New highlights will appear here soon.",
+    "error": "Highlights could not be loaded.",
+    "retry": "Try again"
   },
   "categories": {
     "titlePrefix": "Product",
