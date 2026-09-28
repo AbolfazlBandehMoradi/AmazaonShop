@@ -1,4 +1,4 @@
-import { ArrowDownWideNarrow, ChevronDown, SlidersHorizontal } from 'lucide-react';
+import { ArrowDownWideNarrow, ChevronDown, Search, SlidersHorizontal, X } from 'lucide-react';
 import { useTranslation } from '@/i18n/useTranslation';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useInfiniteProducts } from '@/hooks/useInfiniteProducts';
@@ -279,7 +279,11 @@ function MobileSortSelect({
         className="flex min-h-12 w-full items-center justify-between gap-3 rounded-2xl border border-first/20 bg-color-for-layer-on-body px-3 text-sm font-f-sbold text-first outline-none transition-colors hover:bg-first/5 focus-visible:border-first/60 focus-visible:ring-3 focus-visible:ring-first/10"
       >
         <span className="flex min-w-0 items-center gap-2">
-          <ArrowDownWideNarrow className="h-4.5 w-4.5 shrink-0" strokeWidth={1.8} aria-hidden="true" />
+          <ArrowDownWideNarrow
+            className="h-4.5 w-4.5 shrink-0"
+            strokeWidth={1.8}
+            aria-hidden="true"
+          />
           <span className="min-w-0 truncate">{label}</span>
         </span>
         <ChevronDown
@@ -338,6 +342,7 @@ export default function ProductsFilterPage() {
   const dir = useLangStore((s) => s.dir);
 
   const search = useShopStore((s) => s.search);
+  const setSearch = useShopStore((s) => s.setSearch);
   const categoryIds = useShopStore((s) => s.categoryIds);
   const showcaseIds = useShopStore((s) => s.showcaseIds);
   const minPrice = useShopStore((s) => s.minPrice);
@@ -499,6 +504,34 @@ export default function ProductsFilterPage() {
     Boolean(normalizedActiveFilters.search) ||
     Boolean(normalizedActiveFilters.hasOffer);
 
+  const urlParams = new URLSearchParams(location.search);
+  const activeSearchTerm = isUrlHydrated
+    ? normalizedActiveFilters.search
+    : normalizeSearchValue(urlParams.get('search') ?? urlParams.get('q') ?? undefined);
+  const activeSearchNotice = activeSearchTerm ? (
+    <div
+      role="status"
+      className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-first/20 bg-first/5 px-4 py-3"
+    >
+      <div className="flex min-w-0 items-center gap-2 text-sm first-text-color">
+        <Search className="h-4 w-4 shrink-0 text-first" strokeWidth={1.8} aria-hidden="true" />
+        <span>{t('productsFilter.searchResultsFor')}</span>
+        <strong dir="auto" className="min-w-0 break-words font-f-sbold text-first">
+          {activeSearchTerm}
+        </strong>
+      </div>
+      <button
+        type="button"
+        onClick={() => setSearch(undefined)}
+        className="inline-flex min-h-9 items-center gap-1.5 rounded-lg px-2 text-sm text-first transition-colors hover:bg-first/10 focus-visible:ring-2 focus-visible:ring-first"
+        aria-label={t('productsFilter.clearSearch')}
+      >
+        <X className="h-4 w-4" strokeWidth={1.8} aria-hidden="true" />
+        {t('productsFilter.clearSearch')}
+      </button>
+    </div>
+  ) : null;
+
   const sortOptions = useMemo(() => getProductSortOptions(lang), [lang]);
   const activeSortOption = useMemo(
     () => getActiveProductSortOption(sortOptions, sortBy) ?? sortOptions[0],
@@ -544,6 +577,7 @@ export default function ProductsFilterPage() {
   if (showInitialPageSkeleton) {
     return (
       <main dir={dir} className="page-container page-section">
+        {activeSearchNotice}
         <div className="grid gap-6 lg:grid-cols-[minmax(220px,260px)_minmax(0,1fr)] lg:items-start">
           <aside className="hidden lg:block">
             <FilterPanelSkeleton />
@@ -558,6 +592,7 @@ export default function ProductsFilterPage() {
 
   return (
     <main dir={dir} className="page-container page-section">
+      {activeSearchNotice}
       <div className="mb-4 lg:hidden">
         <div className="flex items-center justify-between gap-3">
           <button

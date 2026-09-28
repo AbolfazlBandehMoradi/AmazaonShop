@@ -24,7 +24,7 @@ const Hero = () => {
   return (
     <section
       dir={dir}
-      className="relative isolate mt-8 overflow-hidden bg-color-for-layer-on-body lg:mt-0"
+      className="relative isolate overflow-hidden bg-color-for-layer-on-body"
       aria-labelledby="landing-hero-title"
     >
       <img
@@ -37,9 +37,9 @@ const Hero = () => {
 
       <div
         dir="ltr"
-        className="relative z-10 mx-auto grid max-w-376 gap-8 px-3 pt-40 pb-8 sm:gap-10 sm:px-6 sm:pb-10 lg:min-h-[clamp(50rem,56vw,58rem)] lg:grid-cols-2 lg:items-center lg:gap-8 lg:pt-55 lg:pb-14 xl:min-h-[clamp(53rem,54vw,62rem)] xl:grid-cols-[minmax(0,55fr)_minmax(0,45fr)] xl:items-start xl:gap-6"
+        className="relative z-10 mx-auto grid max-w-376 gap-8 px-3 pt-4 pb-8 sm:gap-10 sm:px-6 sm:pb-10 lg:min-h-[clamp(50rem,56vw,58rem)] lg:grid-cols-2 lg:items-center lg:gap-8 lg:pt-8 lg:pb-14 xl:min-h-[clamp(53rem,54vw,62rem)] xl:grid-cols-[minmax(0,55fr)_minmax(0,45fr)] xl:items-start xl:gap-6"
       >
-        <div className="relative order-2 mt-5 flex min-w-0 items-center justify-center sm:mt-7 lg:order-1 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:-translate-y-32 lg:justify-start xl:-translate-y-20">
+        <div className="relative order-2 mt-5 flex min-w-0 items-center justify-center sm:mt-7 lg:order-1 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:-translate-y-12 lg:justify-start xl:-translate-y-20">
           <div className="relative w-full max-w-176 lg:translate-y-8 lg:max-w-none xl:max-w-210 xl:translate-y-25">
             <img
               src={HeroImg}

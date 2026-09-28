@@ -1,7 +1,7 @@
 {
   "nav": {
-    "home": "Beris",
-    "shopName": "Beris Handicrafts",
+    "home": "Home",
+    "shopName": "Amazon",
     "products": "Products",
     "categories": "Categories",
     "about": "About us",
@@ -9,6 +9,7 @@
     "blog": "Blog",
     "search": "Search",
     "searchPlaceholder": "Search products...",
+    "clearSearch": "Clear search",
     "closeSearch": "Close search",
     "recentSearches": "Recent Searches",
     "trendingNow": "Trending Now",
@@ -21,12 +22,18 @@
     "profile": "Profile",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
-    "menuTitle": "Beris",
+    "menuTitle": "Amazon",
+    "mobileTagline": "Mobile phone store",
     "navigationLabel": "Main navigation",
     "faq": "Frequently asked questions",
     "returnPolicy": "Return policy",
     "switchToEnglish": "Switch to English",
     "switchToPersian": "Switch to Persian",
-    "mobileBarLabel": "Mobile quick navigation"
+    "mobileBarLabel": "Mobile quick navigation",
+    "register": "Register",
+    "support": "24-hour support",
+    "categoriesLoading": "Loading categories...",
+    "categoriesUnavailable": "Categories are unavailable",
+    "noCategories": "No categories to show"
   }
 }

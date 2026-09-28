@@ -231,7 +231,9 @@ export default function Auth() {
                 className="group inline-flex items-center gap-1 rounded-xl border border-color-theme px-3 py-2 text-sm font-s-medium first-text-color transition-colors hover:bg-first hover:text-white"
               >
                 <span className="leading-none">{lang === 'fa' ? 'بازگشت  ' : 'Back to home'}</span>
-                <ChevronLeftIcon className={`h-4 w-4 shrink-0 ${lang == 'en' ? 'rotate-180' : ""} transition-colors group-hover:text-white`} />
+                <ChevronLeftIcon
+                  className={`h-4 w-4 shrink-0 ${lang == 'en' ? 'rotate-180' : ''} transition-colors group-hover:text-white`}
+                />
               </Link>
             </div>
 
@@ -248,11 +250,7 @@ export default function Auth() {
                 )}{' '}
               </h1>
               <p className="mx-auto mt-2 max-w-md text-center text-sm first-text-color-for-paragraph md:text-base">
-                {step === 'mobile'
-                  ? t('auth.login.welcome')
-                  : lang === 'fa'
-                    ? ''
-                    : ''}
+                {step === 'mobile' ? t('auth.login.welcome') : lang === 'fa' ? '' : ''}
               </p>
             </div>
 
@@ -296,12 +294,12 @@ export default function Auth() {
           </div>
 
           <div className="relative hidden h-full md:flex">
-            <div className="absolute inset-0 bg-linear-to-tr from-first-100 via-first-300/85 to-secound-100" />
+            <div className="absolute inset-0 bg-linear-to-br from-[#b9d5ed] via-[#e8e5df] to-[#d8c7b4]" />{' '}
             <div className="relative z-10 flex w-full flex-col items-center justify-center p-8 text-center">
               <img
                 className="w-4/5 max-w-sm object-contain"
                 src={banner1}
-                loading='eager'
+                loading="eager"
                 alt="Authentication illustration"
               />
               <div className="mt-6 rounded-2xl bg-[color-mix(in_srgb,var(--bg-color-for-layer-on-body)_78%,transparent)] p-4 backdrop-blur-xs">

@@ -21,5 +21,7 @@
   "secondsShort": "ث",
   "failedToParseUrlParams": "خواندن پارامترهای آدرس با خطا مواجه شد.",
   "failedToUpdateUrl": "به‌روزرسانی آدرس با خطا مواجه شد.",
-  "outOfStock": "ناموجود"
+  "outOfStock": "ناموجود",
+  "searchResultsFor": "نتایج جستجو برای",
+  "clearSearch": "حذف جستجو"
 }

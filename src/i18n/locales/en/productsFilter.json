@@ -2,6 +2,8 @@
   "filters": "Filters",
   "clear": "Clear Filters",
   "activeSearchLabel": "Search",
+  "searchResultsFor": "Search results for",
+  "clearSearch": "Clear search",
   "activeCategoryLabel": "Category",
   "categories": "Categories",
   "priceRange": "Price range",

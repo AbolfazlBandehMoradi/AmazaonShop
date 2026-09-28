@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import {
   ChevronDown,
   CircleHelp,
+  Grid2x2,
   Info,
   LogIn,
   LogOut,
@@ -12,15 +13,13 @@ import {
   Phone,
   ScrollText,
   Search,
-  ShoppingCart,
   User2,
   X,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import MainLogo from '@/assets/Images/Logo/logo-nav.png';
-import MainLogoMobile from '@/assets/Images/Logo/MainLogo.png';
-import { LanguageToggle } from './LanguageWithClick';
+import { AmazonMark } from '@/components/layout/brand/AmazonMark';
+import { storeContact } from '@/config/store';
 import { ThemeToggleButton } from '@/components/ui/ThemeToggleButton';
 import { useAuth } from '@/context/AuthContext';
 import useCategories from '@/hooks/useCategories';
@@ -39,12 +38,16 @@ type CategoryItem = {
 };
 
 const actionButtonClass =
-  'relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-color-theme bg-color-for-layer-on-body first-text-color-for-paragraph transition-colors hover:border-secound/40 hover:bg-secound/10 hover:text-secound';
+  'relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-[#1C1C1C] transition-colors hover:bg-first/10 hover:text-first focus-visible:ring-2 focus-visible:ring-first dark:bg-color-for-layer-sec dark:text-text';
 
 export function NavbarWithDropDownDrawer() {
   const { t } = useTranslation();
   const { isAuthenticated, user, logout } = useAuth();
-  const { data: categories } = useCategories();
+  const {
+    data: categories,
+    isPending: areCategoriesPending,
+    isError: areCategoriesUnavailable,
+  } = useCategories();
   const dir = useLangStore((store) => store.dir);
   const localizedPath = useLocalizedPath();
   const navigate = useNavigate();
@@ -55,10 +58,14 @@ export function NavbarWithDropDownDrawer() {
   const setCategoryIds = useShopStore((store) => store.setCategoryIds);
   const categoryList = (categories ?? []) as CategoryItem[];
   const basePath = stripLangPrefix(location.pathname);
-  const isHomeRoute = basePath === '/';
   const isCategoryRoute = basePath.startsWith('/categories');
+  const locationParams = new URLSearchParams(location.search);
+  const activeSearch =
+    basePath === '/products'
+      ? (locationParams.get('search') ?? locationParams.get('q') ?? '').trim()
+      : '';
 
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState(activeSearch);
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
   const [isDesktopCategoryOpen, setIsDesktopCategoryOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -70,13 +77,15 @@ export function NavbarWithDropDownDrawer() {
   usePageScrollLock(isDrawerOpen);
 
   const desktopCategoryRef = useRef<HTMLLIElement>(null);
+  const desktopCategoryButtonRef = useRef<HTMLButtonElement>(null);
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const drawerCloseButtonRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLElement>(null);
+  const desktopSearchRef = useRef<HTMLInputElement>(null);
+  const mobileSearchRef = useRef<HTMLInputElement>(null);
 
   const labels = {
-    home: t('nav.home'),
     shopName: t('nav.shopName'),
     products: t('nav.products'),
     categories: t('nav.categories'),
@@ -87,15 +96,22 @@ export function NavbarWithDropDownDrawer() {
     returnPolicy: t('nav.returnPolicy'),
     login: t('nav.login'),
     loginShort: t('nav.loginShort'),
+    register: t('nav.register'),
     profile: t('nav.profile'),
     logout: t('nav.logout'),
     cart: t('nav.cart'),
     search: t('nav.searchPlaceholder') || t('nav.search'),
+    clearSearch: t('nav.clearSearch'),
     all: t('nav.all'),
     openMenu: t('nav.openMenu'),
     closeMenu: t('nav.closeMenu'),
     menuTitle: t('nav.menuTitle'),
     navigationLabel: t('nav.navigationLabel'),
+    mobileTagline: t('nav.mobileTagline'),
+    support: t('nav.support'),
+    categoriesLoading: t('nav.categoriesLoading'),
+    categoriesUnavailable: t('nav.categoriesUnavailable'),
+    noCategories: t('nav.noCategories'),
   };
 
   const activeCategory = categoryList[activeCategoryIndex] ?? categoryList[0];
@@ -104,7 +120,6 @@ export function NavbarWithDropDownDrawer() {
     [user?.firstName, user?.lastName].filter(Boolean).join(' ') || user?.username || labels.profile;
 
   const navLinks = [
-    { label: labels.home, to: localizedPath('/'), matches: (path: string) => path === '/' },
     {
       label: labels.products,
       to: localizedPath('/products'),
@@ -136,7 +151,7 @@ export function NavbarWithDropDownDrawer() {
   ];
 
   const navLinkClass =
-    'inline-flex h-11 items-center gap-1.5 rounded-xl px-3 text-sm font-f-normal transition-colors hover:bg-first/10 hover:text-first focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first xl:px-4 xl:text-base';
+    'inline-flex h-11 items-center rounded-xl px-3 text-base font-f-normal text-[#1C1C1C] transition-colors hover:bg-first/10 hover:text-first focus-visible:ring-2 focus-visible:ring-first dark:text-text';
 
   const closeDrawer = useCallback(() => {
     setIsDrawerOpen(false);
@@ -155,6 +170,10 @@ export function NavbarWithDropDownDrawer() {
     setIsProfileMenuOpen(false);
     closeDrawer();
   }, [closeDrawer, location.hash, location.key, location.pathname, location.search]);
+
+  useEffect(() => {
+    setSearchValue(activeSearch);
+  }, [activeSearch, basePath]);
 
   useEffect(() => {
     if (!isDrawerOpen) return;
@@ -191,6 +210,8 @@ export function NavbarWithDropDownDrawer() {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key !== 'Escape') return;
 
+      if (isDesktopCategoryOpen) desktopCategoryButtonRef.current?.focus();
+      if (isDrawerOpen) menuButtonRef.current?.focus();
       setIsDesktopCategoryOpen(false);
       setIsProfileMenuOpen(false);
       closeDrawer();
@@ -198,25 +219,46 @@ export function NavbarWithDropDownDrawer() {
 
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
-  }, [closeDrawer]);
+  }, [closeDrawer, isDesktopCategoryOpen, isDrawerOpen]);
 
   const handleSearchChange = (value: string) => {
     setSearchValue(value);
-    setSearchText(value.trim() || undefined);
   };
 
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const normalizedSearch = searchValue.trim() || undefined;
+    setSearchValue(normalizedSearch ?? '');
     setSearchText(normalizedSearch);
 
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(basePath === '/products' ? location.search : '');
+    params.delete('search');
+    params.delete('q');
     if (normalizedSearch) {
       params.set('search', normalizedSearch);
     }
 
     navigate(localizedPath(params.toString() ? `/products?${params.toString()}` : '/products'));
+  };
+
+  const handleClearSearch = (mobile: boolean) => {
+    setSearchValue('');
+    (mobile ? mobileSearchRef : desktopSearchRef).current?.focus();
+
+    if (basePath !== '/products') return;
+
+    setSearchText(undefined);
+    if (!activeSearch) return;
+
+    const params = new URLSearchParams(location.search);
+    params.delete('search');
+    params.delete('q');
+    navigate({
+      pathname: location.pathname,
+      search: params.toString() ? `?${params.toString()}` : '',
+      hash: location.hash,
+    });
   };
 
   const categoryHref = (id: string | number) =>
@@ -266,8 +308,8 @@ export function NavbarWithDropDownDrawer() {
   const renderSearchForm = (id: string, mobile = false) => (
     <form
       className={cn(
-        'flex w-full items-center overflow-hidden rounded-xl border border-color-theme bg-color-for-layer-on-body transition-colors focus-within:border-first/50',
-        mobile ? 'h-12' : 'h-12 max-w-3xl',
+        'flex h-14 w-full items-center overflow-hidden rounded-[24px] bg-white transition-shadow focus-within:ring-2 focus-within:ring-first',
+        !mobile && 'max-w-[34rem]',
       )}
       role="search"
       aria-label={labels.search}
@@ -278,17 +320,29 @@ export function NavbarWithDropDownDrawer() {
       </label>
       <input
         id={id}
+        ref={mobile ? mobileSearchRef : desktopSearchRef}
         dir={dir}
         type="search"
         value={searchValue}
         placeholder={labels.search}
         autoComplete="off"
-        className="h-full min-w-0 flex-1 bg-color-for-layer-sec px-4 text-sm first-text-color outline-none placeholder:first-text-color-for-paragraph-low"
+        className="no-clear-button h-full min-w-0 flex-1 bg-white px-4 text-sm text-[#1C1C1C] outline-none placeholder:text-[#1C1C1C] sm:px-6"
         onChange={(event) => handleSearchChange(event.target.value)}
       />
+      {searchValue && (
+        <button
+          type="button"
+          className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface text-[#656464] transition-colors hover:bg-first/10 hover:text-first focus-visible:ring-2 focus-visible:ring-first"
+          aria-label={labels.clearSearch}
+          title={labels.clearSearch}
+          onClick={() => handleClearSearch(mobile)}
+        >
+          <X className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
+        </button>
+      )}
       <button
         type="submit"
-        className="inline-flex h-full w-12 shrink-0 items-center justify-center border-s border-color-theme bg-color-for-layer-sec first-text-color-for-paragraph transition-colors hover:bg-first/10 hover:text-first"
+        className="inline-flex h-full w-[54px] shrink-0 items-center justify-center px-4 text-[#1C1C1C] transition-colors hover:bg-first/10 hover:text-first"
         aria-label={t('nav.search')}
       >
         <Search className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
@@ -299,13 +353,23 @@ export function NavbarWithDropDownDrawer() {
   const renderCartLink = () => (
     <Link
       to={localizedPath('/cart')}
-      className={cn(actionButtonClass, 'w-auto gap-2 px-3')}
+      className="relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-first text-white shadow-[-4px_4px_5px_0px_#BF000040] transition-colors hover:bg-first-600 focus-visible:ring-2 focus-visible:ring-first focus-visible:ring-offset-2"
       aria-label={`${labels.cart}: ${cartCount}`}
     >
-      <ShoppingCart className="h-5 w-5 " strokeWidth={1.8} aria-hidden="true" />
-      <span className=" absolute -top-1.75 -right-2 min-w-5 rounded-full bg-secound px-1.5 py-1 text-center text-[11px] font-f-sbold leading-none text-white">
-        {cartCount > 99 ? '99+' : cartCount}
-      </span>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path
+          d="M7.5 3.33334L2.5 8.33334L3.63074 13.9871C3.94236 15.5451 5.31041 16.6667 6.89935 16.6667H13.1007C14.6896 16.6667 16.0576 15.5451 16.3693 13.9871L17.5 8.33334L12.5 3.33334M17.5 8.33334H2.5"
+          stroke="white"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+      {cartCount > 0 && (
+        <span className="absolute -top-1.5 -end-1.5 min-w-5 rounded-full bg-secound px-1 text-center text-[11px] font-f-sbold leading-5 text-white">
+          {cartCount > 99 ? '99+' : cartCount}
+        </span>
+      )}
     </Link>
   );
 
@@ -314,9 +378,20 @@ export function NavbarWithDropDownDrawer() {
       return (
         <Link
           to={localizedPath('/auth')}
-          className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-first px-4 text-sm font-f-sbold text-white transition-colors hover:bg-first-600"
+          className="group inline-flex min-h-11 shrink-0 items-center gap-2 rounded-xl px-2 text-sm font-f-sbold font-semibold text-[#1C1C1C] transition-colors hover:bg-first/10 focus-visible:ring-2 focus-visible:ring-first dark:text-text"
+          aria-label={labels.login}
         >
-          <span>{labels.login}</span>
+          <User2
+            className="h-5 w-5 shrink-0 transition-colors group-hover:text-first"
+            strokeWidth={1.7}
+            aria-hidden="true"
+          />
+          <span className="transition-colors group-hover:text-first">{labels.loginShort}</span>
+          <span
+            className="h-3 w-px bg-[#D9D9D9] transition-colors group-hover:bg-first/40"
+            aria-hidden="true"
+          />
+          <span className="transition-colors group-hover:text-first">{labels.register}</span>
         </Link>
       );
     }
@@ -325,17 +400,18 @@ export function NavbarWithDropDownDrawer() {
       <div className="relative" ref={profileMenuRef}>
         <button
           type="button"
-          className={cn(actionButtonClass, 'overflow-hidden')}
+          className="inline-flex h-11 items-center gap-2 overflow-hidden rounded-xl px-2 text-sm text-[#1C1C1C] hover:text-first focus-visible:ring-2 focus-visible:ring-first dark:text-text"
           aria-label={labels.profile}
           aria-expanded={isProfileMenuOpen}
           aria-controls="desktop-profile-menu"
           onClick={() => setIsProfileMenuOpen((previous) => !previous)}
         >
           {userAvatar ? (
-            <img src={userAvatar} alt="" className="h-full w-full object-cover" />
+            <img src={userAvatar} alt="" className="h-8 w-8 rounded-full object-cover" />
           ) : (
             <User2 className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
           )}
+          <span className="max-w-28 truncate">{userName}</span>
         </button>
 
         <AnimatePresence>
@@ -346,7 +422,10 @@ export function NavbarWithDropDownDrawer() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.98 }}
               transition={{ duration: 0.16 }}
-              className="absolute left-0 top-full z-50 mt-3 w-64 overflow-hidden rounded-2xl border border-secound/20 bg-color-for-layer-on-body p-2 shadow-dark-sm"
+              className={cn(
+                'absolute top-full z-50 mt-3 w-64 overflow-hidden rounded-2xl border border-secound/20 bg-color-for-layer-on-body p-2 shadow-dark-sm',
+                dir === 'rtl' ? 'left-0' : 'right-0',
+              )}
             >
               <Link
                 to={localizedPath('/profile')}
@@ -380,239 +459,253 @@ export function NavbarWithDropDownDrawer() {
     );
   };
 
+  const renderSupportContact = (mobile = false) => (
+    <a
+      href={storeContact.phoneHref}
+      className={cn(
+        'inline-flex shrink-0 items-center gap-2 rounded-lg px-1.5 py-1 text-[#1C1C1C] transition-colors hover:text-first focus-visible:ring-2 focus-visible:ring-first dark:text-text',
+        mobile && 'justify-center',
+      )}
+      aria-label={`${storeContact.phone} - ${labels.support}`}
+      onClick={mobile ? closeDrawer : undefined}
+    >
+      <span className="flex min-w-0 flex-col leading-none">
+        <span dir="ltr" className="text-sm font-f-sbold leading-4 tabular-nums">
+          {storeContact.phone}
+        </span>
+        <span className="mt-0.5 text-[11px] leading-3 text-[#656464] dark:text-text-muted">
+          {labels.support}
+        </span>
+      </span>
+      <Phone className="h-5 w-5 shrink-0" strokeWidth={1.8} aria-hidden="true" />
+    </a>
+  );
+
   return (
     <>
       <header
         dir={dir}
         data-navbar-root
-        className={cn(
-          'navbar-shell top-0 z-40 w-full lg:bg-transparent',
-          isHomeRoute ? 'absolute' : 'relative',
-        )}
+        className="navbar-shell relative z-40 w-full bg-white px-3 pt-4 pb-4 dark:bg-background sm:px-6 sm:pt-5 sm:pb-5 lg:px-8 lg:pt-11 lg:pb-8"
       >
-        <div className="mx-auto max-w-376 px-3 py-3 sm:px-6 lg:py-7">
-          <div className="hidden overflow-visible rounded-3xl border border-color-theme bg-color-for-layer-on-body shadow-dark-sm lg:block">
-            <div className="grid grid-cols-[auto_minmax(20rem,1fr)_auto] items-center gap-5 px-5 py-4 xl:gap-8 xl:px-7">
+        <div className="mx-auto max-w-376 rounded-[32px] bg-surface p-4 shadow-sm sm:px-6 lg:flex lg:h-[204px] lg:flex-col lg:px-11 lg:py-8 lg:shadow-none">
+          <div className="hidden min-h-0 flex-1 items-center justify-between gap-6 border-b border-dashed border-[#D9D9D9] pb-4 lg:flex">
+            <div className="flex min-w-0 flex-1 items-center gap-6 xl:gap-8">
               <Link
                 to={localizedPath('/')}
-                className="flex min-w-0 items-center gap-3 rounded-xl"
+                className="flex shrink-0 items-center gap-3 rounded-xl focus-visible:ring-2 focus-visible:ring-first"
                 aria-label={labels.shopName}
               >
-                <img className="h-14 w-14 shrink-0 object-contain" src={MainLogo} alt="" />
-                <span className="max-w-40 text-base font-f-bold leading-6 text-secound xl:max-w-52 xl:text-lg">
+                <AmazonMark className="h-14 w-14 shrink-0" />
+                <span className="text-[24px] leading-7 font-f-bold font-black text-black dark:text-text">
                   {labels.shopName}
                 </span>
               </Link>
 
-              <div className="flex min-w-0 justify-center">
-                {renderSearchForm('desktop-navbar-search')}
-              </div>
-
-              <div className="flex shrink-0 items-center gap-2">
-                <ThemeToggleButton className={actionButtonClass} />
-                <LanguageToggle className={actionButtonClass} />
-                {renderCartLink()}
-                <div dir={dir}>{renderAccountControl()}</div>
-              </div>
+              <div className="min-w-0 flex-1">{renderSearchForm('desktop-navbar-search')}</div>
             </div>
 
-            <nav
-              className="border-t border-color-theme px-5 py-2 xl:px-7"
-              aria-label={labels.navigationLabel}
-            >
-              <ul className="flex items-center gap-1">
-                {navLinks.slice(0, 2).map((link) => {
-                  const isActive = link.matches(basePath);
-                  return (
-                    <li key={link.to}>
-                      <NavLink
-                        to={link.to}
-                        className={cn(
-                          navLinkClass,
-                          isActive
-                            ? 'bg-first/10 font-f-sbold text-first'
-                            : 'first-text-color-for-paragraph',
-                        )}
-                        aria-current={isActive ? 'page' : undefined}
-                      >
-                        {link.label}
-                      </NavLink>
-                    </li>
-                  );
-                })}
-
-                <li className="relative" ref={desktopCategoryRef}>
-                  <button
-                    type="button"
-                    className={cn(
-                      navLinkClass,
-                      isCategoryRoute
-                        ? 'bg-first/10 font-f-sbold text-first'
-                        : 'first-text-color-for-paragraph',
-                    )}
-                    aria-haspopup="true"
-                    aria-expanded={isDesktopCategoryOpen}
-                    aria-controls="desktop-category-menu"
-                    onClick={() => setIsDesktopCategoryOpen((previous) => !previous)}
-                  >
-                    <span>{labels.categories}</span>
-                    <ChevronDown
-                      className={cn(
-                        'h-4 w-4 transition-transform',
-                        isDesktopCategoryOpen && 'rotate-180',
-                      )}
-                      strokeWidth={1.8}
-                      aria-hidden="true"
-                    />
-                  </button>
-
-                  <AnimatePresence>
-                    {isDesktopCategoryOpen && (
-                      <motion.div
-                        id="desktop-category-menu"
-                        initial={{ opacity: 0, y: 10, scale: 0.99 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.99 }}
-                        transition={{ duration: 0.16 }}
-                        className={cn(
-                          'absolute top-full z-50 mt-3 w-[min(60rem,calc(100vw-3rem))] overflow-hidden rounded-3xl border border-color-theme bg-color-for-layer-on-body shadow-dark-sm',
-                          dir === 'rtl' ? 'right-0' : 'left-0',
-                        )}
-                      >
-                        <div className="grid grid-cols-[20rem_minmax(0,1fr)]">
-                          <div className="border-e border-color-theme bg-color-for-layer-sec p-4">
-                            <p className="mb-3 px-2 text-xs font-f-sbold uppercase tracking-wide first-text-color-for-paragraph-low">
-                              {labels.categories}
-                            </p>
-                            <ul className="navbar-category-scroll max-h-[min(24rem,calc(100dvh-10rem))] space-y-1.5 overflow-y-auto pe-1">
-                              {categoryList.length > 0 ? (
-                                categoryList.map((category, index) => (
-                                  <li key={category.id}>
-                                    <button
-                                      type="button"
-                                      className={cn(
-                                        'flex min-h-11 w-full items-center rounded-xl px-3 py-2 text-start text-sm transition-colors',
-                                        activeCategoryIndex === index
-                                          ? 'bg-secound/10 font-f-sbold text-secound'
-                                          : 'bg-color-for-layer-on-body first-text-color-for-paragraph hover:bg-secound/10 hover:text-secound',
-                                      )}
-                                      aria-pressed={activeCategoryIndex === index}
-                                      onClick={() => setActiveCategoryIndex(index)}
-                                      onMouseEnter={() => setActiveCategoryIndex(index)}
-                                      onFocus={() => setActiveCategoryIndex(index)}
-                                    >
-                                      <span className="line-clamp-2">{category.name}</span>
-                                    </button>
-                                  </li>
-                                ))
-                              ) : (
-                                <li className="rounded-xl bg-color-for-layer-on-body px-3 py-4 text-sm first-text-color-for-paragraph">
-                                  {labels.categories}
-                                </li>
-                              )}
-                            </ul>
-                          </div>
-
-                          <div className="min-h-72 p-5 xl:p-6">
-                            <div className="mb-4 flex items-center justify-between gap-4 border-b border-color-theme pb-4">
-                              <h2 className="text-lg font-f-sbold first-text-color">
-                                {activeCategory?.name || labels.categories}
-                              </h2>
-                              {activeCategory && (
-                                <Link
-                                  className="inline-flex h-10 shrink-0 items-center rounded-xl bg-secound px-4 text-sm font-f-sbold text-white transition-colors hover:bg-secound-600"
-                                  to={categoryHref(activeCategory.id)}
-                                  onClick={() => handleCategoryClick(activeCategory.id)}
-                                >
-                                  {labels.all}
-                                </Link>
-                              )}
-                            </div>
-
-                            {activeCategory?.children?.length ? (
-                              <ul className="grid grid-cols-2 gap-2 xl:grid-cols-3">
-                                {activeCategory.children.map((subCategory) => (
-                                  <li key={subCategory.id}>
-                                    <Link
-                                      className="flex min-h-11 items-center rounded-xl border border-transparent bg-color-for-layer-sec px-3 py-2 text-sm first-text-color-for-paragraph transition-colors hover:border-secound/30 hover:bg-secound/10 hover:text-secound"
-                                      to={categoryHref(subCategory.id)}
-                                      onClick={() => handleCategoryClick(subCategory.id)}
-                                    >
-                                      {subCategory.name}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            ) : (
-                              <div className="flex min-h-40 items-center justify-center rounded-2xl border border-dashed border-color-theme bg-color-for-layer-sec px-4 text-center text-sm first-text-color-for-paragraph">
-                                {labels.categories}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </li>
-
-                {navLinks.slice(2).map((link) => {
-                  const isActive = link.matches(basePath);
-                  return (
-                    <li key={link.to}>
-                      <NavLink
-                        to={link.to}
-                        className={cn(
-                          navLinkClass,
-                          isActive
-                            ? 'bg-first/10 font-f-sbold text-first'
-                            : 'first-text-color-for-paragraph',
-                        )}
-                        aria-current={isActive ? 'page' : undefined}
-                      >
-                        {link.label}
-                      </NavLink>
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
+            <div className="flex shrink-0 items-center gap-3">
+              {renderCartLink()}
+              <ThemeToggleButton className="h-11 w-11 shrink-0 rounded-xl text-[#1C1C1C] hover:bg-first/10 dark:text-text" />
+              <span className="h-6 w-px bg-[#D9D9D9]" aria-hidden="true" />
+              <div dir={dir}>{renderAccountControl()}</div>
+            </div>
           </div>
 
-          <div className="space-y-3 rounded-2xl border border-color-theme bg-color-for-layer-on-body p-3 shadow-dark-sm lg:hidden">
-            <div className="grid min-w-0 grid-cols-[5.875rem_minmax(0,1fr)_5.875rem] items-center gap-2">
-              <div className="flex justify-start">
+          <nav
+            className="hidden h-[60px] items-end justify-between gap-5 pt-4 lg:flex"
+            aria-label={labels.navigationLabel}
+          >
+            <ul className="flex min-w-0 items-center gap-3 xl:gap-5">
+              <li
+                className="relative"
+                ref={desktopCategoryRef}
+                onBlur={(event) => {
+                  if (!event.currentTarget.contains(event.relatedTarget)) {
+                    setIsDesktopCategoryOpen(false);
+                  }
+                }}
+              >
                 <button
-                  ref={menuButtonRef}
+                  ref={desktopCategoryButtonRef}
                   type="button"
-                  className={actionButtonClass}
-                  aria-label={labels.openMenu}
-                  aria-expanded={isDrawerOpen}
-                  aria-controls="mobile-navigation-drawer"
-                  onClick={openDrawer}
+                  className={cn(
+                    navLinkClass,
+                    'gap-2',
+                    isCategoryRoute
+                      ? 'bg-first/10 font-f-sbold text-first dark:text-first-300'
+                      : '',
+                  )}
+                  aria-haspopup="true"
+                  aria-expanded={isDesktopCategoryOpen}
+                  aria-controls="desktop-category-menu"
+                  onClick={() => setIsDesktopCategoryOpen((previous) => !previous)}
                 >
-                  <Menu className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+                  <Grid2x2 className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
+                  <span>{labels.categories}</span>
+                  <ChevronDown
+                    className={cn(
+                      'h-4 w-4 mb-0.5 transition-transform',
+                      isDesktopCategoryOpen && 'rotate-180',
+                    )}
+                    strokeWidth={1.8}
+                    aria-hidden="true"
+                  />
                 </button>
-              </div>
+
+                <AnimatePresence>
+                  {isDesktopCategoryOpen && (
+                    <motion.div
+                      id="desktop-category-menu"
+                      initial={{ opacity: 0, y: 10, scale: 0.99 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.99 }}
+                      transition={{ duration: 0.16 }}
+                      className={cn(
+                        'absolute top-full z-50 mt-3 w-[min(60rem,calc(100vw-3rem))] overflow-hidden rounded-3xl border border-color-theme bg-color-for-layer-on-body shadow-dark-sm',
+                        dir === 'rtl' ? 'right-0' : 'left-0',
+                      )}
+                    >
+                      <div className="grid grid-cols-[20rem_minmax(0,1fr)]">
+                        <div className="border-e border-color-theme bg-color-for-layer-sec p-4">
+                 
+                          <ul className="navbar-category-scroll max-h-[min(24rem,calc(100dvh-10rem))] space-y-1.5 overflow-y-auto pe-1">
+                            {categoryList.length > 0 ? (
+                              categoryList.map((category, index) => (
+                                <li key={category.id}>
+                                  <button
+                                    type="button"
+                                    className={cn(
+                                      'flex min-h-11 w-full items-center rounded-xl px-3 py-2 text-start text-sm transition-colors',
+                                      activeCategoryIndex === index
+                                        ? 'bg-secound/10 font-f-sbold text-secound'
+                                        : 'bg-color-for-layer-on-body first-text-color-for-paragraph hover:bg-secound/10 hover:text-secound',
+                                    )}
+                                    aria-pressed={activeCategoryIndex === index}
+                                    onClick={() => setActiveCategoryIndex(index)}
+                                    onMouseEnter={() => setActiveCategoryIndex(index)}
+                                    onFocus={() => setActiveCategoryIndex(index)}
+                                  >
+                                    <span className="line-clamp-2">{category.name}</span>
+                                  </button>
+                                </li>
+                              ))
+                            ) : (
+                              <li className="rounded-xl bg-color-for-layer-on-body px-3 py-4 text-sm first-text-color-for-paragraph">
+                                {areCategoriesPending
+                                  ? labels.categoriesLoading
+                                  : areCategoriesUnavailable
+                                    ? labels.categoriesUnavailable
+                                    : labels.noCategories}
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+
+                        <div className="min-h-72 p-5 xl:p-6">
+                          <div className="mb-4 flex items-center justify-between gap-4 border-b border-color-theme pb-4">
+                            <h2 className="text-lg font-f-sbold first-text-color">
+                              {activeCategory?.name || labels.categories}
+                            </h2>
+                            {activeCategory && (
+                              <Link
+                                className="inline-flex h-10 shrink-0 items-center rounded-xl bg-secound px-4 text-sm font-f-sbold text-white transition-colors hover:bg-secound-600"
+                                to={categoryHref(activeCategory.id)}
+                                onClick={() => handleCategoryClick(activeCategory.id)}
+                              >
+                                {labels.all}
+                              </Link>
+                            )}
+                          </div>
+
+                          {activeCategory?.children?.length ? (
+                            <ul className="grid grid-cols-2 gap-2 xl:grid-cols-3">
+                              {activeCategory.children.map((subCategory) => (
+                                <li key={subCategory.id}>
+                                  <Link
+                                    className="flex min-h-11 items-center rounded-xl border border-transparent bg-color-for-layer-sec px-3 py-2 text-sm first-text-color-for-paragraph transition-colors hover:border-secound/30 hover:bg-secound/10 hover:text-secound"
+                                    to={categoryHref(subCategory.id)}
+                                    onClick={() => handleCategoryClick(subCategory.id)}
+                                  >
+                                    {subCategory.name}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <div className="flex min-h-40 items-center justify-center rounded-2xl border border-dashed border-color-theme bg-color-for-layer-sec px-4 text-center text-sm first-text-color-for-paragraph">
+                              {areCategoriesPending
+                                ? labels.categoriesLoading
+                                : areCategoriesUnavailable
+                                  ? labels.categoriesUnavailable
+                                  : labels.noCategories}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </li>
+
+              <li className="h-6 w-px shrink-0 bg-[#D9D9D9]" aria-hidden="true" />
+
+              {navLinks.map((link) => {
+                const isActive = link.matches(basePath);
+                return (
+                  <li key={link.to}>
+                    <NavLink
+                      to={link.to}
+                      className={cn(
+                        navLinkClass,
+                        isActive ? 'bg-first/10 font-f-sbold text-first dark:text-first-300' : '',
+                      )}
+                      aria-current={isActive ? 'page' : undefined}
+                    >
+                      {link.label}
+                    </NavLink>
+                  </li>
+                );
+              })}
+            </ul>
+            {renderSupportContact()}
+          </nav>
+
+          <div className="lg:hidden">
+            <div className="grid min-w-0 grid-cols-[2.75rem_minmax(0,1fr)_2.75rem] items-center gap-2">
+              <button
+                ref={menuButtonRef}
+                type="button"
+                className={actionButtonClass}
+                aria-label={labels.openMenu}
+                aria-expanded={isDrawerOpen}
+                aria-controls="mobile-navigation-drawer"
+                onClick={openDrawer}
+              >
+                <Menu className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+              </button>
 
               <Link
                 to={localizedPath('/')}
-                className="flex min-w-0 items-center justify-center rounded-xl"
+                className="flex min-w-0 items-center justify-center gap-2 rounded-xl focus-visible:ring-2 focus-visible:ring-first"
                 aria-label={labels.shopName}
               >
-                <img
-                  className="h-14 w-auto max-w-full object-contain"
-                  src={MainLogoMobile}
-                  alt={labels.shopName}
-                />
+                <AmazonMark className="h-10 w-10 shrink-0" />
+                <span className="flex min-w-0 flex-col">
+                  <span className="truncate text-base leading-5 font-f-bold text-[#1C1C1C] dark:text-text">
+                    {labels.shopName}
+                  </span>
+                  <span className="truncate text-[11px] leading-4 text-text-muted">
+                    {labels.mobileTagline}
+                  </span>
+                </span>
               </Link>
 
-              <div className="flex items-center justify-end gap-1.5" dir="ltr">
-                <ThemeToggleButton className={actionButtonClass} />
-                <LanguageToggle className={actionButtonClass} />
-              </div>
+              <ThemeToggleButton className={actionButtonClass} />
             </div>
 
-            {renderSearchForm('mobile-navbar-search', true)}
+            <div className="mt-4">{renderSearchForm('mobile-navbar-search', true)}</div>
           </div>
         </div>
       </header>
@@ -653,7 +746,7 @@ export function NavbarWithDropDownDrawer() {
                 className="flex min-w-0 items-center gap-2 rounded-xl"
                 onClick={closeDrawer}
               >
-                <img className="h-12 w-12 shrink-0 object-contain" src={MainLogo} alt="" />
+                <AmazonMark className="h-12 w-12 shrink-0" />
                 <span
                   id="mobile-navigation-title"
                   className="truncate text-base font-f-bold text-secound"
@@ -778,6 +871,15 @@ export function NavbarWithDropDownDrawer() {
                           </li>
                         );
                       })}
+                      {categoryList.length === 0 && (
+                        <li className="px-3 py-3 text-sm first-text-color-for-paragraph">
+                          {areCategoriesPending
+                            ? labels.categoriesLoading
+                            : areCategoriesUnavailable
+                              ? labels.categoriesUnavailable
+                              : labels.noCategories}
+                        </li>
+                      )}
                     </motion.ul>
                   )}
                 </AnimatePresence>
@@ -812,6 +914,7 @@ export function NavbarWithDropDownDrawer() {
             </div>
 
             <div className="border-t border-color-theme p-4">
+              <div className="mb-3 flex justify-center">{renderSupportContact(true)}</div>
               {isAuthenticated ? (
                 <div className="space-y-2">
                   <Link
