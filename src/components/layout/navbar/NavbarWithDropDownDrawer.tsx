@@ -353,7 +353,7 @@ export function NavbarWithDropDownDrawer() {
   const renderCartLink = () => (
     <Link
       to={localizedPath('/cart')}
-      className="relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-first text-white shadow-[-4px_4px_5px_0px_#BF000040] transition-colors hover:bg-first-600 focus-visible:ring-2 focus-visible:ring-first focus-visible:ring-offset-2"
+      className="relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-first text-white transition-[background-color,box-shadow] hover:bg-first-600 hover:shadow-[-4px_4px_5px_0px_#BF000040] focus-visible:ring-2 focus-visible:ring-first focus-visible:ring-offset-2"
       aria-label={`${labels.cart}: ${cartCount}`}
     >
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
