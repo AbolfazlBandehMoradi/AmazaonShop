@@ -128,9 +128,15 @@
     "viewProduct": "مشاهده محصول"
   },
   "discount": {
-    "title": "پیشنهادات ",
+    "title": "پیشنهادات شگفت‌انگیز",
     "subtitle": "شگفت‌انگیز",
     "remainingTime": "فرصت باقی مانده",
+    "days": "روز",
+    "hours": "ساعت",
+    "minutes": "دقیقه",
+    "seconds": "ثانیه",
+    "pagination": "انتخاب پیشنهاد",
+    "goToSlide": "نمایش پیشنهاد {{number}}",
     "limitedOffer": "پیشنهاد محدود",
     "buy": "خرید",
     "save": "سود شما",

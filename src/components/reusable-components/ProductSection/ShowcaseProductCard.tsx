@@ -14,13 +14,20 @@ interface ShowcaseProductCardProps {
   product: Product;
   tabIndex?: number;
   className?: string;
+  variant?: 'default' | 'deals';
 }
 
-const ShowcaseProductCard = ({ product, tabIndex, className }: ShowcaseProductCardProps) => {
+const ShowcaseProductCard = ({
+  product,
+  tabIndex,
+  className,
+  variant = 'default',
+}: ShowcaseProductCardProps) => {
   const { t } = useTranslation();
   const localizedPath = useLocalizedPath();
   const lang = useLangStore((state) => state.lang);
   const [imageFailed, setImageFailed] = useState(false);
+  const isDealsVariant = variant === 'deals';
 
   const productName = lang === 'en' ? product.nameEn || product.name : product.name;
   const originalPrice = product.originalPrice ?? 0;
@@ -37,7 +44,8 @@ const ShowcaseProductCard = ({ product, tabIndex, className }: ShowcaseProductCa
   return (
     <article
       className={cn(
-        'group mx-auto h-[508px] w-full max-w-[310px] rounded-[32px] transition-transform duration-300 ease-out motion-safe:hover:-translate-y-1 motion-safe:focus-within:-translate-y-1',
+        'group mx-auto h-[508px] w-full rounded-[32px] transition-transform duration-300 ease-out motion-safe:hover:-translate-y-1 motion-safe:focus-within:-translate-y-1',
+        isDealsVariant ? 'max-w-[390px]' : 'max-w-[310px]',
         className,
       )}
     >
@@ -47,14 +55,22 @@ const ShowcaseProductCard = ({ product, tabIndex, className }: ShowcaseProductCa
         className="flex h-full min-h-0 flex-col gap-2 rounded-[32px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first"
         aria-label={`${t('common.viewProduct')}: ${productName}${product.inStock ? '' : ` — ${t('common.outOfStock')}`}`}
       >
-        <div className="relative aspect-square shrink-0 overflow-hidden rounded-t-[32px] rounded-b-lg border border-border bg-white">
+        <div
+          className={cn(
+            'relative aspect-square shrink-0 overflow-hidden rounded-t-[32px] rounded-b-lg border border-border bg-white',
+            isDealsVariant && 'max-h-[310px]',
+          )}
+        >
           {product.image && !imageFailed ? (
             <img
               src={product.image}
               alt={productName}
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-cover transition-transform duration-300 ease-out motion-safe:group-hover:scale-[1.03] motion-safe:group-focus-within:scale-[1.03]"
+              className={cn(
+                'h-full w-full transition-transform duration-300 ease-out motion-safe:group-hover:scale-[1.03] motion-safe:group-focus-within:scale-[1.03]',
+                isDealsVariant ? 'object-contain' : 'object-cover',
+              )}
               onError={() => setImageFailed(true)}
             />
           ) : (
@@ -74,7 +90,12 @@ const ShowcaseProductCard = ({ product, tabIndex, className }: ShowcaseProductCa
           )}
         </div>
 
-        <div className="flex min-h-0 flex-1 flex-col rounded-t-lg rounded-b-[32px] bg-surface px-4 py-6 transition-shadow duration-300 group-hover:shadow-[0_4px_10px_0_#00000014]">
+        <div
+          className={cn(
+            'flex min-h-0 flex-1 flex-col rounded-t-lg rounded-b-[32px] bg-surface px-4 transition-shadow duration-300 group-hover:shadow-[0_4px_10px_0_#00000014]',
+            isDealsVariant ? 'justify-center py-5' : 'py-6',
+          )}
+        >
           <span className="truncate text-start text-xs leading-[18px] font-f-sbold text-first">
             {product.category || t('common.product')}
           </span>
@@ -86,7 +107,10 @@ const ShowcaseProductCard = ({ product, tabIndex, className }: ShowcaseProductCa
           </h3>
 
           <div
-            className="mt-auto mb-4 h-px shrink-0 bg-[repeating-linear-gradient(to_right,var(--color-border)_0_5px,transparent_5px_10px)]"
+            className={cn(
+              'mb-4 h-px shrink-0 bg-[repeating-linear-gradient(to_right,var(--color-border)_0_5px,transparent_5px_10px)]',
+              isDealsVariant ? 'mt-4' : 'mt-auto',
+            )}
             aria-hidden="true"
           />
 

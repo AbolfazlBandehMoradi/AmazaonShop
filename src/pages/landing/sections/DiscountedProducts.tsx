@@ -1,161 +1,58 @@
-import { useMemo, useRef } from 'react';
-import { ArrowLeft, ArrowRight, Clock3, ShoppingBag } from 'lucide-react';
+import { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import type { Swiper as SwiperType } from 'swiper';
-import { A11y, Autoplay } from 'swiper/modules';
+import { A11y, Keyboard } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.css';
 
-import { PriceDisplay } from '@/components/ui/PriceDisplay';
-import RemainingTime from '@/components/ui/RemainingTime';
-import { useLocalizedPath } from '@/hooks/useLocalizedPath';
+import ShowcaseProductCard from '@/components/reusable-components/ProductSection/ShowcaseProductCard';
 import { useLangStore } from '@/stores/languageStore';
 import type { Product } from '@/types';
-import cleanText from '@/utils/cleanText';
+import useDiscountOfferTime from '@/utils/discountOffterTime';
 
 interface Props {
   discountedProduct: Product[];
 }
 
-interface DiscountedProductSlideProps {
-  product: Product;
-}
-
-const MOCK_OFFER_DURATION_MS = 3 * 24 * 60 * 60 * 1000;
-
-const DiscountedProductSlide = ({ product }: DiscountedProductSlideProps) => {
+const DealsCountdown = ({ endDate }: { endDate: string }) => {
   const { t } = useTranslation();
-  const localizedPath = useLocalizedPath();
-  const { dir, lang } = useLangStore();
-  const currency = 'IRT';
-  const backendExpireDate = product.saleEndDateUtc || product.saleEndDate;
+  const lang = useLangStore((state) => state.lang);
+  const timeLeft = useDiscountOfferTime(endDate);
 
-  const expireDate = useMemo(() => {
-    if (backendExpireDate && Number.isFinite(Date.parse(backendExpireDate))) {
-      return backendExpireDate;
-    }
+  if (!timeLeft.isValid || timeLeft.isExpired) return null;
 
-    return new Date(Date.now() + MOCK_OFFER_DURATION_MS).toISOString();
-  }, [backendExpireDate, product.id]);
-
-  const name = lang === 'en' ? product.nameEn || product.name : product.name;
-  const description = cleanText(
-    lang === 'en' ? product.descriptionEn || product.description : product.description,
-  );
-  const originalPrice =
-    typeof product.originalPrice === 'number' && product.originalPrice > product.price
-      ? product.originalPrice
-      : null;
-  const discount =
-    product.discount ??
-    (originalPrice ? Math.round(((originalPrice - product.price) / originalPrice) * 100) : 0);
-  const ForwardIcon = dir === 'rtl' ? ArrowLeft : ArrowRight;
+  const formatter = new Intl.NumberFormat(lang === 'fa' ? 'fa-IR' : 'en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
+  });
+  const units = [
+    { value: timeLeft.days, label: t('mainpage.discount.days') },
+    { value: timeLeft.hours, label: t('mainpage.discount.hours') },
+    { value: timeLeft.minutes, label: t('mainpage.discount.minutes') },
+    { value: timeLeft.seconds, label: t('mainpage.discount.seconds') },
+  ];
 
   return (
-    <article
-      dir="ltr"
-      className="grid overflow-hidden rounded-3xl border border-secound/10 bg-color-for-layer-on-body lg:min-h-118 lg:grid-cols-[minmax(0,40fr)_minmax(0,60fr)]"
+    <div
+      role="timer"
+      aria-label={`${t('mainpage.discount.remainingTime')}: ${units.map(({ value, label }) => `${formatter.format(value)} ${label}`).join(lang === 'fa' ? '، ' : ', ')}`}
+      className="inline-flex w-full max-w-[390px] shrink-0 rounded-full border border-white/25 bg-white/10 px-4 py-3 text-white shadow-[0_8px_24px_rgba(12,12,48,0.18)] backdrop-blur-sm sm:w-auto sm:max-w-none"
     >
-      <div className="relative flex min-h-68 items-center justify-center overflow-hidden bg-[linear-gradient(145deg,color-mix(in_srgb,var(--color-secound)_8%,var(--bg-color-for-layer-sec)),color-mix(in_srgb,var(--color-secound)_16%,var(--bg-color-for-layer-sec)))] p-6 sm:min-h-84 sm:p-9 lg:min-h-118 lg:p-10">
-        <span
-          aria-hidden="true"
-          className="absolute size-60 rounded-full bg-third/25 blur-3xl sm:size-80"
-        />
-        <span
-          aria-hidden="true"
-          className="absolute size-48 rounded-full border border-secound/15 sm:size-64"
-        />
-        <span
-          aria-hidden="true"
-          className="absolute size-64 rounded-full border border-third/20 sm:size-84"
-        />
-
-        {discount > 0 ? (
-          <span
-            dir={dir}
-            className="absolute top-5 start-5 z-20 inline-flex items-center rounded-full bg-secound px-4 py-2 text-sm font-f-bold text-white shadow-lg shadow-secound/20 sm:top-7 sm:start-7"
-          >
-            {discount}% {t('mainpage.featured.discountBadge')}
+      <span
+        dir="ltr"
+        aria-hidden="true"
+        className="flex w-full items-center justify-between gap-2 sm:w-auto sm:gap-3"
+      >
+        {units.map(({ value, label }) => (
+          <span key={label} className="flex min-w-9 flex-col items-center gap-1">
+            <strong className="text-xl leading-6 font-f-bold tabular-nums">
+              {formatter.format(value)}
+            </strong>
+            <small className="text-[10px] leading-3 text-white/75">{label}</small>
           </span>
-        ) : null}
-
-        <img
-          src={product.image}
-          alt={name}
-          loading="lazy"
-          className="relative z-10 h-full max-h-76 w-full object-contain drop-shadow-[0_24px_32px_rgba(20,29,38,0.15)] transition-transform duration-500 hover:scale-105 sm:max-h-84 lg:max-h-88"
-        />
-      </div>
-
-      <div dir={dir} className="flex min-w-0 flex-col justify-between p-6 sm:p-9 lg:p-10 xl:p-12">
-        <div>
-          <span className="inline-flex items-center gap-2 rounded-full bg-third/10 px-4 py-2 text-xs font-f-sbold text-third-700">
-            <span className="size-2 animate-pulse rounded-full bg-secound" aria-hidden="true" />
-            {t('mainpage.discount.limitedOffer')}
-          </span>
-
-          <h2 className="mt-5 text-2xl leading-9 font-s-sbold first-text-color sm:text-3xl sm:leading-11">
-            {name}
-          </h2>
-
-          {description ? (
-            <p className="mt-3 line-clamp-3 max-w-2xl text-sm leading-8 first-text-color-for-paragraph sm:text-base">
-              {description}
-            </p>
-          ) : null}
-
-          <div className="mt-7 overflow-hidden rounded-2xl border border-secound/15 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--color-secound)_6%,var(--bg-color-for-layer-sec)),color-mix(in_srgb,var(--color-secound)_12%,var(--bg-color-for-layer-sec)))] p-4 sm:p-5">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex size-10 items-center justify-center rounded-xl bg-secound text-white shadow-sm shadow-secound/20">
-                <Clock3 className="size-5" strokeWidth={1.8} aria-hidden="true" />
-              </span>
-              <span className="text-sm font-f-sbold first-text-color">
-                {t('mainpage.discount.remainingTime')}
-              </span>
-            </div>
-            <RemainingTime expireDate={expireDate} />
-          </div>
-        </div>
-
-        <div className="mt-8 flex flex-col gap-5 border-t border-first/10 pt-6 sm:flex-row sm:items-end sm:justify-between">
-          <div className="flex min-w-0 flex-col">
-            {originalPrice ? (
-              <PriceDisplay
-                amount={originalPrice}
-                currency={currency}
-                languageCode={lang}
-                currencyMode="none"
-                className="text-sm line-through first-text-color-for-paragraph"
-              />
-            ) : null}
-            <PriceDisplay
-              amount={product.price}
-              currency={currency}
-              languageCode={lang}
-              className="mt-1 text-2xl font-f-bold first-text-color sm:text-3xl"
-              currencyClassName="text-xs font-f-light first-text-color-for-paragraph sm:text-sm"
-            />
-          </div>
-
-          <Link
-            to={localizedPath(`/products/${product.slug}`)}
-            className="group inline-flex h-12 items-center justify-center gap-3 rounded-2xl bg-secound px-6 text-sm font-f-sbold text-white transition-colors hover:bg-secound-600 sm:h-14 sm:text-base"
-          >
-            <ShoppingBag className="size-5" strokeWidth={1.7} aria-hidden="true" />
-            <span>{t('mainpage.discount.buy')}</span>
-            <ForwardIcon
-              className={
-                dir === 'rtl'
-                  ? 'size-4 transition-transform group-hover:-translate-x-1'
-                  : 'size-4 transition-transform group-hover:translate-x-1'
-              }
-              aria-hidden="true"
-            />
-          </Link>
-        </div>
-      </div>
-    </article>
+        ))}
+      </span>
+    </div>
   );
 };
 
@@ -163,45 +60,108 @@ const DiscountedProducts = ({ discountedProduct }: Props) => {
   const { t } = useTranslation();
   const { dir } = useLangStore();
   const swiperRef = useRef<SwiperType | null>(null);
-  const hasMultipleProducts = discountedProduct.length > 1;
+  const [activeSnap, setActiveSnap] = useState(0);
+  const [snapCount, setSnapCount] = useState(discountedProduct.length);
 
-  if (discountedProduct.length === 0) {
-    return null;
-  }
+  const saleEndDate = useMemo(() => {
+    const now = Date.now();
+    let earliestEndDate: string | null = null;
+    let earliestEndTime = Infinity;
+    for (const product of discountedProduct) {
+      for (const endDate of [product.saleEndDateUtc, product.saleEndDate]) {
+        const endTime = endDate ? Date.parse(endDate) : Number.NaN;
+        if (endDate && endTime > now && endTime < earliestEndTime) {
+          earliestEndDate = endDate;
+          earliestEndTime = endTime;
+        }
+      }
+    }
+    return earliestEndDate;
+  }, [discountedProduct]);
+
+  const updateSliderState = (swiper: SwiperType) => {
+    setActiveSnap(swiper.snapIndex);
+    setSnapCount(swiper.snapGrid.length);
+  };
+
+  if (discountedProduct.length === 0) return null;
 
   return (
-    <section dir={dir} className="landing-section" aria-label={t('mainpage.discount.limitedOffer')}>
+    <section dir={dir} className="landing-section" aria-labelledby="deals-title">
       <div className="landing-container">
-        <h2 className="text-xl pt-4 pb-6 font-s-sbold first-text-color sm:text-2xl">
-          {t('mainpage.discount.title')}
-          <span className="text-secound">{t('mainpage.discount.subtitle')}</span>
-        </h2>
-        <Swiper
-          key={dir}
-          dir={dir}
-          modules={[A11y, Autoplay]}
-          slidesPerView={1}
-          spaceBetween={20}
-          loop={hasMultipleProducts}
-          autoplay={
-            hasMultipleProducts
-              ? {
-                  delay: 6500,
-                  disableOnInteraction: false,
-                  pauseOnMouseEnter: true,
-                }
-              : false
-          }
-          onSwiper={(swiper) => {
-            swiperRef.current = swiper;
-          }}
-        >
-          {discountedProduct.map((product) => (
-            <SwiperSlide key={product.id} className="h-auto">
-              <DiscountedProductSlide product={product} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <div className="deals-panel">
+          <div className="deals-panel__background" aria-hidden="true" />
+          <div className="deals-panel__content">
+            <div className="deals-panel__header">
+              <h2
+                id="deals-title"
+                className="text-center text-[18px] leading-7 font-f-bold text-white sm:text-[20px] xl:text-[24px] xl:leading-8"
+              >
+                {t('mainpage.discount.title')}
+              </h2>
+              {saleEndDate && <DealsCountdown endDate={saleEndDate} />}
+            </div>
+
+            <div className="deals-panel__slider">
+              <Swiper
+                key={dir}
+                dir={dir}
+                modules={[A11y, Keyboard]}
+                keyboard={{ enabled: true, onlyInViewport: true }}
+                slidesPerView={1}
+                spaceBetween={16}
+                breakpoints={{
+                  480: { slidesPerView: 1, spaceBetween: 18 },
+                  640: { slidesPerView: 2, spaceBetween: 16 },
+                  768: { slidesPerView: 2, spaceBetween: 20 },
+                  1024: { slidesPerView: 2.5, spaceBetween: 24 },
+                  1280: { slidesPerView: 3, spaceBetween: 27 },
+                }}
+                grabCursor={discountedProduct.length > 1}
+                watchOverflow
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                  updateSliderState(swiper);
+                }}
+                onSlideChange={updateSliderState}
+                onResize={updateSliderState}
+                onLock={updateSliderState}
+                onUnlock={updateSliderState}
+                className="deals-slider"
+              >
+                {discountedProduct.map((product) => (
+                  <SwiperSlide key={product.id}>
+                    <ShowcaseProductCard product={product} variant="deals" />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+
+            {snapCount > 1 && (
+              <div
+                className="deals-panel__pagination"
+                role="group"
+                aria-label={t('mainpage.discount.pagination')}
+              >
+                {Array.from({ length: snapCount }, (_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => swiperRef.current?.slideTo(index)}
+                    aria-label={t('mainpage.discount.goToSlide', { number: index + 1 })}
+                    aria-current={index === activeSnap ? 'true' : undefined}
+                    className="flex h-8 items-center justify-center px-1 focus-visible:rounded-full focus-visible:outline-2 focus-visible:outline-first"
+                  >
+                    <span
+                      className={`block h-2.5 rounded-full bg-[#18183E] transition-all duration-200 dark:bg-white ${index === activeSnap ? 'w-8 opacity-100' : 'w-2.5 opacity-20 hover:opacity-50'}`}
+                      aria-hidden="true"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </section>
   );
