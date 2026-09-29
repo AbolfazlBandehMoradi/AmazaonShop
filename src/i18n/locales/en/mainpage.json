@@ -147,24 +147,26 @@
     "secondAlt": "Promotional banner 2"
   },
   "whyUs": {
-    "title": "Why Pulak Beauty Paradise",
-    "imageAlt": "Pulak beauty and personal care products",
+    "caption": "Shop with confidence",
+    "title": "Why shop with Amazon?",
+    "intro": "A reliable, informed way to choose and buy",
+    "introEnd": "electronic devices.",
     "features": {
-      "production": {
-        "title": "A complete beauty lineup",
-        "description": "Discover beauty and personal care essentials from trusted brands in one place."
+      "purchase": {
+        "title": "Reliable ordering and shipping",
+        "description": "Track your order through a clear purchase and delivery process."
       },
-      "certification": {
-        "title": "Authenticity and quality you can trust",
-        "description": "Every product is selected carefully so you can shop with more confidence."
+      "payment": {
+        "title": "Secure payment",
+        "description": "Pay for your order online with confidence."
+      },
+      "direct": {
+        "title": "Shop directly with Amazon",
+        "description": "Compare product details and choose what suits you best."
       },
       "delivery": {
-        "title": "Fast and reliable delivery",
-        "description": "Your order is packed securely and shipped as quickly as possible."
-      },
-      "experience": {
-        "title": "Special offers with real support",
-        "description": "Great prices, useful offers, and responsive support make shopping easier."
+        "title": "Fast delivery across Iran",
+        "description": "Your order is packed carefully and shipped as quickly as possible."
       }
     }
   }

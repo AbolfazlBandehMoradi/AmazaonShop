@@ -9,6 +9,7 @@ import BlogsSlider from './sections/BlogsSlider';
 import TestimonialsSlider from './sections/TestimonialsSlider';
 import MostViewedProducts from './sections/MostViewedProducts';
 import LatestGallery from './sections/LatestGallery';
+import WhyUs from './sections/WhyUs';
 
 const MainPage = () => {
   const { data: index, isLoading, isError, refetch } = useIndex();
@@ -27,6 +28,7 @@ const MainPage = () => {
       <Hero categories={index?.categories ?? []} />
       <MostViewedProducts showcase={showcases?.[0]} />
       <LatestGallery />
+      <WhyUs />
       <DiscountedProducts discountedProduct={index?.discountProducts ?? []} />
       <BlogsSlider blogs={index?.blogs ?? []} />
       <TestimonialsSlider testimonials={index?.testimonials ?? []} />
