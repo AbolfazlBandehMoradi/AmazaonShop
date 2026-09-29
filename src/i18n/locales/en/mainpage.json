@@ -85,6 +85,19 @@
     "tabsLabel": "Product showcases",
     "empty": "No products are available in this showcase."
   },
+  "mostViewedProducts": {
+    "title": "Most viewed products",
+    "description": "Explore our most viewed products",
+    "filterLabel": "Filter products by category",
+    "empty": "No products are available in this category.",
+    "more": "See products",
+    "categories": {
+      "all": "All",
+      "mobile": "Mobile",
+      "powerBank": "Power bank",
+      "headphones": "Headphones"
+    }
+  },
   "specials": {
     "titlePrefix": "",
     "titleAccent": "Professional",

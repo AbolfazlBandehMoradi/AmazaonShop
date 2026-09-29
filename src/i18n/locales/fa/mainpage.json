@@ -93,6 +93,19 @@
     "tabsLabel": "ویترین محصولات",
     "empty": "محصولی در این ویترین موجود نیست."
   },
+  "mostViewedProducts": {
+    "title": "پربازدیدترین محصولات",
+    "description": "محبوب‌ترین محصولات را ببینید",
+    "filterLabel": "فیلتر محصولات بر اساس دسته‌بندی",
+    "empty": "محصولی در این دسته‌بندی موجود نیست.",
+    "more": "مشاهده محصولات",
+    "categories": {
+      "all": "همه",
+      "mobile": "موبایل",
+      "powerBank": "پاوربانک",
+      "headphones": "هدفون"
+    }
+  },
   "specials": {
     "titlePrefix": "",
     "titleAccent": "تخصصی",

@@ -7,7 +7,7 @@ type SectionHeadingProps = {
   title: ReactNode;
   subtext?: ReactNode;
   align?: 'start' | 'center';
-  decoration?: 'side' | 'both' | 'none';
+  decoration?: 'side' | 'right' | 'both' | 'none';
   className?: string;
   titleClassName?: string;
 };
@@ -34,10 +34,13 @@ export function SectionHeading({
       )}
     >
       {subtext && (
-        <div className="flex items-center gap-2 text-xs font-f-bold text-first">
-          {decoration !== 'none' && <HeadingLine />}
-          <span>{subtext}</span>
-          {decoration === 'both' && <HeadingLine />}
+        <div
+          dir={decoration === 'right' ? 'ltr' : undefined}
+          className="flex items-center gap-2 text-xs font-f-bold text-first"
+        >
+          {(decoration === 'side' || decoration === 'both') && <HeadingLine />}
+          <span dir={decoration === 'right' ? 'auto' : undefined}>{subtext}</span>
+          {(decoration === 'right' || decoration === 'both') && <HeadingLine />}
         </div>
       )}
       <h2 id={id} className={cn('text-xl leading-7 font-f-bold first-text-color', titleClassName)}>

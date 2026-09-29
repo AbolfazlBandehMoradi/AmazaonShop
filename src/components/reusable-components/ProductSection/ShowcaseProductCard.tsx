@@ -8,13 +8,15 @@ import { PriceDisplay } from '@/components/ui/PriceDisplay';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useLangStore } from '@/stores/languageStore';
 import type { Product } from '@/types';
+import { cn } from '@/utils/cn';
 
 interface ShowcaseProductCardProps {
   product: Product;
   tabIndex?: number;
+  className?: string;
 }
 
-const ShowcaseProductCard = ({ product, tabIndex }: ShowcaseProductCardProps) => {
+const ShowcaseProductCard = ({ product, tabIndex, className }: ShowcaseProductCardProps) => {
   const { t } = useTranslation();
   const localizedPath = useLocalizedPath();
   const lang = useLangStore((state) => state.lang);
@@ -33,7 +35,12 @@ const ShowcaseProductCard = ({ product, tabIndex }: ShowcaseProductCardProps) =>
         : 0;
 
   return (
-    <article className="group mx-auto h-[508px] w-full max-w-[310px] rounded-[32px] transition-transform duration-300 ease-out motion-safe:hover:-translate-y-1 motion-safe:focus-within:-translate-y-1">
+    <article
+      className={cn(
+        'group mx-auto h-[508px] w-full max-w-[310px] rounded-[32px] transition-transform duration-300 ease-out motion-safe:hover:-translate-y-1 motion-safe:focus-within:-translate-y-1',
+        className,
+      )}
+    >
       <Link
         to={localizedPath(`/products/${product.slug}`)}
         tabIndex={tabIndex}
@@ -67,7 +74,7 @@ const ShowcaseProductCard = ({ product, tabIndex }: ShowcaseProductCardProps) =>
           )}
         </div>
 
-        <div className="flex min-h-0 flex-1 flex-col rounded-t-lg rounded-b-[32px] bg-surface px-4 py-6 transition-shadow duration-300 group-hover:shadow-[0_8px_8px_2px_#0000001A]">
+        <div className="flex min-h-0 flex-1 flex-col rounded-t-lg rounded-b-[32px] bg-surface px-4 py-6 transition-shadow duration-300 group-hover:shadow-[0_4px_10px_0_#00000014]">
           <span className="truncate text-start text-xs leading-[18px] font-f-sbold text-first">
             {product.category || t('common.product')}
           </span>
