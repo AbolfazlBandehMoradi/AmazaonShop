@@ -1,5 +1,5 @@
 import { useMemo, useState, type KeyboardEvent } from 'react';
-import { ArrowUpLeft, ChevronDown } from 'lucide-react';
+import { ArrowUpLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { A11y, Keyboard } from 'swiper/modules';
@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
 import ShowcaseProductCard from '@/components/reusable-components/ProductSection/ShowcaseProductCard';
+import { CustomSelect } from '@/components/ui/CustomSelect';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import type { Showcase } from '@/hooks/useShowcases';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
@@ -51,6 +52,10 @@ const MostViewedProducts = ({ showcase }: Props) => {
     showcase?.translation?.title?.trim() || t('mainpage.mostViewedProducts.title');
   const showcaseDescription =
     showcase?.translation?.description?.trim() || t('mainpage.mostViewedProducts.description');
+  const selectOptions = categoryFilters.map((category) => ({
+    value: category.id,
+    label: t('mainpage.mostViewedProducts.categories.' + category.labelKey),
+  }));
 
   const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
     const isHorizontalArrow = event.key === 'ArrowLeft' || event.key === 'ArrowRight';
@@ -93,32 +98,18 @@ const MostViewedProducts = ({ showcase }: Props) => {
             titleClassName="sm:text-2xl"
           />
 
-          <div className="relative w-full sm:max-w-72 lg:hidden">
-            <label htmlFor="most-viewed-category" className="sr-only">
-              {t('mainpage.mostViewedProducts.filterLabel')}
-            </label>
-            <select
-              id="most-viewed-category"
-              value={activeCategoryId}
-              onChange={(event) => setActiveCategoryId(event.target.value)}
-              className="h-12 w-full appearance-none rounded-[18px] border border-border bg-white px-4 pe-10 text-sm font-f-sbold text-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first"
-            >
-              {categoryFilters.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {t('mainpage.mostViewedProducts.categories.' + category.labelKey)}
-                </option>
-              ))}
-            </select>
-            <ChevronDown
-              aria-hidden="true"
-              className="pointer-events-none absolute top-1/2 end-4 size-4 -translate-y-1/2 text-first"
-            />
-          </div>
+          <CustomSelect
+            label={t('mainpage.mostViewedProducts.filterLabel')}
+            options={selectOptions}
+            value={activeCategoryId}
+            onChange={setActiveCategoryId}
+            className="sm:max-w-72 lg:hidden"
+          />
 
           <div
             role="tablist"
             aria-label={t('mainpage.mostViewedProducts.filterLabel')}
-            className="hidden h-12 w-[288px] shrink-0 items-center gap-2 rounded-[18px] border border-border bg-white p-1 lg:flex"
+            className="hidden h-12 w-max min-w-[288px] max-w-full shrink-0 items-center justify-between gap-2 rounded-[18px] border border-border bg-white p-1 lg:flex"
           >
             {categoryFilters.map((category, index) => {
               const active = category.id === activeCategoryId;
@@ -132,12 +123,11 @@ const MostViewedProducts = ({ showcase }: Props) => {
                   aria-selected={active}
                   aria-controls="most-viewed-products-panel"
                   tabIndex={active ? 0 : -1}
-                  title={label}
                   onClick={() => setActiveCategoryId(category.id)}
                   onKeyDown={(event) => handleTabKeyDown(event, index)}
                   className={cn(
-                    'min-w-0 flex-auto truncate rounded-2xl border border-transparent px-1 py-2 text-center text-sm leading-5 font-f-sbold text-text transition-colors hover:text-first focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first',
-                    active && 'border-[#163F87] bg-[#F4F7F9] px-3 text-first',
+                    'h-full shrink-0 whitespace-nowrap rounded-2xl border border-transparent px-3 py-2 text-center text-sm leading-5 font-f-sbold text-text transition-colors hover:text-first focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first',
+                    active && 'border-[#163F87] bg-[#F4F7F9] text-first',
                   )}
                 >
                   {label}
@@ -161,7 +151,7 @@ const MostViewedProducts = ({ showcase }: Props) => {
                   dir={dir}
                   modules={[A11y, Keyboard]}
                   keyboard={{ enabled: true, onlyInViewport: true }}
-                  className="showcase-products-swiper !overflow-visible !pt-2"
+                  className="showcase-products-swiper !overflow-hidden !px-3 !pt-3 !pb-6"
                   slidesPerView={1.12}
                   spaceBetween={12}
                   breakpoints={{
