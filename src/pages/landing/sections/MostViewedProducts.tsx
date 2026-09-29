@@ -89,7 +89,7 @@ const MostViewedProducts = ({ showcase }: Props) => {
   return (
     <section dir={dir} className="landing-section" aria-labelledby="most-viewed-products-title">
       <div className="landing-container">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-8">
+        <div className="flex flex-col gap-5 px-4 sm:px-0 lg:flex-row lg:items-end lg:justify-between lg:gap-8">
           <SectionHeading
             id="most-viewed-products-title"
             title={showcaseTitle}
@@ -151,7 +151,7 @@ const MostViewedProducts = ({ showcase }: Props) => {
                   dir={dir}
                   modules={[A11y, Keyboard]}
                   keyboard={{ enabled: true, onlyInViewport: true }}
-                  className="showcase-products-swiper !overflow-hidden !px-3 !pt-3 !pb-6"
+                  className="showcase-products-swiper !overflow-hidden !px-4 !pt-3 !pb-6"
                   slidesPerView={1.12}
                   spaceBetween={12}
                   breakpoints={{
@@ -187,7 +187,7 @@ const MostViewedProducts = ({ showcase }: Props) => {
           )}
         </div>
 
-        <div dir="ltr" className="mt-7 flex justify-start sm:mt-8">
+        <div dir="ltr" className="mt-7 flex justify-start px-4 sm:mt-8 sm:px-0">
           <Link
             to={localizedPath(moreProductsPath)}
             dir={dir}
