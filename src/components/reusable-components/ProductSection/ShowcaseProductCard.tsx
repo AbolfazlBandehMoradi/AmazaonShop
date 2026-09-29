@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BadgePercent, ImageOff } from 'lucide-react';
+import { ImageOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -33,12 +33,12 @@ const ShowcaseProductCard = ({ product, tabIndex }: ShowcaseProductCardProps) =>
         : 0;
 
   return (
-    <article className="group relative mx-auto h-[508px] w-full max-w-[310px] rounded-[32px]">
+    <article className="group mx-auto h-[508px] w-full max-w-[310px] rounded-[32px] transition-transform duration-300 ease-out motion-safe:hover:-translate-y-1 motion-safe:focus-within:-translate-y-1">
       <Link
         to={localizedPath(`/products/${product.slug}`)}
         tabIndex={tabIndex}
         className="flex h-full min-h-0 flex-col gap-2 rounded-[32px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first"
-        aria-label={`${t('common.viewProduct')}: ${productName}`}
+        aria-label={`${t('common.viewProduct')}: ${productName}${product.inStock ? '' : ` — ${t('common.outOfStock')}`}`}
       >
         <div className="relative aspect-square shrink-0 overflow-hidden rounded-t-[32px] rounded-b-lg border border-border bg-white">
           {product.image && !imageFailed ? (
@@ -47,7 +47,7 @@ const ShowcaseProductCard = ({ product, tabIndex }: ShowcaseProductCardProps) =>
               alt={productName}
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover transition-transform duration-300 ease-out motion-safe:group-hover:scale-[1.03] motion-safe:group-focus-within:scale-[1.03]"
               onError={() => setImageFailed(true)}
             />
           ) : (
@@ -60,21 +60,14 @@ const ShowcaseProductCard = ({ product, tabIndex }: ShowcaseProductCardProps) =>
           {discountPercent > 0 && (
             <span
               dir="ltr"
-              className="absolute top-3 right-3 inline-flex items-center gap-1.5 rounded-xl border border-white/80 bg-white/90 px-2.5 py-1.5 text-xs leading-4 font-f-sbold text-secound-700 shadow-[0_4px_16px_#0000001A] backdrop-blur-md"
+              className="absolute top-3 right-3 inline-flex items-center rounded-xl bg-red-700 px-3 py-1.5 text-xs leading-4 font-f-sbold text-white ring-2 ring-white/90"
             >
-              <BadgePercent className="size-3.5" strokeWidth={1.8} aria-hidden="true" />
               {discountPercent}%
-            </span>
-          )}
-
-          {!product.inStock && (
-            <span className="absolute top-3 left-3 rounded-lg bg-text/75 px-2.5 py-1 text-xs leading-5 font-f-sbold text-white">
-              {t('common.outOfStock')}
             </span>
           )}
         </div>
 
-        <div className="flex min-h-0 flex-1 flex-col rounded-t-lg rounded-b-[32px] bg-surface px-4 py-6">
+        <div className="flex min-h-0 flex-1 flex-col rounded-t-lg rounded-b-[32px] bg-surface px-4 py-6 transition-shadow duration-300 group-hover:shadow-[0_8px_8px_2px_#0000001A]">
           <span className="truncate text-start text-xs leading-[18px] font-f-sbold text-first">
             {product.category || t('common.product')}
           </span>
@@ -90,7 +83,7 @@ const ShowcaseProductCard = ({ product, tabIndex }: ShowcaseProductCardProps) =>
             aria-hidden="true"
           />
 
-          <div dir="rtl" className="flex items-end justify-between gap-2">
+          <div dir="rtl" className="flex flex-wrap items-end justify-between gap-2">
             <div
               dir={lang === 'fa' ? 'rtl' : 'ltr'}
               className="flex min-w-0 flex-col items-end gap-0.5"
@@ -111,19 +104,22 @@ const ShowcaseProductCard = ({ product, tabIndex }: ShowcaseProductCardProps) =>
               )}
             </div>
 
-            <span
-              className="inline-flex size-11 shrink-0 items-center justify-center rounded-2xl bg-first text-white transition-colors group-hover:bg-first-600"
-              aria-hidden="true"
-            >
-              <CartIcon />
-            </span>
+            {product.inStock ? (
+              <span
+                className="inline-flex size-11 shrink-0 items-center justify-center rounded-2xl bg-first text-white transition-colors group-hover:bg-first-600"
+                aria-hidden="true"
+              >
+                <CartIcon />
+              </span>
+            ) : (
+              <span className="inline-flex min-h-9 shrink-0 items-center gap-2 rounded-xl bg-text px-2.5 text-xs font-f-sbold text-surface">
+                <span className="size-2 rounded-full bg-red-500" aria-hidden="true" />
+                {t('common.outOfStock')}
+              </span>
+            )}
           </div>
         </div>
       </Link>
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-4 bottom-0 h-px rounded-full bg-surface opacity-0 shadow-surface transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
-      />
     </article>
   );
 };

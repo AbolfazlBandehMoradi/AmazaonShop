@@ -119,7 +119,7 @@ export default function HeroCategories({ categories }: HeroCategoriesProps) {
   });
 
   return (
-    <section dir={dir} className="pt-8" aria-labelledby="hero-categories-title">
+    <section dir={dir} className="pt-8 lg:pt-10" aria-labelledby="hero-categories-title">
       <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between md:gap-8">
         <SectionHeading
           id="hero-categories-title"

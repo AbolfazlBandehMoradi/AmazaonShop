@@ -232,7 +232,7 @@ const Hero = ({ categories }: { categories: Category[] }) => {
             </div>
           )}
         </div>
-        <div className="mt-6 border-b border-dashed border-[#D9D9D9]" aria-hidden="true" />
+        <div className="hero-section-divider mt-6 lg:mt-10" aria-hidden="true" />
         <HeroCategories categories={categories} />
       </div>
     </section>

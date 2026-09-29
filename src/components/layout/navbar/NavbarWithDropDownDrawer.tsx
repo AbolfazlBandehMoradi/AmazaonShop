@@ -481,8 +481,8 @@ export function NavbarWithDropDownDrawer() {
         data-navbar-root
         className="navbar-shell relative z-40 w-full bg-white px-3 pt-4 pb-4 dark:bg-background sm:px-6 sm:pt-5 sm:pb-5 lg:px-8 lg:pt-11 lg:pb-8"
       >
-        <div className="mx-auto max-w-376 rounded-[32px] bg-surface p-4 shadow-sm sm:px-6 lg:flex lg:h-[204px] lg:flex-col lg:px-11 lg:py-8 lg:shadow-none">
-          <div className="hidden min-h-0 flex-1 items-center justify-between gap-6 border-b border-dashed border-[#D9D9D9] pb-4 lg:flex">
+        <div className="mx-auto max-w-376 rounded-[32px] bg-surface p-4 shadow-sm sm:px-6 lg:flex lg:h-[212px] lg:flex-col lg:px-11 lg:py-8 lg:shadow-none">
+          <div className="navbar-desktop-divider hidden min-h-0 flex-1 items-center justify-between gap-6 pb-6 lg:flex">
             <div className="flex min-w-0 flex-1 items-center gap-6 xl:gap-8">
               <Link
                 to={localizedPath('/')}
@@ -507,7 +507,7 @@ export function NavbarWithDropDownDrawer() {
           </div>
 
           <nav
-            className="hidden h-[60px] items-end justify-between gap-5 pt-4 lg:flex"
+            className="hidden h-[68px] items-end justify-between gap-5 pt-6 lg:flex"
             aria-label={labels.navigationLabel}
           >
             <ul className="flex min-w-0 items-center gap-3 xl:gap-5">
