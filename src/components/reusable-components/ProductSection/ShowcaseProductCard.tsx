@@ -1,223 +1,129 @@
 import { useState } from 'react';
-import { ImageOff, ShoppingCart, Star } from 'lucide-react';
+import { BadgePercent, ImageOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import { CartIcon } from '@/components/ui/CartIcon';
 import { PriceDisplay } from '@/components/ui/PriceDisplay';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useLangStore } from '@/stores/languageStore';
 import type { Product } from '@/types';
-import cleanText from '@/utils/cleanText';
-import { cn } from '@/utils/cn';
-
-export type ProductCardVariant = 'default' | 'compact' | 'hero';
 
 interface ShowcaseProductCardProps {
   product: Product;
-  variant?: ProductCardVariant;
   tabIndex?: number;
 }
 
-const ShowcaseProductCard = ({
-  product,
-  variant = 'default',
-  tabIndex,
-}: ShowcaseProductCardProps) => {
+const ShowcaseProductCard = ({ product, tabIndex }: ShowcaseProductCardProps) => {
   const { t } = useTranslation();
   const localizedPath = useLocalizedPath();
   const lang = useLangStore((state) => state.lang);
   const [imageFailed, setImageFailed] = useState(false);
 
-  const isHero = variant === 'hero';
-  const isCompact = variant === 'compact';
-  const productPath = localizedPath(`/products/${product.slug}`);
   const productName = lang === 'en' ? product.nameEn || product.name : product.name;
-  const description = cleanText(
-    lang === 'en' ? product.descriptionEn || product.description : product.description,
-  );
-  const rating =
-    typeof product.rating === 'number' && Number.isFinite(product.rating) ? product.rating : 5;
-  const hasDiscount =
-    typeof product.originalPrice === 'number' && product.originalPrice > product.price;
+  const originalPrice = product.originalPrice ?? 0;
+  const hasDiscount = originalPrice > product.price;
+  const discountPercent =
+    typeof product.discount === 'number' &&
+    Number.isFinite(product.discount) &&
+    product.discount > 0
+      ? Math.round(product.discount)
+      : hasDiscount
+        ? Math.round(((originalPrice - product.price) / originalPrice) * 100)
+        : 0;
 
   return (
-    <article
-      data-variant={variant}
-      className={cn(
-        'h-full overflow-hidden bg-color-for-layer-on-body transition duration-300',
-        isHero ? 'hero-product-card' : 'rounded-2xl hover:-translate-y-1',
-      )}
-    >
+    <article className="group relative mx-auto h-[508px] w-full max-w-[310px] rounded-[32px]">
       <Link
-        to={productPath}
+        to={localizedPath(`/products/${product.slug}`)}
         tabIndex={tabIndex}
-        className={cn(
-          'group h-full min-h-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-first/50',
-          isHero ? 'hero-product-card__link' : 'flex flex-col',
-        )}
+        className="flex h-full min-h-0 flex-col gap-2 rounded-[32px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first"
         aria-label={`${t('common.viewProduct')}: ${productName}`}
       >
-        <div
-          className={cn(
-            'relative flex shrink-0 items-center justify-center overflow-hidden bg-color-for-layer-three',
-            isHero
-              ? 'hero-product-card__media'
-              : isCompact
-                ? 'm-2 aspect-[4/3] rounded-xl'
-                : 'm-2 aspect-[286/272] rounded-2xl',
-          )}
-        >
+        <div className="relative aspect-square shrink-0 overflow-hidden rounded-t-[32px] rounded-b-lg border border-border bg-white">
           {product.image && !imageFailed ? (
             <img
               src={product.image}
               alt={productName}
               loading="lazy"
               decoding="async"
-              className={cn(
-                'transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.04]',
-                isHero ? 'hero-product-card__image' : 'h-full w-full object-cover',
-              )}
+              className="h-full w-full object-cover"
               onError={() => setImageFailed(true)}
             />
           ) : (
-            <div className="flex h-full w-full flex-col items-center justify-center gap-2 first-text-color-for-paragraph">
-              <ImageOff
-                className={cn('opacity-50', isHero || isCompact ? 'size-8' : 'size-10')}
-                strokeWidth={1.4}
-                aria-hidden="true"
-              />
+            <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-text-muted">
+              <ImageOff className="size-10 opacity-50" strokeWidth={1.4} aria-hidden="true" />
               <span className="text-xs">{t('common.product')}</span>
             </div>
           )}
 
-          {!isHero && (
+          {discountPercent > 0 && (
             <span
-              className={cn(
-                'absolute start-3 top-3 inline-flex items-center gap-1.5 bg-secound font-f-sbold leading-none text-white shadow-sm',
-                isCompact
-                  ? 'rounded-xl px-2 py-1 text-[0.7rem]'
-                  : 'rounded-2xl px-2.5 py-1 text-xs',
-              )}
+              dir="ltr"
+              className="absolute top-3 right-3 inline-flex items-center gap-1.5 rounded-xl border border-white/80 bg-white/90 px-2.5 py-1.5 text-xs leading-4 font-f-sbold text-secound-700 shadow-[0_4px_16px_#0000001A] backdrop-blur-md"
             >
-              <Star
-                className={cn('fill-white text-white', isCompact ? 'size-3.5' : 'size-4')}
-                strokeWidth={1.8}
-                aria-hidden="true"
-              />
-              <span>{rating.toFixed(2)}</span>
+              <BadgePercent className="size-3.5" strokeWidth={1.8} aria-hidden="true" />
+              {discountPercent}%
             </span>
           )}
 
-          {(product.discount || !product.inStock) && (
-            <div className="absolute end-2.5 top-2.5 flex flex-col items-end gap-2 sm:end-3 sm:top-3">
-              {product.discount ? (
-                <span
-                  className={cn(
-                    'rounded-full bg-secound font-f-bold text-white shadow-sm',
-                    isHero || isCompact ? 'px-2.5 py-1 text-[0.7rem]' : 'px-3 py-1 text-xs',
-                  )}
-                >
-                  {product.discount}%
-                </span>
-              ) : null}
-
-              {!product.inStock ? (
-                <span
-                  className={cn(
-                    'rounded-full bg-black/65 font-f-sbold text-white backdrop-blur-sm',
-                    isHero || isCompact ? 'px-2.5 py-1 text-[0.65rem]' : 'px-3 py-1 text-xs',
-                  )}
-                >
-                  {t('common.outOfStock')}
-                </span>
-              ) : null}
-            </div>
+          {!product.inStock && (
+            <span className="absolute top-3 left-3 rounded-lg bg-text/75 px-2.5 py-1 text-xs leading-5 font-f-sbold text-white">
+              {t('common.outOfStock')}
+            </span>
           )}
         </div>
 
-        <div
-          className={cn(
-            'flex min-h-0 min-w-0 flex-1 flex-col',
-            isHero ? 'hero-product-card__content' : isCompact ? 'px-3 pb-3 pt-1' : 'px-4 pb-4 pt-2',
-          )}
-        >
+        <div className="flex min-h-0 flex-1 flex-col rounded-t-lg rounded-b-[32px] bg-surface px-4 py-6">
+          <span className="truncate text-start text-xs leading-[18px] font-f-sbold text-first">
+            {product.category || t('common.product')}
+          </span>
           <h3
-            className={cn(
-              'text-start font-f-bold first-text-color transition-colors group-hover:text-first',
-              isHero
-                ? 'line-clamp-2 min-h-11 text-sm leading-[1.375rem] sm:text-base'
-                : isCompact
-                  ? 'line-clamp-1 text-sm'
-                  : 'line-clamp-1 text-base sm:text-lg',
-            )}
+            className="mt-1 line-clamp-2 text-start text-sm leading-5 font-f-sbold text-text"
+            title={productName}
           >
             {productName}
           </h3>
 
-          {isHero && description ? (
-            <p className="mt-1 line-clamp-1 text-start text-xs leading-5 first-text-color-for-paragraph">
-              {description}
-            </p>
-          ) : null}
-
           <div
-            dir="ltr"
-            className={cn(
-              'mt-auto flex items-end justify-between gap-2',
-              isHero ? 'min-h-12 pt-3' : isCompact ? 'min-h-12 pt-3' : 'min-h-14 pt-4',
-            )}
-          >
-            <div className="flex min-w-0 flex-col items-start gap-1">
-              {hasDiscount ? (
-                <span
-                  className={cn(
-                    'inline-flex rounded-xl bg-first/10 py-0.5',
-                    isHero ? 'px-1.5' : 'px-2',
-                  )}
-                >
-                  <PriceDisplay
-                    amount={product.originalPrice}
-                    currency="IRT"
-                    languageCode={lang}
-                    currencyMode="none"
-                    className={cn(
-                      'line-through first-text-color-for-paragraph',
-                      isHero || isCompact ? 'text-[0.65rem]' : 'text-xs',
-                    )}
-                  />
-                </span>
-              ) : null}
+            className="mt-auto mb-4 h-px shrink-0 bg-[repeating-linear-gradient(to_right,var(--color-border)_0_5px,transparent_5px_10px)]"
+            aria-hidden="true"
+          />
 
+          <div dir="rtl" className="flex items-end justify-between gap-2">
+            <div
+              dir={lang === 'fa' ? 'rtl' : 'ltr'}
+              className="flex min-w-0 flex-col items-end gap-0.5"
+            >
               <PriceDisplay
                 amount={product.price}
-                currency="IRT"
                 languageCode={lang}
-                className={cn(
-                  'whitespace-nowrap font-f-bold first-text-color',
-                  isHero ? 'text-xs sm:text-sm xl:text-base' : 'text-sm sm:text-base',
-                )}
-                currencyClassName={cn(
-                  'first-text-color-for-paragraph',
-                  isHero || isCompact ? 'text-[0.6rem]' : 'text-[0.65rem]',
-                )}
+                className="whitespace-nowrap text-lg leading-6 font-f-sbold text-text"
+                currencyClassName="text-xs font-f-normal text-text-muted"
               />
+              {hasDiscount && (
+                <PriceDisplay
+                  amount={originalPrice}
+                  languageCode={lang}
+                  currencyMode="none"
+                  className="text-xs leading-4 text-text-muted line-through"
+                />
+              )}
             </div>
 
             <span
-              className={cn(
-                'flex shrink-0 items-center justify-center rounded-full bg-first/5 text-first transition-colors duration-300 group-hover:bg-first group-hover:text-white',
-                isHero || isCompact ? 'size-9' : 'size-10',
-              )}
+              className="inline-flex size-11 shrink-0 items-center justify-center rounded-2xl bg-first text-white transition-colors group-hover:bg-first-600"
               aria-hidden="true"
             >
-              <ShoppingCart
-                className={cn(isHero ? 'size-[18px]' : isCompact ? 'size-4' : 'size-5')}
-                strokeWidth={1.8}
-              />
+              <CartIcon />
             </span>
           </div>
         </div>
       </Link>
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-4 bottom-0 h-px rounded-full bg-surface opacity-0 shadow-surface transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
+      />
     </article>
   );
 };

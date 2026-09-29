@@ -19,6 +19,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import { AmazonMark } from '@/components/layout/brand/AmazonMark';
+import { CartIcon } from '@/components/ui/CartIcon';
 import { storeContact } from '@/config/store';
 import { ThemeToggleButton } from '@/components/ui/ThemeToggleButton';
 import { useAuth } from '@/context/AuthContext';
@@ -356,15 +357,7 @@ export function NavbarWithDropDownDrawer() {
       className="relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-first text-white transition-[background-color,box-shadow] hover:bg-first-600 hover:shadow-[-4px_4px_5px_0px_#BF000040] focus-visible:ring-2 focus-visible:ring-first focus-visible:ring-offset-2"
       aria-label={`${labels.cart}: ${cartCount}`}
     >
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <path
-          d="M7.5 3.33334L2.5 8.33334L3.63074 13.9871C3.94236 15.5451 5.31041 16.6667 6.89935 16.6667H13.1007C14.6896 16.6667 16.0576 15.5451 16.3693 13.9871L17.5 8.33334L12.5 3.33334M17.5 8.33334H2.5"
-          stroke="white"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <CartIcon />
       {cartCount > 0 && (
         <span className="absolute -top-1.5 -end-1.5 min-w-5 rounded-full bg-secound px-1 text-center text-[11px] font-f-sbold leading-5 text-white">
           {cartCount > 99 ? '99+' : cartCount}

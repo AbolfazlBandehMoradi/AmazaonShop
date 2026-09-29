@@ -128,6 +128,10 @@
   align-items: stretch;
 }
 
+.showcase-products-swiper {
+  padding-bottom: 20px;
+}
+
 .showcase-products-swiper .swiper-slide {
   display: flex;
   height: auto;
