@@ -52,6 +52,25 @@ function getSlideLink(slide: HeroSlider) {
   return null;
 }
 
+function renderSlideTitle(title: string, isRtl: boolean) {
+  if (!isRtl) return title;
+
+  // Keep Latin phone names and model numbers together, but leave prices and discounts uncolored.
+  return title
+    .split(
+      /([A-Za-z][A-Za-z0-9۰-۹٠-٩]*(?:[-./+][A-Za-z0-9۰-۹٠-٩]+)*\+?(?:[ \t]+(?![0-9۰-۹٠-٩]+[ \t]*(?:[%٪]|درصد|تومان|ریال))[A-Za-z0-9۰-۹٠-٩]+(?:[-./+][A-Za-z0-9۰-۹٠-٩]+)*\+?)*)/g,
+    )
+    .map((part, index) =>
+      index % 2 === 1 ? (
+        <bdi key={index} dir="ltr" className="text-secound">
+          {part}
+        </bdi>
+      ) : (
+        part
+      ),
+    );
+}
+
 const Hero = ({ categories }: { categories: Category[] }) => {
   const { t } = useTranslation();
   const { dir } = useLangStore();
@@ -163,7 +182,7 @@ const Hero = ({ categories }: { categories: Category[] }) => {
                           )}
                           {title && (
                             <h1 className="text-[22px] leading-[1.35] font-f-bold first-text-color sm:text-[28px] lg:text-[26px] xl:text-[32px]">
-                              {title}
+                              {renderSlideTitle(title, dir === 'rtl')}
                             </h1>
                           )}
                           {description && (
