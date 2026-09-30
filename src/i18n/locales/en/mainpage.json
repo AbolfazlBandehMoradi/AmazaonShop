@@ -98,6 +98,14 @@
       "headphones": "Headphones"
     }
   },
+  "mostSoldProducts": {
+    "title": "Best-selling products",
+    "description": "Explore our customers' favorites",
+    "filterLabel": "Filter best-selling products by category",
+    "empty": "No products are available in this category.",
+    "previous": "Previous products",
+    "next": "Next products"
+  },
   "newestProducts": {
     "title": "Newest products",
     "description": "Explore the latest arrivals at Amazon",

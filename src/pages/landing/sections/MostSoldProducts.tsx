@@ -1,326 +1,222 @@
-import { useMemo } from 'react';
+import { useMemo, useRef, useState, type KeyboardEvent } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { A11y } from 'swiper/modules';
+import type { Swiper as SwiperType } from 'swiper';
+import { A11y, Keyboard } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 
-import HorizontalProductCard from '@/components/reusable-components/ProductSection/HorizontalProductCard';
+import ShowcaseProductCard from '@/components/reusable-components/ProductSection/ShowcaseProductCard';
+import { CustomSelect } from '@/components/ui/CustomSelect';
 import type { Showcase } from '@/hooks/useShowcases';
 import { useLangStore } from '@/stores/languageStore';
 import { cn } from '@/utils/cn';
-
 
 interface Props {
   showcase?: Showcase;
 }
 
+const categoryFilters = [
+  { id: 'all', labelKey: 'all' },
+  { id: '1', labelKey: 'mobile' },
+  { id: '2', labelKey: 'powerBank' },
+  { id: '3', labelKey: 'headphones' },
+] as const;
 
-const MostSoldProducts = ({
-  showcase,
-}: Props) => {
-
+const MostSoldProducts = ({ showcase }: Props) => {
   const { t } = useTranslation();
-
   const { dir } = useLangStore();
-
-
-  const isRtl = dir === 'rtl';
-
+  const swiperRef = useRef<SwiperType | null>(null);
+  const [activeCategoryId, setActiveCategoryId] = useState<string>('all');
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(true);
 
   const products = useMemo(
-    () =>
-      [...(showcase?.items ?? [])].sort(
-        (a, b) =>
-          a.sortOrder - b.sortOrder,
-      ),
+    () => [...(showcase?.items ?? [])].sort((a, b) => a.sortOrder - b.sortOrder),
     [showcase?.items],
   );
-
-
-  const productGroups = useMemo(
-    () => {
-      const groups = [];
-
-      for (
-        let i = 0;
-        i < products.length;
-        i += 2
-      ) {
-        groups.push(
-          products.slice(
-            i,
-            i + 2,
-          ),
-        );
-      }
-
-      return groups;
-    },
-    [products],
+  const visibleProducts = useMemo(
+    () =>
+      products.filter(
+        (item) =>
+          activeCategoryId === 'all' || String(item.product.categoryId) === activeCategoryId,
+      ),
+    [activeCategoryId, products],
   );
 
+  const title = showcase?.translation?.title?.trim() || t('mainpage.mostSoldProducts.title');
+  const description =
+    showcase?.translation?.description?.trim() || t('mainpage.mostSoldProducts.description');
+  const filterLabel = t('mainpage.mostSoldProducts.filterLabel');
+  const selectOptions = categoryFilters.map((category) => ({
+    value: category.id,
+    label: t(`mainpage.mostViewedProducts.categories.${category.labelKey}`),
+  }));
 
-  const title =
-    showcase?.translation?.title?.trim()
-    ||
-    [
-      t(
-        'mainpage.mostSoldProducts.titlePrefix',
-      ),
-      t(
-        'mainpage.mostSoldProducts.titleAccent',
-      ),
-      t(
-        'mainpage.mostSoldProducts.titleSuffix',
-      ),
-    ]
-      .filter(Boolean)
-      .join(' ');
+  const updateSliderState = (swiper: SwiperType) => {
+    setIsBeginning(swiper.isBeginning);
+    setIsEnd(swiper.isEnd);
+  };
 
+  const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
 
-  if (!products.length) {
-    return null;
-  }
+    event.preventDefault();
+    let nextIndex = currentIndex;
+    if (event.key === 'Home') nextIndex = 0;
+    else if (event.key === 'End') nextIndex = categoryFilters.length - 1;
+    else {
+      const forwardKey = dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight';
+      nextIndex =
+        (currentIndex + (event.key === forwardKey ? 1 : -1) + categoryFilters.length) %
+        categoryFilters.length;
+    }
 
+    setActiveCategoryId(categoryFilters[nextIndex].id);
+    event.currentTarget.parentElement
+      ?.querySelectorAll<HTMLButtonElement>('[role="tab"]')
+      [nextIndex]?.focus();
+  };
+
+  if (!products.length) return null;
+
+  const PreviousIcon = dir === 'rtl' ? ChevronRight : ChevronLeft;
+  const NextIcon = dir === 'rtl' ? ChevronLeft : ChevronRight;
 
   return (
+    <section dir={dir} className="landing-section" aria-labelledby="most-sold-products-title">
+      <div className="landing-container">
+        <div className="best-products-panel">
+          <div className="best-products-panel__background" aria-hidden="true" />
 
-    <section
+          <div className="best-products-panel__header">
+            <div className="best-products-panel__intro">
+              <h2
+                id="most-sold-products-title"
+                className="text-xl leading-8 font-f-bold text-white sm:text-2xl sm:leading-9"
+              >
+                {title}
+              </h2>
+              <p className="mt-1 text-sm leading-6 font-f-normal text-white/85">{description}</p>
+            </div>
 
-      dir={dir}
+            <div className="best-products-panel__actions">
+              <CustomSelect
+                label={filterLabel}
+                options={selectOptions}
+                value={activeCategoryId}
+                onChange={setActiveCategoryId}
+                className="lg:hidden"
+              />
 
-      className="
-        landing-section
-        overflow-hidden
-      "
+              <div
+                role="tablist"
+                aria-label={filterLabel}
+                className="hidden h-12 shrink-0 items-center gap-1 rounded-[18px] border border-border bg-white p-1 lg:flex"
+              >
+                {categoryFilters.map((category, index) => {
+                  const active = category.id === activeCategoryId;
+                  return (
+                    <button
+                      key={category.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={active}
+                      aria-controls="most-sold-products-panel"
+                      tabIndex={active ? 0 : -1}
+                      onClick={() => setActiveCategoryId(category.id)}
+                      onKeyDown={(event) => handleTabKeyDown(event, index)}
+                      className={cn(
+                        'h-full shrink-0 rounded-2xl border border-transparent px-3 text-sm leading-5 font-f-sbold text-text transition-colors hover:text-first focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first',
+                        active && 'border-[#163F87] bg-[#F4F7F9] text-first',
+                      )}
+                    >
+                      {t(`mainpage.mostViewedProducts.categories.${category.labelKey}`)}
+                    </button>
+                  );
+                })}
+              </div>
 
-      aria-labelledby="
-        most-sold-products-title
-      "
-
-    >
-
-      <div
-        className="
-          landing-container
-        "
-      >
-
-
-        {/* Header */}
-
-        <div
-          className="
-            flex
-            items-center
-            gap-2.5
-            sm:gap-3
-          "
-        >
-
-          <span
-
-            aria-hidden="true"
-
-            className="
-              h-[18px]
-              w-2.5
-              shrink-0
-              rounded-full
-              bg-third
-            "
-
-          />
-
-
-          <h2
-
-            id="
-              most-sold-products-title
-            "
-
-            className="
-              shrink-0
-              text-lg
-              font-s-sbold
-              first-text-color
-
-              sm:text-xl
-              lg:text-2xl
-            "
-
-          >
-
-            {title}
-
-          </h2>
-
-
-          <span
-
-            aria-hidden="true"
-
-            className={cn(
-              `
-              h-0.5
-              flex-1
-              rounded-full
-              mx-1.5
-              `,
-              isRtl
-                ?
-                `
-                bg-gradient-to-l
-                from-first/20
-                via-first/10
-                to-transparent
-                `
-                :
-                `
-                bg-gradient-to-r
-                from-first/20
-                via-first/10
-                to-transparent
-                `,
-            )}
-
-          />
-
-
-        </div>
-
-
-
-        {/* Slider */}
-
-        <div
-          className="
-            mt-5
-            sm:mt-6
-          "
-        >
-
-          <Swiper
-
-            dir={dir}
-
-            modules={[
-              A11y,
-            ]}
-
-            className="
-              w-full
-
-              [&_.swiper-wrapper]:
-              items-stretch
-            "
-
-            slidesPerView={1.05}
-
-            spaceBetween={14}
-
-            grabCursor
-
-            watchOverflow
-
-            a11y={{
-              enabled:true,
-            }}
-
-
-            breakpoints={{
-
-              640:{
-                slidesPerView:1.3,
-                spaceBetween:16,
-              },
-
-
-              768:{
-                slidesPerView:2,
-                spaceBetween:18,
-              },
-
-
-              1280:{
-                slidesPerView:3,
-                spaceBetween:20,
-              },
-
-
-            }}
-
-          >
-
-
-            {
-              productGroups.map(
-                (
-                  group,
-                  index,
-                ) => (
-
-                <SwiperSlide
-
-                  key={index}
-
-                  className="
-                    h-auto
-                  "
-
-                >
-
-                  <div
-                    className="
-                      grid
-                      gap-4
-                    "
+              {visibleProducts.length > 1 && (
+                <div className="hidden items-center gap-2 lg:flex">
+                  <button
+                    type="button"
+                    aria-label={t('mainpage.mostSoldProducts.previous')}
+                    disabled={isBeginning}
+                    onClick={() => swiperRef.current?.slidePrev()}
+                    className="flex size-10 items-center justify-center rounded-full border border-border bg-white text-first transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first disabled:cursor-not-allowed disabled:opacity-40"
                   >
+                    <PreviousIcon className="size-5" aria-hidden="true" />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label={t('mainpage.mostSoldProducts.next')}
+                    disabled={isEnd}
+                    onClick={() => swiperRef.current?.slideNext()}
+                    className="flex size-10 items-center justify-center rounded-full border border-border bg-white text-first transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    <NextIcon className="size-5" aria-hidden="true" />
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
 
-                    {
-                      group.map(
-                        item => (
-
-                        <HorizontalProductCard
-
-                          key={
-                            item.id
-                          }
-
-                          product={
-                            item.product
-                          }
-
-                        />
-
-                      ))
-                    }
-
-                  </div>
-
-
-                </SwiperSlide>
-
-
-              ))
-            }
-
-
-          </Swiper>
-
-
+          <div
+            id="most-sold-products-panel"
+            role="tabpanel"
+            aria-label={title}
+            className="best-products-panel__slider"
+          >
+            {visibleProducts.length ? (
+              <Swiper
+                key={`${showcase?.id}-${activeCategoryId}-${dir}`}
+                dir={dir}
+                modules={[A11y, Keyboard]}
+                keyboard={{ enabled: true, onlyInViewport: true }}
+                className="best-products-panel__swiper"
+                slidesPerView={1.12}
+                spaceBetween={12}
+                breakpoints={{
+                  480: { slidesPerView: 1.4, spaceBetween: 14 },
+                  640: { slidesPerView: 2.05, spaceBetween: 16 },
+                  768: { slidesPerView: 2.5, spaceBetween: 18 },
+                  1024: { slidesPerView: 3.1, spaceBetween: 20 },
+                  1280: { slidesPerView: 3.8, spaceBetween: 24 },
+                }}
+                grabCursor={visibleProducts.length > 1}
+                watchOverflow
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                  updateSliderState(swiper);
+                }}
+                onSlideChange={updateSliderState}
+                onResize={updateSliderState}
+                onBreakpoint={updateSliderState}
+                onLock={updateSliderState}
+                onUnlock={updateSliderState}
+              >
+                {visibleProducts.map((item) => (
+                  <SwiperSlide key={item.id}>
+                    <ShowcaseProductCard
+                      product={item.product}
+                      variant="mostViewed"
+                      className="max-w-none"
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            ) : (
+              <p className="flex min-h-[508px] items-center justify-center rounded-[32px] bg-surface px-6 text-center text-sm text-text-muted">
+                {t('mainpage.mostSoldProducts.empty')}
+              </p>
+            )}
+          </div>
         </div>
-
-
       </div>
-
-
     </section>
-
   );
-
 };
-
 
 export default MostSoldProducts;

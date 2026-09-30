@@ -11,6 +11,7 @@ import MostViewedProducts from './sections/MostViewedProducts';
 import LatestGallery from './sections/LatestGallery';
 import WhyUs from './sections/WhyUs';
 import NewestProducts from './sections/NewestProducts';
+import MostSoldProducts from './sections/MostSoldProducts';
 import BannerGallery from './sections/BannerGallery';
 
 const MainPage = () => {
@@ -29,6 +30,7 @@ const MainPage = () => {
     <main>
       <Hero categories={index?.categories ?? []} />
       <MostViewedProducts showcase={showcases?.[0]} />
+      <MostSoldProducts showcase={showcases?.[0]} />
       <LatestGallery />
       <WhyUs />
       <DiscountedProducts discountedProduct={index?.discountProducts ?? []} />

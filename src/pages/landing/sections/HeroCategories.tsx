@@ -61,7 +61,7 @@ function CategoryCard({
       )}
     >
       <img src={icon} alt="" aria-hidden="true" className="h-10 w-10" />
-      <h3 className="mt-5 line-clamp-1 text-lg leading-6 font-f-bold first-text-color">{name}</h3>
+      <h3 className="mt-5 line-clamp-1 text-lg font-f-sbold first-text-color">{name}</h3>
       <p dir="auto" className="mt-1 line-clamp-1 text-sm leading-5 first-text-color-for-paragraph">
         {category.nameEn || category.name}
       </p>

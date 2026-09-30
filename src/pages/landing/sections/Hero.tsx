@@ -148,7 +148,7 @@ const Hero = ({ categories }: { categories: Category[] }) => {
                     </>
                   );
                   const ctaClass =
-                    'inline-flex min-h-12 w-fit items-center justify-center gap-3 rounded-2xl bg-first px-6 text-sm font-f-bold text-white transition-colors hover:bg-first-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first';
+                    'inline-flex min-h-12 w-fit items-center justify-center gap-3 rounded-2xl bg-first px-6 text-sm font-f-sbold text-white transition-colors hover:bg-first-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first';
 
                   return (
                     <SwiperSlide key={slide.id} className="!h-auto">
@@ -223,7 +223,7 @@ const Hero = ({ categories }: { categories: Category[] }) => {
                       aria-current={index === activeSlide ? 'true' : undefined}
                     >
                       <span
-                        className={`block h-2.5 rounded-full bg-[#18183E] transition-all duration-200 dark:bg-white ${index === activeSlide ? 'w-8 opacity-100' : 'w-2.5 opacity-20 hover:opacity-50'}`}
+                        className={`block h-2.5 rounded-full bg-[#163F87] transition-all duration-200 dark:bg-white ${index === activeSlide ? 'w-8 opacity-100' : 'w-2.5 opacity-20 hover:opacity-50'}`}
                       />
                     </button>
                   ))}
