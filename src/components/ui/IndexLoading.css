@@ -786,9 +786,7 @@
 
   color: var(--loader-text);
 
-  font-family:
-    firstFont-sbold,
-    sans-serif;
+  font-family: var(--font-heading);
 
   font-size: clamp(1.65rem, 4vw, 2.3rem);
 

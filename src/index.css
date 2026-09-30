@@ -13,6 +13,8 @@ button {
 @theme static {
   --breakpoint-xs: 360px;
   --breakpoint-3xl: 1792px;
+  --font-sans: 'IRANSansX', Arial, sans-serif;
+  --font-heading: 'Kalameh', 'IRANSansX', sans-serif;
   /* Existing first/secound/third utilities share these brand colors. */
   --color-first-50: #eff4fc;
   --color-first-100: #dce8f8;
@@ -60,99 +62,182 @@ button {
 @custom-variant dark (&:where(.dark, .dark *));
 
 @font-face {
-  font-family: 'firstFont-light';
+  font-family: 'IRANSansX';
   src:
-    url('assets/fonts/firstFont/firstFont-light.woff2') format('woff2'),
-    url('assets/fonts/firstFont/firstFont-light.woff') format('woff'),
-    url('assets/fonts/firstFont/firstFont-light.ttf') format('truetype');
+    url('./assets/fonts/IRANSansX/woff2/IRANSansX-Thin.woff2') format('woff2'),
+    url('./assets/fonts/IRANSansX/woff/IRANSansX-Thin.woff') format('woff');
   font-style: normal;
+  font-weight: 100;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'firstFont-normal';
+  font-family: 'IRANSansX';
   src:
-    url('assets/fonts/firstFont/firstFont-Regular.woff2') format('woff2'),
-    url('assets/fonts/firstFont/firstFont-Regular.woff') format('woff'),
-    url('assets/fonts/firstFont/firstFont-Regular.ttf') format('truetype');
+    url('./assets/fonts/IRANSansX/woff2/IRANSansX-UltraLight.woff2') format('woff2'),
+    url('./assets/fonts/IRANSansX/woff/IRANSansX-UltraLight.woff') format('woff');
   font-style: normal;
+  font-weight: 200;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'firstFont-sbold';
+  font-family: 'IRANSansX';
   src:
-    url('assets/fonts/firstFont/firstFont-SemiBold.woff2') format('woff2'),
-    url('assets/fonts/firstFont/firstFont-SemiBold.woff') format('woff'),
-    url('assets/fonts/firstFont/firstFont-SemiBold.ttf') format('truetype');
+    url('./assets/fonts/IRANSansX/woff2/IRANSansX-Light.woff2') format('woff2'),
+    url('./assets/fonts/IRANSansX/woff/IRANSansX-Light.woff') format('woff');
   font-style: normal;
+  font-weight: 300;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'firstFont-bold';
+  font-family: 'IRANSansX';
   src:
-    url('assets/fonts/firstFont/firstFont-Bold.woff2') format('woff2'),
-    url('assets/fonts/firstFont/firstFont-Bold.woff') format('woff'),
-    url('assets/fonts/firstFont/firstFont-SemiBold.ttf') format('truetype');
+    url('./assets/fonts/IRANSansX/woff2/IRANSansX-Regular.woff2') format('woff2'),
+    url('./assets/fonts/IRANSansX/woff/IRANSansX-Regular.woff') format('woff');
   font-style: normal;
-  font-weight: bolder;
+  font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'secoundFont-light';
+  font-family: 'IRANSansX';
   src:
-    url('assets/fonts/secoundFont/secoundFont-light.woff2') format('woff2'),
-    url('assets/fonts/secoundFont/secoundFont-light.woff') format('woff'),
-    url('assets/fonts/secoundFont/secoundFont-light.ttf') format('truetype'),
-    url('assets/fonts/secoundFont/secoundFont-light.eot');
+    url('./assets/fonts/IRANSansX/woff2/IRANSansX-Medium.woff2') format('woff2'),
+    url('./assets/fonts/IRANSansX/woff/IRANSansX-Medium.woff') format('woff');
   font-style: normal;
+  font-weight: 500;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'secoundFont-Regular';
+  font-family: 'IRANSansX';
   src:
-    url('assets/fonts/secoundFont/secoundFont-Regular.woff2') format('woff2'),
-    url('assets/fonts/secoundFont/secoundFont-Regular.woff') format('woff'),
-    url('assets/fonts/secoundFont/secoundFont-Regular.ttf') format('truetype'),
-    url('assets/fonts/secoundFont/secoundFont-Regular.eot');
+    url('./assets/fonts/IRANSansX/woff2/IRANSansX-DemiBold.woff2') format('woff2'),
+    url('./assets/fonts/IRANSansX/woff/IRANSansX-DemiBold.woff') format('woff');
   font-style: normal;
+  font-weight: 600;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'secoundFont-Medium';
+  font-family: 'IRANSansX';
   src:
-    url('assets/fonts/secoundFont/secoundFont-Medium.woff2') format('woff2'),
-    url('assets/fonts/secoundFont/secoundFont-Medium.woff') format('woff'),
-    url('assets/fonts/secoundFont/secoundFont-Medium.ttf') format('truetype'),
-    url('assets/fonts/secoundFont/secoundFont-Medium.eot');
+    url('./assets/fonts/IRANSansX/woff2/IRANSansX-Bold.woff2') format('woff2'),
+    url('./assets/fonts/IRANSansX/woff/IRANSansX-Bold.woff') format('woff');
   font-style: normal;
+  font-weight: 700;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'secoundFont-sbold';
+  font-family: 'IRANSansX';
   src:
-    url('assets/fonts/secoundFont/secoundFont-SemiBold.woff2') format('woff2'),
-    url('assets/fonts/secoundFont/secoundFont-SemiBold.woff') format('woff'),
-    url('assets/fonts/secoundFont/secoundFont-SemiBold.ttf') format('truetype'),
-    url('assets/fonts/secoundFont/secoundFont-SemiBold.eot');
+    url('./assets/fonts/IRANSansX/woff2/IRANSansX-ExtraBold.woff2') format('woff2'),
+    url('./assets/fonts/IRANSansX/woff/IRANSansX-ExtraBold.woff') format('woff');
   font-style: normal;
+  font-weight: 800;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'secoundFont-bold';
+  font-family: 'IRANSansX';
   src:
-    url('assets/fonts/secoundFont/secoundFont-SemiBold.woff2') format('woff2'),
-    url('assets/fonts/secoundFont/secoundFont-SemiBold.woff') format('woff'),
-    url('assets/fonts/secoundFont/secoundFont-SemiBold.ttf') format('truetype'),
-    url('assets/fonts/secoundFont/secoundFont-SemiBold.eot');
+    url('./assets/fonts/IRANSansX/woff2/IRANSansX-Black.woff2') format('woff2'),
+    url('./assets/fonts/IRANSansX/woff/IRANSansX-Black.woff') format('woff');
+  font-style: normal;
   font-weight: 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kalameh';
+  src:
+    url('./assets/fonts/Kalameh/woff2/KalamehWeb-Thin.woff2') format('woff2'),
+    url('./assets/fonts/Kalameh/woff/KalamehWeb-Thin.woff') format('woff');
   font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kalameh';
+  src:
+    url('./assets/fonts/Kalameh/woff2/KalamehWeb-ExtraLight.woff2') format('woff2'),
+    url('./assets/fonts/Kalameh/woff/KalamehWeb-ExtraLight.woff') format('woff');
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kalameh';
+  src:
+    url('./assets/fonts/Kalameh/woff2/KalamehWeb-Light.woff2') format('woff2'),
+    url('./assets/fonts/Kalameh/woff/KalamehWeb-Light.woff') format('woff');
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kalameh';
+  src:
+    url('./assets/fonts/Kalameh/woff2/KalamehWeb-Regular.woff2') format('woff2'),
+    url('./assets/fonts/Kalameh/woff/KalamehWeb-Regular.woff') format('woff');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kalameh';
+  src:
+    url('./assets/fonts/Kalameh/woff2/KalamehWeb-Medium.woff2') format('woff2'),
+    url('./assets/fonts/Kalameh/woff/KalamehWeb-Medium.woff') format('woff');
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kalameh';
+  src:
+    url('./assets/fonts/Kalameh/woff2/KalamehWeb-SemiBold.woff2') format('woff2'),
+    url('./assets/fonts/Kalameh/woff/KalamehWeb-SemiBold.woff') format('woff');
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kalameh';
+  src:
+    url('./assets/fonts/Kalameh/woff2/KalamehWeb-Bold.woff2') format('woff2'),
+    url('./assets/fonts/Kalameh/woff/KalamehWeb-Bold.woff') format('woff');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kalameh';
+  src:
+    url('./assets/fonts/Kalameh/woff2/KalamehWeb-ExtraBold.woff2') format('woff2'),
+    url('./assets/fonts/Kalameh/woff/KalamehWeb-ExtraBold.woff') format('woff');
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kalameh';
+  src:
+    url('./assets/fonts/Kalameh/woff2/KalamehWeb-Black.woff2') format('woff2'),
+    url('./assets/fonts/Kalameh/woff/KalamehWeb-Black.woff') format('woff');
+  font-style: normal;
+  font-weight: 900;
   font-display: swap;
 }
 
@@ -533,11 +618,11 @@ body.dark img[alt='Pulak Shop logo'] {
 
 body {
   background-color: var(--bg-color-for-body);
-  font-family: firstFont-normal;
+  font-family: var(--font-sans);
 }
 
-html[lang='en'] body {
-  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+:where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-heading);
 }
 
 html {
@@ -551,39 +636,39 @@ html {
 /* Start Section Font  */
 /* شروع قسمت فونت   */
 @utility font-f-light {
-  font-family: firstFont-light;
+  font-weight: 300;
 }
 
 @utility font-f-normal {
-  font-family: firstFont-normal;
+  font-weight: 400;
 }
 
 @utility font-f-sbold {
-  font-family: firstFont-sbold;
+  font-weight: 600;
 }
 
 @utility font-f-bold {
-  font-family: firstFont-bold;
+  font-weight: 700;
 }
 
 @utility font-s-light {
-  font-family: secoundFont-light;
+  font-weight: 300;
 }
 
 @utility font-s-regular {
-  font-family: secoundFont-Regular;
+  font-weight: 400;
 }
 
 @utility font-s-medium {
-  font-family: secoundFont-Medium;
+  font-weight: 500;
 }
 
 @utility font-s-sbold {
-  font-family: secoundFont-sbold;
+  font-weight: 600;
 }
 
 @utility font-s-bold {
-  font-family: secoundFont-bold;
+  font-weight: 700;
 }
 
 /* پایان قسمت فونت   */
