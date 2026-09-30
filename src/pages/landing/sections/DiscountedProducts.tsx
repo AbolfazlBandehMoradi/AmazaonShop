@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.css';
 
 import ShowcaseProductCard from '@/components/reusable-components/ProductSection/ShowcaseProductCard';
+import { useSlideEdgeFade } from '@/hooks/useSlideEdgeFade';
 import { useLangStore } from '@/stores/languageStore';
 import type { Product } from '@/types';
 
@@ -19,10 +20,12 @@ const DiscountedProducts = ({ discountedProduct }: Props) => {
   const swiperRef = useRef<SwiperType | null>(null);
   const [activeSnap, setActiveSnap] = useState(0);
   const [snapCount, setSnapCount] = useState(discountedProduct.length);
+  const { fadeWidth, updateFade } = useSlideEdgeFade();
 
   const updateSliderState = (swiper: SwiperType) => {
     setActiveSnap(swiper.snapIndex);
     setSnapCount(swiper.snapGrid.length);
+    updateFade(swiper);
   };
 
   if (discountedProduct.length === 0) return null;
@@ -65,6 +68,7 @@ const DiscountedProducts = ({ discountedProduct }: Props) => {
                 }}
                 onSlideChange={updateSliderState}
                 onResize={updateSliderState}
+                onBreakpoint={updateSliderState}
                 onLock={updateSliderState}
                 onUnlock={updateSliderState}
                 className="deals-slider"
@@ -75,6 +79,13 @@ const DiscountedProducts = ({ discountedProduct }: Props) => {
                   </SwiperSlide>
                 ))}
               </Swiper>
+              {fadeWidth > 0 && (
+                <div
+                  className="landing-slider-edge-fade"
+                  style={{ width: fadeWidth }}
+                  aria-hidden="true"
+                />
+              )}
             </div>
 
             {snapCount > 1 && (

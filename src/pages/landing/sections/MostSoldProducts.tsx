@@ -1,7 +1,5 @@
-import { useMemo, useRef, useState, type KeyboardEvent } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useMemo, useState, type KeyboardEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Swiper as SwiperType } from 'swiper';
 import { A11y, Keyboard } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -10,6 +8,7 @@ import 'swiper/css';
 import ShowcaseProductCard from '@/components/reusable-components/ProductSection/ShowcaseProductCard';
 import { CustomSelect } from '@/components/ui/CustomSelect';
 import type { Showcase } from '@/hooks/useShowcases';
+import { useSlideEdgeFade } from '@/hooks/useSlideEdgeFade';
 import { useLangStore } from '@/stores/languageStore';
 import { cn } from '@/utils/cn';
 
@@ -27,10 +26,8 @@ const categoryFilters = [
 const MostSoldProducts = ({ showcase }: Props) => {
   const { t } = useTranslation();
   const { dir } = useLangStore();
-  const swiperRef = useRef<SwiperType | null>(null);
   const [activeCategoryId, setActiveCategoryId] = useState<string>('all');
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(true);
+  const { fadeWidth, updateFade } = useSlideEdgeFade();
 
   const products = useMemo(
     () => [...(showcase?.items ?? [])].sort((a, b) => a.sortOrder - b.sortOrder),
@@ -54,11 +51,6 @@ const MostSoldProducts = ({ showcase }: Props) => {
     label: t(`mainpage.mostViewedProducts.categories.${category.labelKey}`),
   }));
 
-  const updateSliderState = (swiper: SwiperType) => {
-    setIsBeginning(swiper.isBeginning);
-    setIsEnd(swiper.isEnd);
-  };
-
   const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
     if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
 
@@ -81,11 +73,12 @@ const MostSoldProducts = ({ showcase }: Props) => {
 
   if (!products.length) return null;
 
-  const PreviousIcon = dir === 'rtl' ? ChevronRight : ChevronLeft;
-  const NextIcon = dir === 'rtl' ? ChevronLeft : ChevronRight;
-
   return (
-    <section dir={dir} className="landing-section" aria-labelledby="most-sold-products-title">
+    <section
+      dir={dir}
+      className="landing-section most-sold-products-section"
+      aria-labelledby="most-sold-products-title"
+    >
       <div className="landing-container">
         <div className="best-products-panel">
           <div className="best-products-panel__background" aria-hidden="true" />
@@ -108,6 +101,7 @@ const MostSoldProducts = ({ showcase }: Props) => {
                 value={activeCategoryId}
                 onChange={setActiveCategoryId}
                 className="lg:hidden"
+                variant="glass"
               />
 
               <div
@@ -137,29 +131,6 @@ const MostSoldProducts = ({ showcase }: Props) => {
                   );
                 })}
               </div>
-
-              {visibleProducts.length > 1 && (
-                <div className="hidden items-center gap-2 lg:flex">
-                  <button
-                    type="button"
-                    aria-label={t('mainpage.mostSoldProducts.previous')}
-                    disabled={isBeginning}
-                    onClick={() => swiperRef.current?.slidePrev()}
-                    className="flex size-10 items-center justify-center rounded-full border border-border bg-white text-first transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first disabled:cursor-not-allowed disabled:opacity-40"
-                  >
-                    <PreviousIcon className="size-5" aria-hidden="true" />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label={t('mainpage.mostSoldProducts.next')}
-                    disabled={isEnd}
-                    onClick={() => swiperRef.current?.slideNext()}
-                    className="flex size-10 items-center justify-center rounded-full border border-border bg-white text-first transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first disabled:cursor-not-allowed disabled:opacity-40"
-                  >
-                    <NextIcon className="size-5" aria-hidden="true" />
-                  </button>
-                </div>
-              )}
             </div>
           </div>
 
@@ -176,33 +147,37 @@ const MostSoldProducts = ({ showcase }: Props) => {
                 modules={[A11y, Keyboard]}
                 keyboard={{ enabled: true, onlyInViewport: true }}
                 className="best-products-panel__swiper"
-                slidesPerView={1.12}
+                slidesPerView={1}
                 spaceBetween={12}
                 breakpoints={{
+                  390: { slidesPerView: 1.1, spaceBetween: 14 },
+                  430: { slidesPerView: 1.2, spaceBetween: 14 },
                   480: { slidesPerView: 1.4, spaceBetween: 14 },
-                  640: { slidesPerView: 2.05, spaceBetween: 16 },
-                  768: { slidesPerView: 2.5, spaceBetween: 18 },
-                  1024: { slidesPerView: 3.1, spaceBetween: 20 },
-                  1280: { slidesPerView: 3.8, spaceBetween: 24 },
+                  560: { slidesPerView: 1.6, spaceBetween: 14 },
+                  640: { slidesPerView: 1.8, spaceBetween: 16 },
+                  720: { slidesPerView: 2, spaceBetween: 16 },
+                  768: { slidesPerView: 2.15, spaceBetween: 18 },
+                  840: { slidesPerView: 2.4, spaceBetween: 18 },
+                  900: { slidesPerView: 2.6, spaceBetween: 18 },
+                  960: { slidesPerView: 2.8, spaceBetween: 18 },
+                  1024: { slidesPerView: 'auto', spaceBetween: 20 },
+                  1280: { slidesPerView: 'auto', spaceBetween: 24 },
                 }}
                 grabCursor={visibleProducts.length > 1}
                 watchOverflow
-                onSwiper={(swiper) => {
-                  swiperRef.current = swiper;
-                  updateSliderState(swiper);
-                }}
-                onSlideChange={updateSliderState}
-                onResize={updateSliderState}
-                onBreakpoint={updateSliderState}
-                onLock={updateSliderState}
-                onUnlock={updateSliderState}
+                onSwiper={updateFade}
+                onSlideChange={updateFade}
+                onResize={updateFade}
+                onBreakpoint={updateFade}
+                onLock={updateFade}
+                onUnlock={updateFade}
               >
                 {visibleProducts.map((item) => (
                   <SwiperSlide key={item.id}>
                     <ShowcaseProductCard
                       product={item.product}
                       variant="mostViewed"
-                      className="max-w-none"
+                      className="h-auto max-w-none"
                     />
                   </SwiperSlide>
                 ))}
@@ -211,6 +186,13 @@ const MostSoldProducts = ({ showcase }: Props) => {
               <p className="flex min-h-[508px] items-center justify-center rounded-[32px] bg-surface px-6 text-center text-sm text-text-muted">
                 {t('mainpage.mostSoldProducts.empty')}
               </p>
+            )}
+            {visibleProducts.length > 0 && fadeWidth > 0 && (
+              <div
+                className="landing-slider-edge-fade"
+                style={{ width: fadeWidth }}
+                aria-hidden="true"
+              />
             )}
           </div>
         </div>

@@ -490,7 +490,7 @@ export function NavbarWithDropDownDrawer() {
                 aria-label={labels.shopName}
               >
                 <AmazonMark className="h-14 w-14 shrink-0" />
-                <span className="text-[24px] leading-7 font-f-bold font-black text-black dark:text-text">
+                <span className="shop-brand-name text-2xl text-black dark:text-text">
                   {labels.shopName}
                 </span>
               </Link>
@@ -562,7 +562,6 @@ export function NavbarWithDropDownDrawer() {
                     >
                       <div className="grid grid-cols-[20rem_minmax(0,1fr)]">
                         <div className="border-e border-color-theme bg-color-for-layer-sec p-4">
-                 
                           <ul className="navbar-category-scroll max-h-[min(24rem,calc(100dvh-10rem))] space-y-1.5 overflow-y-auto pe-1">
                             {categoryList.length > 0 ? (
                               categoryList.map((category, index) => (
@@ -686,7 +685,7 @@ export function NavbarWithDropDownDrawer() {
               >
                 <AmazonMark className="h-10 w-10 shrink-0" />
                 <span className="flex min-w-0 flex-col">
-                  <span className="truncate text-base leading-5 font-f-bold text-[#1C1C1C] dark:text-text">
+                  <span className="shop-brand-name truncate text-xl text-[#1C1C1C] dark:text-text sm:text-2xl">
                     {labels.shopName}
                   </span>
                   <span className="truncate text-[11px] leading-4 text-text-muted">
@@ -742,7 +741,7 @@ export function NavbarWithDropDownDrawer() {
                 <AmazonMark className="h-12 w-12 shrink-0" />
                 <span
                   id="mobile-navigation-title"
-                  className="truncate text-base font-f-bold text-secound"
+                  className="shop-brand-name truncate text-xl text-secound sm:text-2xl"
                 >
                   {labels.menuTitle}
                 </span>

@@ -1,9 +1,10 @@
-import { Mail, MessageCircle, Phone } from 'lucide-react';
+import { MessageCircle, Phone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import EnamadLogo from '@/assets/Images/E-namd/E-namd-2.png';
-import SamandehiLogo from '@/assets/Images/E-namd/E-namd.png';
-import MainLogo from '@/assets/Images/Logo/logo-nav.png';
+import ZibalLogo from '@/assets/Images/E-namd/E-namd.png';
+import { AmazonMark } from '@/components/layout/brand/AmazonMark';
+import { storeContact } from '@/config/store';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useLangStore } from '@/stores/languageStore';
 import type { SVGProps } from 'react';
@@ -22,8 +23,6 @@ export function Instagram(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-const instagramUrl = 'https://www.instagram.com/beris_handicrafts/';
-
 export const Footer = () => {
   const { t } = useTranslation();
   const dir = useLangStore((s) => s.dir);
@@ -32,25 +31,19 @@ export const Footer = () => {
   const socialLinks = [
     {
       key: 'instagram',
-      href: instagramUrl,
+      href: storeContact.instagram,
       icon: Instagram,
       external: true,
     },
     {
       key: 'whatsapp',
-      href: 'https://ble.ir/09361844504',
+      href: storeContact.whatsapp,
       icon: MessageCircle,
       external: true,
     },
     {
-      key: 'email',
-      href: 'arefarbabi71@gmail.com',
-      icon: Mail,
-      external: false,
-    },
-    {
       key: 'phone',
-      href: 'tel:09361844504',
+      href: storeContact.phoneHref,
       icon: Phone,
       external: false,
     },
@@ -88,39 +81,71 @@ export const Footer = () => {
 
   const trustMarks = [
     {
-      key: 'samandehi',
-      src: SamandehiLogo,
-      href: '',
+      key: 'enamad',
+      src: EnamadLogo,
+    },
+    {
+      key: 'zibal',
+      src: ZibalLogo,
     },
   ] as const;
 
   return (
-    <footer dir={dir} className="mt-10 pb-25 lg:pb-8">
-      <div className="landing-container">
-        <div className="overflow-hidden rounded-3xl border border-color-theme bg-color-for-layer-on-body first-text-color shadow-dark-sm">
-          <div className="grid gap-10 px-5 py-8 sm:grid-cols-2 sm:px-8 sm:py-10 lg:grid-cols-12 lg:gap-8 lg:px-10 lg:py-12">
-            <section className="sm:col-span-2 lg:col-span-4" aria-labelledby="footer-brand">
-              <Link
-                to={localizedPath('/')}
-                className="inline-flex items-center gap-3 rounded-xl"
-                aria-label={t('footer.brand.title')}
-              >
-                <img
-                  src={MainLogo}
-                  alt=""
-                  className="h-16 w-16 shrink-0 object-contain"
-                  loading="lazy"
-                />
-                <h2 id="footer-brand" className="text-2xl font-s-bold text-first">
-                  {t('footer.brand.title')}
-                </h2>
-              </Link>
+    <footer
+      dir={dir}
+      className="mt-10 px-3 pb-[calc(8rem+env(safe-area-inset-bottom))] first-text-color sm:px-6 lg:px-8 lg:pb-8"
+    >
+      <div className="mx-auto w-full max-w-376 rounded-[40px] bg-color-for-layer-on-body p-5 sm:p-8 lg:p-10 2xl:p-16">
+        <section className="flex flex-col items-center text-center" aria-labelledby="footer-brand">
+          <Link
+            to={localizedPath('/')}
+            className="inline-flex items-center justify-center gap-3 rounded-xl"
+            aria-label={t('footer.brand.title')}
+          >
+            <AmazonMark className="h-14 w-14 shrink-0" />
+            <h2 id="footer-brand" className="shop-brand-name text-xl text-first sm:text-2xl">
+              {t('footer.brand.title')}
+            </h2>
+          </Link>
+          <p className="mt-4 max-w-2xl text-sm leading-8 first-text-color-for-paragraph sm:text-base">
+            {t('footer.brand.description')}
+          </p>
+        </section>
 
-              <p className="mt-4 max-w-xl text-sm leading-8 first-text-color-for-paragraph">
-                {t('footer.brand.description')}
-              </p>
+        <div className="mt-8 border-t border-dashed border-color-theme" aria-hidden="true" />
 
-              <div className="mt-6 flex flex-wrap gap-3">
+        <div className="mt-8 flex flex-col gap-10 lg:flex-row lg:justify-between lg:gap-8">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:shrink-0 lg:gap-x-8 2xl:gap-x-14">
+            {columns.map((column) => (
+              <nav key={column.key} aria-label={t(`footer.columns.${column.key}.title`)}>
+                <h3 className="font-s-sbold first-text-color">
+                  {t(`footer.columns.${column.key}.title`)}
+                </h3>
+                <ul className="mt-4 space-y-3">
+                  {column.links.map((link) => (
+                    <li key={link.key}>
+                      <Link
+                        to={localizedPath(link.to)}
+                        className="text-sm first-text-color-for-paragraph transition-colors hover:text-secound"
+                      >
+                        {t(`footer.columns.${column.key}.${link.key}`)}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
+          </div>
+
+          <div className="flex flex-col gap-8 sm:flex-row sm:items-start lg:flex-col 2xl:flex-row 2xl:gap-10">
+            <section className="max-w-64" aria-labelledby="footer-address">
+              <h3 id="footer-address" className="font-s-sbold first-text-color">
+                {t('footer.address.title')}
+              </h3>
+              <address className="mt-4 text-sm leading-7 not-italic first-text-color-for-paragraph">
+                {t('footer.address.value')}
+              </address>
+              <nav className="mt-5 flex flex-wrap gap-3" aria-label={t('footer.social.label')}>
                 {socialLinks.map(({ key, href, icon: Icon, external }) => (
                   <a
                     key={key}
@@ -133,104 +158,37 @@ export const Footer = () => {
                     <Icon className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
                   </a>
                 ))}
-              </div>
+              </nav>
             </section>
 
-            <div className="grid grid-cols-1 gap-x-6 gap-y-8 xs:grid-cols-2 sm:col-span-2 sm:grid-cols-3 lg:col-span-5">
-              {columns.map((column) => (
-                <nav key={column.key} aria-label={t(`footer.columns.${column.key}.title`)}>
-                  <h3 className="font-s-sbold first-text-color">
-                    {t(`footer.columns.${column.key}.title`)}
-                  </h3>
-                  <ul className="mt-4 space-y-3">
-                    {column.links.map((link) => (
-                      <li key={link.key}>
-                        <Link
-                          to={localizedPath(link.to)}
-                          className="text-sm first-text-color-for-paragraph transition-colors hover:text-secound"
-                        >
-                          {t(`footer.columns.${column.key}.${link.key}`)}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
+            <div
+              role="group"
+              aria-label={t('footer.trust.label')}
+              className="flex w-fit max-w-full items-center justify-center gap-4 rounded-3xl bg-white p-4"
+            >
+              {trustMarks.map((mark) => (
+                <img
+                  key={mark.key}
+                  src={mark.src}
+                  alt={t(`footer.trust.${mark.key}`)}
+                  className="h-20 w-20 object-contain"
+                  loading="lazy"
+                />
               ))}
             </div>
-
-            <section
-              className="mx-auto w-full max-w-md sm:col-span-2 lg:col-span-3 lg:max-w-none"
-              aria-labelledby="footer-trust"
-            >
-              <div className="flex h-full max-h-54 flex-col overflow-hidden rounded-2xl border border-color-theme bg-color-for-layer-sec p-4">
-                <h3
-                  id="footer-trust"
-                  className="shrink-0 border-b border-dashed border-color-theme pb-3 text-center text-sm font-s-sbold first-text-color-for-paragraph"
-                >
-                  {t('footer.trust.title')}
-                </h3>
-
-                <div className="grid min-h-0 flex-1 grid-cols-2 gap-3 pt-4">
-                  {trustMarks.map((mark) => (
-                    <div
-                      key={mark.key}
-                      className="flex min-h-0 min-w-0 items-center justify-center rounded-xl border border-color-theme bg-color-for-layer-on-body p-2"
-                    >
-                      {mark.href ? (
-                        <a
-                          href={mark.href}
-                          className="flex  h-full"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <img
-                            src={mark.src}
-                            alt={t(`footer.trust.${mark.key}`)}
-                            className="max-h-full max-w-full object-contain"
-                            loading="lazy"
-                          />
-                        </a>
-                      ) : (
-                        <img
-                          src={mark.src}
-                          alt={t(`footer.trust.${mark.key}`)}
-                          className="max-h-full max-w-full object-contain"
-                          loading="lazy"
-                        />
-                      )}
-                    </div>
-                  ))}
-                  <a
-                    referrerPolicy="origin"
-                    target="_blank"
-                    href="https://trustseal.enamad.ir/?id=739665&Code=7DYKLIohiUdwez6k9DMZquLHhjHQBcix"
-                  >
-                    <img
-                      referrerPolicy="origin"
-                      src="https://trustseal.enamad.ir/logo.aspx?id=739665&Code=7DYKLIohiUdwez6k9DMZquLHhjHQBcix"
-                      alt=""
-                      code="7DYKLIohiUdwez6k9DMZquLHhjHQBcix"
-                    />
-                  </a>
-                </div>
-              </div>
-            </section>
           </div>
+        </div>
 
-          <p className="border-t border-color-theme bg-color-for-layer-sec px-5 py-4 text-center text-xs leading-6 first-text-color-for-paragraph-low sm:text-sm">
-            {t('footer.copyright', { year: new Date().getFullYear() })}
-            <span className="mx-2" aria-hidden="true">
-              |
-            </span>
-            <a
-              href="https://adrin-innovation.ir/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-colors hover:text-secound"
-            >
-              طراحی شده توسط شرکت نوآوری افق مدرن
-            </a>
-          </p>
+        <div className="mt-10 flex min-h-14 flex-col items-center justify-center gap-1 rounded-3xl bg-white px-4 py-2 text-center text-xs text-[#4B5563] sm:h-14 sm:flex-row sm:justify-between sm:gap-6 sm:py-0 sm:text-sm">
+          <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>
+          <a
+            href="https://adrin-innovation.ir/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#1C1C1C] transition-colors hover:text-secound"
+          >
+            {t('footer.credit')}
+          </a>
         </div>
       </div>
     </footer>

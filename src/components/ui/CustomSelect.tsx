@@ -14,9 +14,17 @@ type CustomSelectProps = {
   value: string;
   onChange: (value: string) => void;
   className?: string;
+  variant?: 'default' | 'glass';
 };
 
-export function CustomSelect({ label, options, value, onChange, className }: CustomSelectProps) {
+export function CustomSelect({
+  label,
+  options,
+  value,
+  onChange,
+  className,
+  variant = 'default',
+}: CustomSelectProps) {
   const listboxId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -120,14 +128,27 @@ export function CustomSelect({ label, options, value, onChange, className }: Cus
         }}
         onKeyDown={handleTriggerKeyDown}
         className={cn(
-          'flex h-12 w-full items-center justify-between gap-3 rounded-[18px] border bg-white px-4 text-start text-sm font-f-sbold text-text transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first',
-          isOpen ? 'border-first' : 'border-border hover:border-first/60',
+          'flex h-12 w-full items-center justify-between gap-3 rounded-[18px] border px-4 text-start text-sm font-f-sbold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2',
+          variant === 'glass'
+            ? 'bg-white/15 text-white shadow-[0_8px_24px_rgba(8,8,35,0.18),inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-xl focus-visible:outline-white'
+            : 'bg-white text-text focus-visible:outline-first',
+          variant === 'glass'
+            ? isOpen
+              ? 'border-white/60'
+              : 'border-white/30 hover:border-white/50 hover:bg-white/20'
+            : isOpen
+              ? 'border-first'
+              : 'border-border hover:border-first/60',
         )}
       >
         <span className="min-w-0 truncate">{selectedLabel}</span>
         <ChevronDown
           aria-hidden="true"
-          className={cn('size-4 shrink-0 text-first transition-transform', isOpen && 'rotate-180')}
+          className={cn(
+            'size-4 shrink-0 transition-transform',
+            variant === 'glass' ? 'text-white' : 'text-first',
+            isOpen && 'rotate-180',
+          )}
         />
       </button>
 
@@ -137,7 +158,12 @@ export function CustomSelect({ label, options, value, onChange, className }: Cus
           role="listbox"
           aria-label={label}
           onKeyDown={handleListboxKeyDown}
-          className="absolute inset-x-0 top-full z-30 mt-2 rounded-[18px] border border-border bg-white p-1.5 shadow-[0_8px_24px_#163F871A]"
+          className={cn(
+            'absolute inset-x-0 top-full z-30 mt-2 rounded-[18px] border p-1.5',
+            variant === 'glass'
+              ? 'border-white/25 bg-[#18183e]/85 shadow-[0_12px_30px_rgba(8,8,35,0.3)] backdrop-blur-xl'
+              : 'border-border bg-white shadow-[0_8px_24px_#163F871A]',
+          )}
         >
           {options.map((option, index) => (
             <button
@@ -151,8 +177,14 @@ export function CustomSelect({ label, options, value, onChange, className }: Cus
               tabIndex={index === highlightedIndex ? 0 : -1}
               onClick={() => choose(option)}
               className={cn(
-                'flex w-full items-center justify-between gap-3 rounded-[13px] px-3 py-2.5 text-start text-sm text-text hover:bg-surface focus-visible:bg-surface focus-visible:outline-none',
-                option.value === value && 'bg-[#F4F7F9] font-f-sbold text-first',
+                'flex w-full items-center justify-between gap-3 rounded-[13px] px-3 py-2.5 text-start text-sm focus-visible:outline-none',
+                variant === 'glass'
+                  ? 'text-white hover:bg-white/15 focus-visible:bg-white/15'
+                  : 'text-text hover:bg-surface focus-visible:bg-surface',
+                option.value === value &&
+                  (variant === 'glass'
+                    ? 'bg-white/20 font-f-sbold text-white'
+                    : 'bg-[#F4F7F9] font-f-sbold text-first'),
               )}
             >
               <span>{option.label}</span>

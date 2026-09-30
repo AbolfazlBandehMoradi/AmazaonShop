@@ -12,6 +12,7 @@ import { CustomSelect } from '@/components/ui/CustomSelect';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import type { Showcase } from '@/hooks/useShowcases';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
+import { useSlideEdgeFade } from '@/hooks/useSlideEdgeFade';
 import { useLangStore } from '@/stores/languageStore';
 import { cn } from '@/utils/cn';
 
@@ -31,6 +32,7 @@ const MostViewedProducts = ({ showcase }: Props) => {
   const { dir } = useLangStore();
   const localizedPath = useLocalizedPath();
   const [activeCategoryId, setActiveCategoryId] = useState<string>('all');
+  const { fadeWidth, updateFade } = useSlideEdgeFade();
 
   const products = useMemo(
     () => [...(showcase?.items ?? [])].sort((a, b) => a.sortOrder - b.sortOrder),
@@ -145,7 +147,7 @@ const MostViewedProducts = ({ showcase }: Props) => {
         >
           {visibleProducts.length ? (
             <>
-              <div className="lg:hidden">
+              <div className="relative lg:hidden">
                 <Swiper
                   key={[showcase?.id ?? 'most-viewed', activeCategoryId, dir].join('-')}
                   dir={dir}
@@ -161,6 +163,12 @@ const MostViewedProducts = ({ showcase }: Props) => {
                   }}
                   grabCursor={visibleProducts.length > 1}
                   watchOverflow
+                  onSwiper={updateFade}
+                  onSlideChange={updateFade}
+                  onResize={updateFade}
+                  onBreakpoint={updateFade}
+                  onLock={updateFade}
+                  onUnlock={updateFade}
                 >
                   {visibleProducts.map((item) => (
                     <SwiperSlide key={item.id} className="h-auto">
@@ -168,6 +176,13 @@ const MostViewedProducts = ({ showcase }: Props) => {
                     </SwiperSlide>
                   ))}
                 </Swiper>
+                {fadeWidth > 0 && (
+                  <div
+                    className="landing-slider-edge-fade"
+                    style={{ width: fadeWidth }}
+                    aria-hidden="true"
+                  />
+                )}
               </div>
 
               <div className="hidden pt-2 lg:grid lg:grid-cols-3 lg:gap-5 xl:grid-cols-4 xl:gap-6">

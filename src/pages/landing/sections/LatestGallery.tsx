@@ -6,6 +6,7 @@ import 'swiper/css';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { useGalleriesByCategory, type GalleriesByCategoryResponse } from '@/hooks/useGalleries';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
+import { useSlideEdgeFade } from '@/hooks/useSlideEdgeFade';
 import { useLangStore } from '@/stores/languageStore';
 
 type GalleryBanner = GalleriesByCategoryResponse['items'][number];
@@ -34,6 +35,7 @@ function Banner({ item, fallbackAlt }: { item: GalleryBanner; fallbackAlt: strin
 export default function LatestGallery() {
   const { data } = useGalleriesByCategory('latest');
   const { dir } = useLangStore();
+  const { fadeWidth, updateFade } = useSlideEdgeFade();
   const items = [...(data?.items ?? [])].sort((a, b) => a.displayOrder - b.displayOrder);
 
   if (!data?.category || items.length === 0) return null;
@@ -51,7 +53,7 @@ export default function LatestGallery() {
         />
 
         <div className="mt-6">
-          <div className="lg:hidden">
+          <div className="relative lg:hidden">
             <Swiper
               key={dir}
               dir={dir}
@@ -66,6 +68,12 @@ export default function LatestGallery() {
               }}
               grabCursor={items.length > 1}
               watchOverflow
+              onSwiper={updateFade}
+              onSlideChange={updateFade}
+              onResize={updateFade}
+              onBreakpoint={updateFade}
+              onLock={updateFade}
+              onUnlock={updateFade}
             >
               {items.map((item) => (
                 <SwiperSlide key={item.id}>
@@ -73,6 +81,13 @@ export default function LatestGallery() {
                 </SwiperSlide>
               ))}
             </Swiper>
+            {fadeWidth > 0 && (
+              <div
+                className="landing-slider-edge-fade"
+                style={{ width: fadeWidth }}
+                aria-hidden="true"
+              />
+            )}
           </div>
 
           <div className="hidden lg:grid lg:grid-cols-4 lg:gap-2">

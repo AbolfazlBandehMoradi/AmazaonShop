@@ -1,19 +1,23 @@
 {
   "footer": {
     "brand": {
-      "title": "Beris",
-      "description": "Since 2018, Beris has been preserving the art of Baluchi needlework. More than 60 Baluchi women artisans work with Beris, and every purchase helps support the artisans and the cultural heritage of Baluchistan."
+      "title": "Amazon",
+      "description": "With more than 10 years of experience sourcing authentic digital products, our online store is committed to offering you the best prices, top quality, and a valid warranty."
     },
     "social": {
-      "instagram": "Beris on Instagram",
-      "whatsapp": "Beris on WhatsApp",
-      "email": "Email Beris",
-      "phone": "Call Beris"
+      "label": "Contact Amazon",
+      "instagram": "Amazon on Instagram",
+      "whatsapp": "Amazon on WhatsApp",
+      "phone": "Call Amazon"
     },
     "trust": {
-      "title": "Trust marks",
+      "label": "Trust and payment",
       "enamad": "Electronic trust mark",
-      "samandehi": "Samandehi registration mark"
+      "zibal": "Zibal payment gateway"
+    },
+    "address": {
+      "title": "Store address",
+      "value": "Before Beheshti, Maleki Tower 15, Amazon"
     },
     "columns": {
       "services": {
@@ -27,7 +31,7 @@
         "title": "Shop",
         "categories": "Categories",
         "products": "All products",
-        "blogs": "Beris blog",
+        "blogs": "Amazon blog",
         "specialOffers": "Featured products"
       },
       "contact": {
@@ -38,6 +42,7 @@
         "faq": "Frequently asked questions"
       }
     },
-    "copyright": "© {{year}} Beris. All rights reserved. Made for Iranian craft."
+    "copyright": "© {{year}} Amazon. All rights reserved.",
+    "credit": "Designed by Ofogh Modern Innovation"
   }
 }

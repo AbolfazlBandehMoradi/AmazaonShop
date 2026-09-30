@@ -30,12 +30,12 @@ const MainPage = () => {
     <main>
       <Hero categories={index?.categories ?? []} />
       <MostViewedProducts showcase={showcases?.[0]} />
-      <MostSoldProducts showcase={showcases?.[0]} />
       <LatestGallery />
       <WhyUs />
       <DiscountedProducts discountedProduct={index?.discountProducts ?? []} />
       <NewestProducts showcase={showcases?.[0]} />
       <BannerGallery />
+      <MostSoldProducts showcase={showcases?.[0]} />
       <BlogsSlider blogs={index?.blogs ?? []} />
       <TestimonialsSlider testimonials={index?.testimonials ?? []} />
     </main>

@@ -150,7 +150,7 @@
 .best-products-panel {
   --best-products-bg-width: min(calc(100% - 24px), 320px);
   position: relative;
-  width: min(100%, 1248px);
+  width: 100%;
   margin-inline: auto;
   padding-bottom: 28px;
 }
@@ -209,6 +209,23 @@ section[dir='ltr'] .best-products-panel__background {
   height: auto;
 }
 
+.best-products-panel__swiper .swiper-slide > article > div {
+  min-height: 508px;
+}
+
+.landing-slider-edge-fade {
+  position: absolute;
+  z-index: 2;
+  inset-block: 0;
+  inset-inline-end: 0;
+  background: linear-gradient(90deg, #FFFFFF 39.06%, rgba(255, 255, 255, 0) 88.57%);
+  pointer-events: none;
+}
+
+section[dir='ltr'] .landing-slider-edge-fade {
+  transform: scaleX(-1);
+}
+
 @media (min-width: 640px) {
   .best-products-panel {
     --best-products-bg-width: 310px;
@@ -218,6 +235,15 @@ section[dir='ltr'] .best-products-panel__background {
 @media (min-width: 1024px) {
   .best-products-panel {
     --best-products-bg-width: 344px;
+  }
+
+  .best-products-panel__background {
+    inset-inline-start: -1.5rem;
+    width: calc(var(--best-products-bg-width) + 1.5rem);
+  }
+
+  .best-products-panel__swiper .swiper-slide {
+    width: clamp(300px, 25vw, 330px);
   }
 
   .best-products-panel__header {
@@ -240,7 +266,19 @@ section[dir='ltr'] .best-products-panel__background {
 
 @media (min-width: 1280px) {
   .best-products-panel {
-    --best-products-bg-width: 354px;
+    /* Keep the SVG's inner edge near the first card as the section widens. */
+    --best-products-bg-width: clamp(344px, calc(10vw + 216px), 384px);
+  }
+}
+
+@media (min-width: 1536px) {
+  .best-products-panel__header {
+    padding-inline-start: 40px;
+  }
+
+  .best-products-panel__slider {
+    width: calc(100% - 40px);
+    margin-inline-start: 40px;
   }
 }
 
@@ -268,6 +306,7 @@ section[dir='ltr'] .best-products-panel__background {
 }
 
 .deals-panel__slider {
+  position: relative;
   width: calc(100% - 32px);
   margin: 28px auto 0;
 }
