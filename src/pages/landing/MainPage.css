@@ -175,7 +175,7 @@
   margin: 28px auto 0;
 }
 
-.deals-slider {
+.swiper.deals-slider {
   padding-block: 12px 20px;
   padding-inline: 12px;
 }
