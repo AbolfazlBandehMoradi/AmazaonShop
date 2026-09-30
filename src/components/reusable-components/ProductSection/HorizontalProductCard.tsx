@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { ImageOff, LoaderCircle, ShoppingCart } from 'lucide-react';
+import { ImageOff, LoaderCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import { CartIcon } from '@/components/ui/CartIcon';
 import { PriceDisplay } from '@/components/ui/PriceDisplay';
 import { useToast } from '@/context/ToastContext';
 import useAddToCart from '@/hooks/cart/useAddToCart';
@@ -26,6 +27,8 @@ const HorizontalProductCard = ({ product }: Props) => {
   const productName = lang === 'en' ? product.nameEn || product.name : product.name;
   const productId = Number(product.id);
   const canAddToCart = product.inStock && Number.isFinite(productId);
+  const originalPrice = product.originalPrice ?? 0;
+  const hasDiscount = originalPrice > product.price;
 
   return (
     <article className="horizontal-product-card group relative w-full transition-transform duration-300 motion-safe:hover:-translate-y-1 motion-safe:focus-within:-translate-y-1">
@@ -57,7 +60,7 @@ const HorizontalProductCard = ({ product }: Props) => {
           </h3>
 
           <div
-            className="horizontal-product-card__price-wrap mt-auto text-text"
+            className="horizontal-product-card__price-wrap mt-auto flex flex-col items-start gap-0.5 text-text"
             dir={lang === 'fa' ? 'rtl' : 'ltr'}
           >
             <PriceDisplay
@@ -66,6 +69,14 @@ const HorizontalProductCard = ({ product }: Props) => {
               className="horizontal-product-card__price font-f-sbold"
               currencyClassName="text-xs font-f-normal text-text-muted"
             />
+            {hasDiscount && (
+              <PriceDisplay
+                amount={originalPrice}
+                languageCode={lang}
+                currencyMode="none"
+                className="horizontal-product-card__original-price text-xs leading-4 text-text-muted line-through"
+              />
+            )}
           </div>
         </div>
 
@@ -87,7 +98,7 @@ const HorizontalProductCard = ({ product }: Props) => {
 
       <button
         type="button"
-        className="horizontal-product-card__cart absolute bottom-0 left-1/2 z-20 -translate-x-1/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first disabled:cursor-not-allowed"
+        className="horizontal-product-card__cart absolute bottom-0 z-20 -translate-x-1/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first disabled:cursor-not-allowed"
         aria-label={
           canAddToCart ? `${t('common.addToCart')}: ${productName}` : t('common.outOfStock')
         }
@@ -110,7 +121,7 @@ const HorizontalProductCard = ({ product }: Props) => {
               aria-hidden="true"
             />
           ) : (
-            <ShoppingCart className="size-4" strokeWidth={1.8} aria-hidden="true" />
+            <CartIcon />
           )}
         </span>
       </button>
