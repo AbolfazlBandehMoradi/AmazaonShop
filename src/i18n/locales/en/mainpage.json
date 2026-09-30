@@ -121,6 +121,7 @@
   },
   "discount": {
     "remainingTime": "Time left",
+    "offerEndsIn": "Offer ends in",
     "title": "Amazing deals",
     "subtitle": "You can't miss",
     "days": "days",

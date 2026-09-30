@@ -7,8 +7,9 @@ import { CartIcon } from '@/components/ui/CartIcon';
 import { PriceDisplay } from '@/components/ui/PriceDisplay';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useLangStore } from '@/stores/languageStore';
-import type { Product } from '@/types';
+import type { Language, Product } from '@/types';
 import { cn } from '@/utils/cn';
+import useDiscountOfferTime from '@/utils/discountOffterTime';
 
 interface ShowcaseProductCardProps {
   product: Product;
@@ -16,6 +17,50 @@ interface ShowcaseProductCardProps {
   className?: string;
   variant?: 'default' | 'deals';
 }
+
+const DealsCardCountdown = ({ endDate, lang }: { endDate: string; lang: Language }) => {
+  const { t } = useTranslation();
+  const timeLeft = useDiscountOfferTime(endDate);
+
+  if (!timeLeft.isValid || timeLeft.isExpired) return null;
+
+  const formatter = new Intl.NumberFormat(lang === 'fa' ? 'fa-IR' : 'en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
+  });
+  const offerEndsIn = t('mainpage.discount.offerEndsIn');
+  const units = [
+    { value: timeLeft.days * 24 + timeLeft.hours, label: t('mainpage.discount.hours') },
+    { value: timeLeft.minutes, label: t('mainpage.discount.minutes') },
+    { value: timeLeft.seconds, label: t('mainpage.discount.seconds') },
+  ];
+
+  return (
+    <div
+      role="timer"
+      aria-label={`${offerEndsIn}: ${units.map(({ value, label }) => `${formatter.format(value)} ${label}`).join(lang === 'fa' ? '، ' : ', ')}`}
+      dir={lang === 'fa' ? 'rtl' : 'ltr'}
+      className="absolute top-4 left-4 z-10 inline-flex max-w-[calc(100%-1.5rem)] items-center gap-2 rounded-lg bg-white px-2 py-1.5"
+    >
+      <span
+        dir="ltr"
+        aria-hidden="true"
+        className="inline-flex shrink-0 items-center whitespace-nowrap text-base leading-5 font-f-bold tabular-nums text-red-600"
+      >
+        {units.map(({ value, label }, index) => (
+          <span key={label} className="inline-flex items-center gap-1">
+            {index > 0 && <span>:</span>}
+            <span>{formatter.format(value)}</span>
+          </span>
+        ))}
+      </span>
+      <span aria-hidden="true" className="relative mb-1 flex size-2 shrink-0">
+        <span className="absolute inline-flex size-full animate-ping rounded-full bg-red-400 opacity-70 motion-reduce:animate-none" />
+        <span className="relative inline-flex size-2 rounded-full bg-red-600" />
+      </span>
+    </div>
+  );
+};
 
 const ShowcaseProductCard = ({
   product,
@@ -40,12 +85,17 @@ const ShowcaseProductCard = ({
       : hasDiscount
         ? Math.round(((originalPrice - product.price) / originalPrice) * 100)
         : 0;
+  const saleEndDate = isDealsVariant
+    ? [product.saleEndDateUtc, product.saleEndDate].find(
+        (value) => value && Date.parse(value) > Date.now(),
+      )
+    : undefined;
 
   return (
     <article
       className={cn(
-        'group mx-auto h-[508px] w-full rounded-[32px] transition-transform duration-300 ease-out motion-safe:hover:-translate-y-1 motion-safe:focus-within:-translate-y-1',
-        isDealsVariant ? 'max-w-[390px]' : 'max-w-[310px]',
+        'group mx-auto w-full rounded-[32px] transition-transform duration-300 ease-out motion-safe:hover:-translate-y-1 motion-safe:focus-within:-translate-y-1',
+        isDealsVariant ? 'h-[570px] max-w-[390px]' : 'h-[508px] max-w-[310px]',
         className,
       )}
     >
@@ -57,8 +107,9 @@ const ShowcaseProductCard = ({
       >
         <div
           className={cn(
-            'relative aspect-square shrink-0 overflow-hidden rounded-t-[32px] rounded-b-lg border border-border bg-white',
-            isDealsVariant && 'max-h-[310px]',
+            'relative shrink-0 overflow-hidden rounded-t-[32px] rounded-b-lg border border-border bg-white',
+            isDealsVariant ? 'flex h-[350px] items-center justify-center p-6' : 'aspect-square',
+            isDealsVariant && saleEndDate && 'pt-14',
           )}
         >
           {product.image && !imageFailed ? (
@@ -69,7 +120,7 @@ const ShowcaseProductCard = ({
               decoding="async"
               className={cn(
                 'h-full w-full transition-transform duration-300 ease-out motion-safe:group-hover:scale-[1.03] motion-safe:group-focus-within:scale-[1.03]',
-                isDealsVariant ? 'object-contain' : 'object-cover',
+                isDealsVariant ? 'max-h-[260px] max-w-[260px] object-contain' : 'object-cover',
               )}
               onError={() => setImageFailed(true)}
             />
@@ -80,10 +131,15 @@ const ShowcaseProductCard = ({
             </div>
           )}
 
+          {saleEndDate && <DealsCardCountdown endDate={saleEndDate} lang={lang} />}
+
           {discountPercent > 0 && (
             <span
               dir="ltr"
-              className="absolute top-3 right-3 inline-flex items-center rounded-xl bg-red-700 px-3 py-1.5 text-xs leading-4 font-f-sbold text-white ring-2 ring-white/90"
+              className={cn(
+                'absolute right-3 inline-flex items-center rounded-xl bg-red-700 px-3 py-1.5 text-xs leading-4 font-f-sbold text-white ring-2 ring-white/90',
+                isDealsVariant ? 'bottom-3' : 'top-3',
+              )}
             >
               {discountPercent}%
             </span>
