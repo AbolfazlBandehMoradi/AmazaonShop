@@ -85,6 +85,21 @@
   }
 }
 
+@container (max-width: 480px) {
+  .horizontal-product-card__badge {
+    min-height: 0;
+    gap: 3px;
+    padding: 2px 4px;
+    font-size: 9px;
+    line-height: 12px;
+  }
+
+  .horizontal-product-card__status-dot {
+    width: 5px;
+    height: 5px;
+  }
+}
+
 @container (max-width: 370px) {
   .horizontal-product-card__copy > span {
     font-size: 10px;
