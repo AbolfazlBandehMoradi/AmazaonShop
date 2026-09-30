@@ -37,7 +37,7 @@ export default function BannerGallery() {
   return (
     <section dir={dir} className="landing-section" aria-label={data.category.name}>
       <div className="landing-container">
-        <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 xl:mx-auto xl:max-w-[1312px]">
+        <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
           {items.map((item) => (
             <Banner key={item.id} item={item} fallbackAlt={data.category.name} />
           ))}

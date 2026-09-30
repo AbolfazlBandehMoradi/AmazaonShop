@@ -5,6 +5,7 @@ import { A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.css';
 
+import { SectionHeading } from '@/components/ui/SectionHeading';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useLangStore } from '@/stores/languageStore';
 import type { Blog } from '@/types';
@@ -30,10 +31,12 @@ const BlogsSlider = ({ blogs }: BlogsSliderProps) => {
     <section dir={dir} className="landing-section" aria-labelledby="landing-blogs-title">
       <div className="landing-container">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4 sm:mb-8">
-          <h2 id="landing-blogs-title" className="text-2xl font-s-sbold first-text-color">
-            <span className="text-first">{t('mainpage.landingBlogs.blog')}</span>
-            {t('mainpage.landingBlogs.title')}
-          </h2>
+          <SectionHeading
+            id="landing-blogs-title"
+            subtext={t('mainpage.landingBlogs.blog')}
+            title={t('mainpage.landingBlogs.title')}
+            titleClassName="sm:text-2xl"
+          />
           <Link
             to={localizedPath('/blogs')}
             className="group inline-flex items-center gap-2 text-sm font-s-medium text-first"
@@ -52,49 +55,64 @@ const BlogsSlider = ({ blogs }: BlogsSliderProps) => {
         <Swiper
           key={dir}
           dir={dir}
+          className="!py-3"
           modules={[A11y]}
+          watchOverflow
           spaceBetween={20}
-          slidesPerView={1}
+          slidesPerView={1.1}
           breakpoints={{
             640: { slidesPerView: 1.6 },
             768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
+            1024: { slidesPerView: 2.3 },
+            1152: { slidesPerView: 2.6 },
+            1280: { slidesPerView: 3 },
           }}
         >
           {blogs.map((blog) => {
             const title = lang === 'en' ? blog.titleEn || blog.title : blog.title;
             const excerpt = lang === 'en' ? blog.excerptEn || blog.excerpt : blog.excerpt;
+            const category = lang === 'en' ? blog.categoryEn || blog.category : blog.category;
 
             return (
-              <SwiperSlide key={blog.id} className="h-auto">
+              <SwiperSlide key={blog.id} className="!h-auto">
                 <Link
                   to={localizedPath(`/blogs/${blog.slug || blog.id}`)}
-                  className="group relative block pb-28"
+                  className="group flex aspect-[421.333/476.222] min-h-[410px] w-full flex-col rounded-[32px] bg-surface p-2 text-start hover:shadow-sm focus-visible:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first motion-safe:transition-[transform,box-shadow] motion-safe:duration-300 motion-safe:ease-out motion-safe:hover:-translate-y-1 motion-safe:focus-visible:-translate-y-1 sm:min-h-[440px] lg:min-h-[476.222px] dark:bg-[#273242] dark:hover:shadow-black/30 dark:focus-visible:shadow-black/30"
                 >
-                  <span className="block aspect-410/250 overflow-hidden rounded-2xl bg-color-for-layer-sec">
+                  <span className="block aspect-[405.333/270.222] shrink-0 overflow-hidden rounded-[28px] bg-color-for-layer-three">
                     <img
                       src={blog.image}
-                      alt={title}
+                      alt=""
+                      width={405}
+                      height={270}
                       loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      decoding="async"
+                      className="h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-105 motion-safe:group-focus-visible:scale-105"
                     />
                   </span>
-                  <span className="absolute bottom-28 start-4 flex min-h-44 w-[72%] max-w-86 translate-y-1/2 flex-col rounded-2xl bg-color-for-layer-on-body p-5 pb-14 text-start sm:w-3/4 sm:max-w-none">
-                    <strong className="line-clamp-2 text-[18px] leading-7 font-s-sbold first-text-color">
+                  <span className="flex min-w-0 flex-1 flex-col px-5 pb-5 pt-4 lg:p-8">
+                    <span className="line-clamp-1 text-sm leading-[18px] text-secound">
+                      {category}
+                    </span>
+                    <strong className="mt-1 line-clamp-2 text-base leading-5 font-semibold font-f-sbold first-text-color">
                       {title}
                     </strong>
-                    <span className="mt-2 line-clamp-2 text-base leading-7 first-text-color-for-paragraph">
+                    <span className="mt-1 line-clamp-2 text-sm leading-[18px] first-text-color-for-paragraph">
                       {cleanText(excerpt)}
                     </span>
-                    <span className="absolute start-5 bottom-5 inline-flex items-center gap-2 text-sm font-s-medium text-first">
-                      {t('mainpage.landingBlogs.readMore')}
-                      <ForwardIcon
-                        aria-hidden="true"
-                        className={cn(
-                          'h-4 w-4 transition-transform',
-                          isRtl ? 'group-hover:-translate-x-1' : 'group-hover:translate-x-1',
-                        )}
-                      />
+                    <span className="mt-auto block pt-1 text-right text-sm leading-[18px] font-s-medium text-first">
+                      <span className="inline-flex items-center gap-2">
+                        {t('mainpage.landingBlogs.readMore')}
+                        <ForwardIcon
+                          aria-hidden="true"
+                          className={cn(
+                            'h-4 w-4 motion-safe:transition-transform',
+                            isRtl
+                              ? 'motion-safe:group-hover:-translate-x-1 motion-safe:group-focus-visible:-translate-x-1'
+                              : 'motion-safe:group-hover:translate-x-1 motion-safe:group-focus-visible:translate-x-1',
+                          )}
+                        />
+                      </span>
                     </span>
                   </span>
                 </Link>

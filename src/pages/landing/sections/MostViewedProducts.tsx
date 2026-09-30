@@ -164,7 +164,7 @@ const MostViewedProducts = ({ showcase }: Props) => {
                 >
                   {visibleProducts.map((item) => (
                     <SwiperSlide key={item.id} className="h-auto">
-                      <ShowcaseProductCard product={item.product} />
+                      <ShowcaseProductCard product={item.product} variant="mostViewed" />
                     </SwiperSlide>
                   ))}
                 </Swiper>
@@ -175,6 +175,7 @@ const MostViewedProducts = ({ showcase }: Props) => {
                   <ShowcaseProductCard
                     key={item.id}
                     product={item.product}
+                    variant="mostViewed"
                     className="h-auto max-w-none"
                   />
                 ))}

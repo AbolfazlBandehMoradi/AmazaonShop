@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { ImageOff } from 'lucide-react';
+import { ImageOff, LoaderCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { CartIcon } from '@/components/ui/CartIcon';
 import { PriceDisplay } from '@/components/ui/PriceDisplay';
+import { useToast } from '@/context/ToastContext';
+import useAddToCart from '@/hooks/cart/useAddToCart';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useLangStore } from '@/stores/languageStore';
 import type { Language, Product } from '@/types';
@@ -15,7 +17,7 @@ interface ShowcaseProductCardProps {
   product: Product;
   tabIndex?: number;
   className?: string;
-  variant?: 'default' | 'deals';
+  variant?: 'default' | 'deals' | 'mostViewed';
 }
 
 const DealsCardCountdown = ({ endDate, lang }: { endDate: string; lang: Language }) => {
@@ -71,10 +73,15 @@ const ShowcaseProductCard = ({
   const { t } = useTranslation();
   const localizedPath = useLocalizedPath();
   const lang = useLangStore((state) => state.lang);
+  const { success, error } = useToast();
+  const addToCart = useAddToCart();
   const [imageFailed, setImageFailed] = useState(false);
   const isDealsVariant = variant === 'deals';
+  const hasCartButton = isDealsVariant || variant === 'mostViewed';
 
   const productName = lang === 'en' ? product.nameEn || product.name : product.name;
+  const productId = Number(product.id);
+  const canAddToCart = product.inStock && Number.isFinite(productId);
   const originalPrice = product.originalPrice ?? 0;
   const hasDiscount = originalPrice > product.price;
   const discountPercent =
@@ -90,21 +97,28 @@ const ShowcaseProductCard = ({
         (value) => value && Date.parse(value) > Date.now(),
       )
     : undefined;
+  const outOfStockBadge = (
+    <span className="inline-flex min-h-9 shrink-0 items-center gap-2 rounded-xl bg-text px-2.5 text-xs font-f-sbold text-surface">
+      <span className="size-2 rounded-full bg-red-500" aria-hidden="true" />
+      {t('common.outOfStock')}
+    </span>
+  );
 
   return (
     <article
       className={cn(
-        'group mx-auto w-full rounded-[32px] transition-transform duration-300 ease-out motion-safe:hover:-translate-y-1 motion-safe:focus-within:-translate-y-1',
+        'group relative mx-auto w-full rounded-[32px] transition-transform duration-300 ease-out motion-safe:hover:-translate-y-1 motion-safe:focus-within:-translate-y-1',
         isDealsVariant ? 'h-[570px] max-w-[390px]' : 'h-[508px] max-w-[310px]',
         className,
       )}
     >
-      <Link
-        to={localizedPath(`/products/${product.slug}`)}
-        tabIndex={tabIndex}
-        className="flex h-full min-h-0 flex-col gap-2 rounded-[32px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first"
-        aria-label={`${t('common.viewProduct')}: ${productName}${product.inStock ? '' : ` — ${t('common.outOfStock')}`}`}
-      >
+      <div className="flex h-full min-h-0 flex-col gap-2 rounded-[32px]">
+        <Link
+          to={localizedPath(`/products/${product.slug}`)}
+          tabIndex={tabIndex}
+          className="absolute inset-0 z-10 rounded-[32px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first"
+          aria-label={`${t('common.viewProduct')}: ${productName}${product.inStock ? '' : ` — ${t('common.outOfStock')}`}`}
+        />
         <div
           className={cn(
             'relative shrink-0 overflow-hidden rounded-t-[32px] rounded-b-lg border border-border bg-white',
@@ -148,8 +162,8 @@ const ShowcaseProductCard = ({
 
         <div
           className={cn(
-            'flex min-h-0 flex-1 flex-col rounded-t-lg rounded-b-[32px] bg-surface px-4 transition-shadow duration-300 group-hover:shadow-[0_4px_10px_0_#00000014]',
-            isDealsVariant ? 'justify-center py-5' : 'py-6',
+            'flex min-h-0 flex-1 flex-col justify-center rounded-t-lg rounded-b-[32px] bg-surface px-4 transition-shadow duration-300 group-hover:shadow-[0_4px_10px_0_#00000014]',
+            isDealsVariant ? 'py-5' : 'py-6',
           )}
         >
           <span className="truncate text-start text-xs leading-[18px] font-f-sbold text-first">
@@ -163,10 +177,7 @@ const ShowcaseProductCard = ({
           </h3>
 
           <div
-            className={cn(
-              'mb-4 h-px shrink-0 bg-[repeating-linear-gradient(to_right,var(--color-border)_0_5px,transparent_5px_10px)]',
-              isDealsVariant ? 'mt-4' : 'mt-auto',
-            )}
+            className="mt-4 mb-4 h-px shrink-0 bg-[repeating-linear-gradient(to_right,var(--color-border)_0_5px,transparent_5px_10px)]"
             aria-hidden="true"
           />
 
@@ -175,23 +186,57 @@ const ShowcaseProductCard = ({
               dir={lang === 'fa' ? 'rtl' : 'ltr'}
               className="flex min-w-0 flex-col items-end gap-0.5"
             >
-              <PriceDisplay
-                amount={product.price}
-                languageCode={lang}
-                className="whitespace-nowrap text-lg leading-6 font-f-sbold text-text"
-                currencyClassName="text-xs font-f-normal text-text-muted"
-              />
-              {hasDiscount && (
-                <PriceDisplay
-                  amount={originalPrice}
-                  languageCode={lang}
-                  currencyMode="none"
-                  className="text-xs leading-4 text-text-muted line-through"
-                />
+              {product.inStock || !hasCartButton ? (
+                <>
+                  <PriceDisplay
+                    amount={product.price}
+                    languageCode={lang}
+                    className="whitespace-nowrap text-lg leading-6 font-f-sbold text-text"
+                    currencyClassName="text-xs font-f-normal text-text-muted"
+                  />
+                  {hasDiscount && (
+                    <PriceDisplay
+                      amount={originalPrice}
+                      languageCode={lang}
+                      currencyMode="none"
+                      className="text-xs leading-4 text-text-muted line-through"
+                    />
+                  )}
+                </>
+              ) : (
+                outOfStockBadge
               )}
             </div>
 
-            {product.inStock ? (
+            {hasCartButton ? (
+              <button
+                type="button"
+                className="relative z-20 inline-flex size-11 shrink-0 items-center justify-center rounded-2xl bg-first text-white transition-colors hover:bg-first-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first disabled:cursor-not-allowed disabled:bg-text-muted"
+                aria-label={
+                  canAddToCart ? `${t('common.addToCart')}: ${productName}` : t('common.outOfStock')
+                }
+                title={canAddToCart ? t('common.addToCart') : t('common.outOfStock')}
+                disabled={!canAddToCart || addToCart.isPending}
+                onClick={() => {
+                  addToCart.mutate(
+                    { productId, quantity: 1 },
+                    {
+                      onSuccess: () => success(t('cart.itemAddedSuccessfully')),
+                      onError: () => error(t('common.error')),
+                    },
+                  );
+                }}
+              >
+                {addToCart.isPending ? (
+                  <LoaderCircle
+                    className="size-5 animate-spin motion-reduce:animate-none"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <CartIcon />
+                )}
+              </button>
+            ) : product.inStock ? (
               <span
                 className="inline-flex size-11 shrink-0 items-center justify-center rounded-2xl bg-first text-white transition-colors group-hover:bg-first-600"
                 aria-hidden="true"
@@ -199,14 +244,11 @@ const ShowcaseProductCard = ({
                 <CartIcon />
               </span>
             ) : (
-              <span className="inline-flex min-h-9 shrink-0 items-center gap-2 rounded-xl bg-text px-2.5 text-xs font-f-sbold text-surface">
-                <span className="size-2 rounded-full bg-red-500" aria-hidden="true" />
-                {t('common.outOfStock')}
-              </span>
+              outOfStockBadge
             )}
           </div>
         </div>
-      </Link>
+      </div>
     </article>
   );
 };
