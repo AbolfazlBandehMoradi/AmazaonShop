@@ -79,6 +79,51 @@
   background: var(--color-text-muted);
 }
 
+@media (min-width: 1280px) {
+  .horizontal-product-card__copy {
+    padding: 16px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .horizontal-product-card__link {
+    gap: 18px;
+  }
+
+  .horizontal-product-card__copy {
+    padding: 24px;
+  }
+
+  .horizontal-product-card__copy > span {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .horizontal-product-card__name {
+    font-size: 18px;
+    line-height: 26px;
+  }
+
+  .horizontal-product-card__price {
+    font-size: 20px;
+    line-height: 26px;
+  }
+
+  .horizontal-product-card__original-price {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .horizontal-product-card__badge {
+    font-size: 13px;
+  }
+
+  .horizontal-product-card__cart-visual svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
 @container (max-width: 559px) {
   .horizontal-product-card__cart-visual {
     padding: min(8px, 1.5cqw);
