@@ -98,6 +98,13 @@
       "headphones": "Headphones"
     }
   },
+  "newestProducts": {
+    "title": "Newest products",
+    "description": "Explore the latest arrivals at Amazon",
+    "filterLabel": "Filter newest products by category",
+    "empty": "No new products are available in this category.",
+    "more": "See products"
+  },
   "specials": {
     "titlePrefix": "",
     "titleAccent": "Professional",

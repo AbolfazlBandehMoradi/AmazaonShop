@@ -1,0 +1,109 @@
+.horizontal-product-card {
+  aspect-ratio: 628 / 193;
+  container-type: inline-size;
+}
+
+.horizontal-product-card__link {
+  display: flex;
+  gap: clamp(8px, 2.5cqw, 16px);
+  padding: 8px;
+}
+
+.horizontal-product-card__copy {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  padding: 8px;
+}
+
+.horizontal-product-card__name {
+  font-size: clamp(12px, 2.4cqw, 16px);
+  line-height: 1.4;
+}
+
+.horizontal-product-card__image {
+  height: 100%;
+  width: auto;
+  aspect-ratio: 227 / 177;
+  flex: 0 0 auto;
+  border: 1px solid #d9d9d9;
+  border-radius: min(24px, 3.82cqw);
+}
+
+.horizontal-product-card__price-wrap {
+  width: fit-content;
+  max-width: min(100%, calc(39cqw - 16px));
+  margin-right: auto;
+}
+
+.horizontal-product-card__price {
+  flex-wrap: wrap;
+  gap: 0 4px;
+  font-size: clamp(11px, 2.8cqw, 18px);
+  line-height: 1.25;
+}
+
+.horizontal-product-card__price > span {
+  white-space: nowrap;
+}
+
+.horizontal-product-card__cart {
+  display: flex;
+  width: max(44px, min(62px, 11.071cqw));
+  height: 44px;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+
+.horizontal-product-card__cart-visual {
+  display: flex;
+  width: min(62px, 11.071cqw);
+  height: min(44px, 7.857cqw);
+  align-items: center;
+  justify-content: center;
+  border-radius: min(16px, 2.857cqw);
+  background: var(--color-first);
+  padding: 14px;
+  color: white;
+  transition: background-color 150ms ease;
+}
+
+.horizontal-product-card__cart:hover .horizontal-product-card__cart-visual {
+  background: var(--color-first-600);
+}
+
+.horizontal-product-card__cart:disabled .horizontal-product-card__cart-visual {
+  background: var(--color-text-muted);
+}
+
+@container (max-width: 559px) {
+  .horizontal-product-card__cart-visual {
+    padding: min(8px, 1.5cqw);
+  }
+}
+
+@container (max-width: 370px) {
+  .horizontal-product-card__copy > span {
+    font-size: 10px;
+    line-height: 14px;
+  }
+
+  .horizontal-product-card__name {
+    -webkit-line-clamp: 1;
+    line-height: 16px;
+  }
+
+  .horizontal-product-card__image {
+    padding: 4px;
+  }
+
+  .horizontal-product-card__price {
+    font-size: 11px;
+  }
+
+  .horizontal-product-card__cart-visual {
+    padding: 2px;
+  }
+}

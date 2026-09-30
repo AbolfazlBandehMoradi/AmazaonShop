@@ -1,250 +1,121 @@
-import { ImageOff, ShoppingCart, Star } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { ImageOff, LoaderCircle, ShoppingCart } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import { PriceDisplay } from '@/components/ui/PriceDisplay';
+import { useToast } from '@/context/ToastContext';
+import useAddToCart from '@/hooks/cart/useAddToCart';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useLangStore } from '@/stores/languageStore';
 import type { Product } from '@/types';
+import cardBackground from './horizental card bg.svg';
+import './HorizontalProductCard.css';
 
 interface Props {
   product: Product;
 }
 
-
-const HorizontalProductCard = ({
-  product,
-}: Props) => {
-
+const HorizontalProductCard = ({ product }: Props) => {
+  const { t } = useTranslation();
   const localizedPath = useLocalizedPath();
-
-  const lang = useLangStore(
-    state => state.lang
-  );
-
-  const [imageFailed,setImageFailed] =
-    useState(false);
-
+  const lang = useLangStore((state) => state.lang);
+  const { success, error } = useToast();
+  const addToCart = useAddToCart();
+  const [imageFailed, setImageFailed] = useState(false);
+  const productName = lang === 'en' ? product.nameEn || product.name : product.name;
+  const productId = Number(product.id);
+  const canAddToCart = product.inStock && Number.isFinite(productId);
 
   return (
-
-    <article
-      className="
-        h-full
-        overflow-hidden
-        rounded-2xl
-        bg-color-for-layer-on-body
-        transition-all
-        duration-300
-        min-h-[144px]
-
-        hover:-translate-y-1
-      "
-    >
-
+    <article className="horizontal-product-card group relative w-full transition-transform duration-300 motion-safe:hover:-translate-y-1 motion-safe:focus-within:-translate-y-1">
+      <img
+        src={cardBackground}
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        className="pointer-events-none absolute inset-0 h-full w-full"
+      />
       <Link
-
-        to={
-          localizedPath(
-            `/products/${product.slug}`
-          )
-        }
-
-        className="
-          flex
-          h-full
-          items-center
-          gap-4
-          p-3
-        "
+        to={localizedPath(`/products/${product.slug}`)}
+        dir="ltr"
+        className="horizontal-product-card__link absolute inset-0 z-10 rounded-[32px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first"
+        aria-label={`${t('common.viewProduct')}: ${productName}`}
       >
-
-
-        {/* Image */}
-
         <div
-          className="
-            relative
-            flex
-            size-24
-            shrink-0
-            items-center
-            justify-center
-            overflow-hidden
-            rounded-xl
-            bg-color-for-layer-three
-            sm:size-28
-          "
+          className="horizontal-product-card__copy min-w-0 text-start"
+          dir={lang === 'fa' ? 'rtl' : 'ltr'}
         >
-
-          {
-            product.image &&
-            !imageFailed ?
-
-            <img
-
-              src={product.image}
-
-              alt={product.name}
-
-              loading="lazy"
-
-              decoding="async"
-
-              onError={() =>
-                setImageFailed(true)
-              }
-
-              className="
-                h-full
-                w-full
-                object-cover
-                transition-transform
-                duration-500
-                group-hover:scale-105
-              "
-            />
-
-            :
-
-            <ImageOff
-              className="
-                size-8
-                opacity-40
-              "
-            />
-
-          }
-
-        </div>
-
-
-
-        {/* Content */}
-
-        <div
-          className="
-            flex
-            min-w-0
-            flex-1
-            flex-col
-            justify-between
-            gap-3
-          "
-        >
-
-
-          <div>
-
-            <h3
-              className="
-                line-clamp-2
-                text-sm
-                font-f-bold
-                first-text-color
-                sm:text-base
-              "
-            >
-              {product.name}
-            </h3>
-
-
-
-            <div
-              className="
-                mt-2
-                flex
-                items-center
-                gap-1
-                text-xs
-              "
-            >
-
-              <Star
-                className="
-                  size-3.5
-                  fill-current
-                  text-yellow-500
-                "
-              />
-
-              <span>
-                {
-                  product.rating ??
-                  5
-                }
-              </span>
-
-            </div>
-
-          </div>
-
-
+          <span className="block truncate text-xs leading-5 font-f-sbold text-first">
+            {product.category || t('common.product')}
+          </span>
+          <h3
+            className="horizontal-product-card__name line-clamp-2 font-f-sbold text-text"
+            title={productName}
+          >
+            {productName}
+          </h3>
 
           <div
-            dir="ltr"
-            className="
-              flex
-              items-center
-              justify-between
-            "
+            className="horizontal-product-card__price-wrap mt-auto text-text"
+            dir={lang === 'fa' ? 'rtl' : 'ltr'}
           >
-
             <PriceDisplay
-
-              amount={
-                product.price
-              }
-
-              currency="IRT"
-
-              languageCode={
-                lang
-              }
-
-              className="
-                text-sm
-                font-f-bold
-                first-text-color
-              "
+              amount={product.price}
+              languageCode={lang}
+              className="horizontal-product-card__price font-f-sbold"
+              currencyClassName="text-xs font-f-normal text-text-muted"
             />
-
-
-
-            <span
-              className="
-                flex
-                size-9
-                items-center
-                justify-center
-                rounded-full
-                bg-first/5
-              "
-            >
-
-              <ShoppingCart
-                className="
-                  size-4
-                "
-              />
-
-            </span>
-
-
           </div>
-
-
         </div>
 
-
+        <div className="horizontal-product-card__image flex items-center justify-center overflow-hidden bg-white p-2">
+          {product.image && !imageFailed ? (
+            <img
+              src={product.image}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              onError={() => setImageFailed(true)}
+              className="h-full w-full object-contain transition-transform duration-300 motion-safe:group-hover:scale-[1.04]"
+            />
+          ) : (
+            <ImageOff className="size-8 text-text-muted/50" strokeWidth={1.5} aria-hidden="true" />
+          )}
+        </div>
       </Link>
 
-
+      <button
+        type="button"
+        className="horizontal-product-card__cart absolute bottom-0 left-1/2 z-20 -translate-x-1/2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first disabled:cursor-not-allowed"
+        aria-label={
+          canAddToCart ? `${t('common.addToCart')}: ${productName}` : t('common.outOfStock')
+        }
+        title={canAddToCart ? t('common.addToCart') : t('common.outOfStock')}
+        disabled={!canAddToCart || addToCart.isPending}
+        onClick={() => {
+          addToCart.mutate(
+            { productId, quantity: 1 },
+            {
+              onSuccess: () => success(t('cart.itemAddedSuccessfully')),
+              onError: () => error(t('common.error')),
+            },
+          );
+        }}
+      >
+        <span className="horizontal-product-card__cart-visual">
+          {addToCart.isPending ? (
+            <LoaderCircle
+              className="size-4 animate-spin motion-reduce:animate-none"
+              aria-hidden="true"
+            />
+          ) : (
+            <ShoppingCart className="size-4" strokeWidth={1.8} aria-hidden="true" />
+          )}
+        </span>
+      </button>
     </article>
-
   );
-
 };
-
 
 export default HorizontalProductCard;
