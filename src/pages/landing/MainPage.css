@@ -164,6 +164,10 @@
   pointer-events: none;
 }
 
+body.dark .best-products-panel__background {
+  filter: hue-rotate(-25deg) saturate(0.8) brightness(0.85);
+}
+
 section[dir='ltr'] .best-products-panel__background {
   transform: scaleX(-1);
 }
@@ -312,6 +316,8 @@ section[dir='ltr'] .landing-slider-edge-fade {
 }
 
 .swiper.deals-slider {
+  overflow-x: clip;
+  overflow-y: visible;
   padding-block: 12px 20px;
   padding-inline: 12px;
 }
@@ -402,6 +408,10 @@ section[dir='ltr'] .landing-slider-edge-fade {
   .deals-panel__background {
     border-radius: 0;
     background: url('../../assets/Images/Landing/deals-section-bg.svg') center / 100% 100% no-repeat;
+  }
+
+  body.dark .deals-panel__background {
+    filter: hue-rotate(-25deg) saturate(0.8) brightness(0.85);
   }
 
   .deals-panel__header {
