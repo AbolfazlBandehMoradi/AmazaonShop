@@ -83,10 +83,10 @@ const Hero = ({ categories }: { categories: Category[] }) => {
   return (
     <section
       dir={dir}
-      className="bg-white px-3 pt-2 pb-5 dark:bg-background sm:px-6 lg:px-8 lg:pb-8"
+      className="bg-white pt-2 pb-5 dark:bg-background lg:pb-8"
       aria-label={t('mainpage.hero.label')}
     >
-      <div className="mx-auto max-w-376 rounded-[32px] bg-surface p-5 sm:p-6">
+      <div className="site-container rounded-[32px] bg-surface p-5 sm:p-6">
         <div className="relative isolate">
           <div
             className="pointer-events-none absolute inset-0 rounded-[28px] bg-white dark:bg-[#273242] lg:hidden"

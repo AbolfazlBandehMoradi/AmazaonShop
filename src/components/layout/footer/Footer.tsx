@@ -93,9 +93,9 @@ export const Footer = () => {
   return (
     <footer
       dir={dir}
-      className="mt-10 px-3 pb-[calc(8rem+env(safe-area-inset-bottom))] first-text-color sm:px-6 lg:px-8 lg:pb-8"
+      className="mt-10 pb-[calc(8rem+env(safe-area-inset-bottom))] first-text-color lg:pb-8"
     >
-      <div className="mx-auto w-full max-w-376 rounded-[40px] bg-color-for-layer-on-body p-5 sm:p-8 lg:p-10 2xl:p-16">
+      <div className="site-container rounded-[40px] bg-color-for-layer-on-body p-5 sm:p-8 lg:p-10 2xl:p-16">
         <section className="flex flex-col items-center text-center" aria-labelledby="footer-brand">
           <Link
             to={localizedPath('/')}

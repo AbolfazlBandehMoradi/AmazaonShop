@@ -705,16 +705,13 @@ html {
 }
 
 @layer components {
-  .landing-container {
-    width: min(100%, 94rem);
-    margin-inline: auto;
-    padding-inline: 1rem;
-  }
-
+  /* Keep the navbar, page sections, and footer on one responsive grid. */
+  .site-container,
+  .landing-container,
   .page-container {
-    width: min(100%, 94rem);
+    width: calc(100% - 2rem);
+    max-width: 94rem;
     margin-inline: auto;
-    padding-inline: 1rem;
   }
 
   .landing-section {
@@ -726,12 +723,10 @@ html {
   }
 
   @media (min-width: 640px) {
-    .landing-container {
-      padding-inline: 1.5rem;
-    }
-
+    .site-container,
+    .landing-container,
     .page-container {
-      padding-inline: 1.5rem;
+      width: calc(100% - 3rem);
     }
 
     .landing-section {
@@ -744,6 +739,12 @@ html {
   }
 
   @media (min-width: 1024px) {
+    .site-container,
+    .landing-container,
+    .page-container {
+      width: calc(100% - 4rem);
+    }
+
     .landing-section {
       padding-block: 4rem;
     }
