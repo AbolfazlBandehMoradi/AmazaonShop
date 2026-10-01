@@ -88,7 +88,7 @@ export function NavbarWithDropDownDrawer() {
   const searchDebounceRef = useRef<number | null>(null);
 
   const labels = {
-    products: t('nav.products'),
+    products: t('nav.productsNav'),
     categories: t('nav.categories'),
     blog: t('nav.blog'),
     about: t('nav.about'),

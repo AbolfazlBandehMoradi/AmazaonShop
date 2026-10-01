@@ -59,7 +59,7 @@ export function MobileBottomNav() {
 
   const navLabels: Record<NavItemKey, string> = {
     home: t('nav.home') || 'Home',
-    categories: t('nav.categories') || 'Categories',
+    categories: t('nav.mobileCategories') || 'Categories',
     cart: t('nav.cart') || 'Cart',
     blog: t('nav.blog') || 'Blog',
     user: userLabel,
