@@ -43,6 +43,9 @@
       }
     },
     "copyright": "© {{year}} Amazon. All rights reserved.",
-    "credit": "Designed by Ofogh Modern Innovation"
+    "credit": {
+      "prefix": "Designed by",
+      "company": "Ofogh Modern Innovation"
+    }
   }
 }

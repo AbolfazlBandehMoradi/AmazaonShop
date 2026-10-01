@@ -105,7 +105,7 @@ export const Footer = () => {
             <img src={MainLogo} alt="" className="h-14 w-14 shrink-0 object-contain" />
             <h2
               id="footer-brand"
-              className="shop-brand-name text-lg font-black text-first sm:text-xl xl:text-2xl"
+              className="shop-brand-name text-2xl font-black text-first xl:text-3xl"
             >
               {storeBrandName}
             </h2>
@@ -117,68 +117,64 @@ export const Footer = () => {
 
         <div className="mt-8 border-t border-dashed border-color-theme" aria-hidden="true" />
 
-        <div className="mt-8 flex flex-col gap-10 lg:flex-row lg:justify-between lg:gap-8">
-          <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:shrink-0 lg:gap-x-8 2xl:gap-x-14">
-            {columns.map((column) => (
-              <nav key={column.key} aria-label={t(`footer.columns.${column.key}.title`)}>
-                <h3 className="font-s-sbold first-text-color">
-                  {t(`footer.columns.${column.key}.title`)}
-                </h3>
-                <ul className="mt-4 space-y-3">
-                  {column.links.map((link) => (
-                    <li key={link.key}>
-                      <Link
-                        to={localizedPath(link.to)}
-                        className="text-sm first-text-color-for-paragraph transition-colors hover:text-secound"
-                      >
-                        {t(`footer.columns.${column.key}.${link.key}`)}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            ))}
-          </div>
-
-          <div className="flex flex-col gap-8 sm:flex-row sm:items-start lg:flex-col 2xl:flex-row 2xl:gap-10">
-            <section className="max-w-64" aria-labelledby="footer-address">
-              <h3 id="footer-address" className="font-s-sbold first-text-color">
-                {t('footer.address.title')}
+        <div className="mx-auto mt-8 grid w-full max-w-sm grid-cols-2 gap-x-4 gap-y-8 sm:max-w-lg md:max-w-none md:grid-cols-4 md:gap-x-6 lg:grid-cols-[repeat(3,minmax(0,1fr))_minmax(10rem,1.25fr)_max-content] lg:gap-x-6 xl:gap-x-8">
+          {columns.map((column) => (
+            <nav key={column.key} aria-label={t(`footer.columns.${column.key}.title`)}>
+              <h3 className="font-s-sbold first-text-color">
+                {t(`footer.columns.${column.key}.title`)}
               </h3>
-              <address className="mt-4 text-sm leading-7 not-italic first-text-color-for-paragraph">
-                {t('footer.address.value')}
-              </address>
-              <nav className="mt-5 flex flex-wrap gap-3" aria-label={t('footer.social.label')}>
-                {socialLinks.map(({ key, href, icon: Icon, external }) => (
-                  <a
-                    key={key}
-                    href={href}
-                    target={external ? '_blank' : undefined}
-                    rel={external ? 'noopener noreferrer' : undefined}
-                    aria-label={t(`footer.social.${key}`)}
-                    className="flex h-10 w-10 items-center justify-center rounded-xl bg-secound/10 text-secound transition-colors hover:bg-secound hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secound"
-                  >
-                    <Icon className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
-                  </a>
+              <ul className="mt-4 space-y-3">
+                {column.links.map((link) => (
+                  <li key={link.key}>
+                    <Link
+                      to={localizedPath(link.to)}
+                      className="text-sm first-text-color-for-paragraph transition-colors hover:text-secound"
+                    >
+                      {t(`footer.columns.${column.key}.${link.key}`)}
+                    </Link>
+                  </li>
                 ))}
-              </nav>
-            </section>
+              </ul>
+            </nav>
+          ))}
 
-            <div
-              role="group"
-              aria-label={t('footer.trust.label')}
-              className="flex w-fit max-w-full items-center justify-center gap-4 rounded-3xl bg-white p-4"
-            >
-              {trustMarks.map((mark) => (
-                <img
-                  key={mark.key}
-                  src={mark.src}
-                  alt={t(`footer.trust.${mark.key}`)}
-                  className="h-20 w-20 object-contain"
-                  loading="lazy"
-                />
+          <section className="min-w-0" aria-labelledby="footer-address">
+            <h3 id="footer-address" className="font-s-sbold first-text-color">
+              {t('footer.address.title')}
+            </h3>
+            <address className="mt-4 text-sm leading-7 not-italic first-text-color-for-paragraph">
+              {t('footer.address.value')}
+            </address>
+            <nav className="mt-5 flex flex-wrap gap-3" aria-label={t('footer.social.label')}>
+              {socialLinks.map(({ key, href, icon: Icon, external }) => (
+                <a
+                  key={key}
+                  href={href}
+                  target={external ? '_blank' : undefined}
+                  rel={external ? 'noopener noreferrer' : undefined}
+                  aria-label={t(`footer.social.${key}`)}
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-secound/10 text-secound transition-colors hover:bg-secound hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secound"
+                >
+                  <Icon className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+                </a>
               ))}
-            </div>
+            </nav>
+          </section>
+
+          <div
+            role="group"
+            aria-label={t('footer.trust.label')}
+            className="col-span-2 flex w-fit max-w-full items-center justify-center justify-self-center gap-4 rounded-3xl bg-white p-4 md:col-span-4 lg:col-span-1"
+          >
+            {trustMarks.map((mark) => (
+              <img
+                key={mark.key}
+                src={mark.src}
+                alt={t(`footer.trust.${mark.key}`)}
+                className="h-20 w-20 object-contain"
+                loading="lazy"
+              />
+            ))}
           </div>
         </div>
 
@@ -190,7 +186,8 @@ export const Footer = () => {
             rel="noopener noreferrer"
             className="text-[#1C1C1C] transition-colors hover:text-secound"
           >
-            {t('footer.credit')}
+            {t('footer.credit.prefix')}{' '}
+            <strong className="font-bold">{t('footer.credit.company')}</strong>
           </a>
         </div>
       </div>
