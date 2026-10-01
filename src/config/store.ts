@@ -1,3 +1,5 @@
+export const storeBrandName = 'موبایل آمازون';
+
 export const storeContact = {
   phone: '09156304012',
   phoneHref: 'tel:09156304012',

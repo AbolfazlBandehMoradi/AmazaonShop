@@ -18,9 +18,9 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { AmazonMark } from '@/components/layout/brand/AmazonMark';
+import MainLogo from '@/assets/Images/Logo/MainLogo.webp';
 import { CartIcon } from '@/components/ui/CartIcon';
-import { storeContact } from '@/config/store';
+import { storeBrandName, storeContact } from '@/config/store';
 import { ThemeToggleButton } from '@/components/ui/ThemeToggleButton';
 import { useAuth } from '@/context/AuthContext';
 import useCategories from '@/hooks/useCategories';
@@ -87,7 +87,6 @@ export function NavbarWithDropDownDrawer() {
   const mobileSearchRef = useRef<HTMLInputElement>(null);
 
   const labels = {
-    shopName: t('nav.shopName'),
     products: t('nav.products'),
     categories: t('nav.categories'),
     blog: t('nav.blog'),
@@ -487,11 +486,11 @@ export function NavbarWithDropDownDrawer() {
               <Link
                 to={localizedPath('/')}
                 className="flex shrink-0 items-center gap-3 rounded-xl focus-visible:ring-2 focus-visible:ring-first"
-                aria-label={labels.shopName}
+                aria-label={storeBrandName}
               >
-                <AmazonMark className="h-14 w-14 shrink-0" />
-                <span className="shop-brand-name text-2xl text-black dark:text-text">
-                  {labels.shopName}
+                <img src={MainLogo} alt="" className="h-14 w-14 shrink-0 object-contain" />
+                <span className="shop-brand-name text-lg font-black text-first dark:text-text sm:text-xl xl:text-2xl">
+                  {storeBrandName}
                 </span>
               </Link>
 
@@ -681,12 +680,12 @@ export function NavbarWithDropDownDrawer() {
               <Link
                 to={localizedPath('/')}
                 className="flex min-w-0 items-center justify-center gap-2 rounded-xl focus-visible:ring-2 focus-visible:ring-first"
-                aria-label={labels.shopName}
+                aria-label={storeBrandName}
               >
-                <AmazonMark className="h-10 w-10 shrink-0" />
+                <img src={MainLogo} alt="" className="h-10 w-10 shrink-0 object-contain" />
                 <span className="flex min-w-0 flex-col">
-                  <span className="shop-brand-name truncate text-xl text-[#1C1C1C] dark:text-text sm:text-2xl">
-                    {labels.shopName}
+                  <span className="shop-brand-name truncate text-base font-black text-[#1C1C1C] dark:text-text sm:text-xl xl:text-2xl">
+                    {storeBrandName}
                   </span>
                   <span className="truncate text-[11px] leading-4 text-text-muted">
                     {labels.mobileTagline}
@@ -738,12 +737,12 @@ export function NavbarWithDropDownDrawer() {
                 className="flex min-w-0 items-center gap-2 rounded-xl"
                 onClick={closeDrawer}
               >
-                <AmazonMark className="h-12 w-12 shrink-0" />
+                <img src={MainLogo} alt="" className="h-12 w-12 shrink-0 object-contain" />
                 <span
                   id="mobile-navigation-title"
-                  className="shop-brand-name truncate text-xl text-secound sm:text-2xl"
+                  className="shop-brand-name truncate text-lg font-black text-secound sm:text-xl xl:text-2xl"
                 >
-                  {labels.menuTitle}
+                  {storeBrandName}
                 </span>
               </Link>
               <button

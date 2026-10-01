@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import EnamadLogo from '@/assets/Images/E-namd/E-namd-2.png';
 import ZibalLogo from '@/assets/Images/E-namd/E-namd.png';
-import { AmazonMark } from '@/components/layout/brand/AmazonMark';
-import { storeContact } from '@/config/store';
+import MainLogo from '@/assets/Images/Logo/MainLogo.webp';
+import { storeBrandName, storeContact } from '@/config/store';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useLangStore } from '@/stores/languageStore';
 import type { SVGProps } from 'react';
@@ -100,11 +100,14 @@ export const Footer = () => {
           <Link
             to={localizedPath('/')}
             className="inline-flex items-center justify-center gap-3 rounded-xl"
-            aria-label={t('footer.brand.title')}
+            aria-label={storeBrandName}
           >
-            <AmazonMark className="h-14 w-14 shrink-0" />
-            <h2 id="footer-brand" className="shop-brand-name text-xl text-first sm:text-2xl">
-              {t('footer.brand.title')}
+            <img src={MainLogo} alt="" className="h-14 w-14 shrink-0 object-contain" />
+            <h2
+              id="footer-brand"
+              className="shop-brand-name text-lg font-black text-first sm:text-xl xl:text-2xl"
+            >
+              {storeBrandName}
             </h2>
           </Link>
           <p className="mt-4 max-w-2xl text-sm leading-8 first-text-color-for-paragraph sm:text-base">
