@@ -37,7 +37,7 @@ const ReturnPolicy = () => {
         <main dir={dir} className="page-container page-section">
             {/* Policy Section */}
             <section
-                className={`flex flex-wrap bg-color-for-layer-on-body p-8 rounded-2xl gap-6 ${lang === "fa" ? "text-right" : "text-left"
+                className={`flex flex-wrap gap-6 rounded-3xl border border-color-theme bg-color-for-layer-on-body p-5 shadow-dark-sm sm:p-8 ${lang === "fa" ? "text-right" : "text-left"
                     }`}
                 aria-labelledby="return-policy-heading"
             >
@@ -52,31 +52,31 @@ const ReturnPolicy = () => {
                 </figure> */}
 
                 {/* Text Content */}
-                <div className="w-full lg:w-31/48 xl:w-35/48 2xl:w-35/48 flex flex-col justify-between mt-4 lg:mt-0">
+                <div className="flex w-full flex-col justify-between">
                     <header>
                         <h1
                             id="return-policy-heading"
-                            className="font-s-sbold text-xl md:text-2xl first-text-color"
+                            className="text-2xl font-s-bold first-text-color md:text-3xl"
                         >
                             {policyData.title}
                         </h1>
-                        <p className="first-text-color-for-paragraph mt-2 text-justify">
+                        <p className="mt-3 text-justify leading-8 first-text-color-for-paragraph">
                             {policyData.description}
                         </p>
                     </header>
 
                     {/* Rules List */}
                     <ul
-                        className="mt-4 space-y-1"
+                        className="mt-6 grid gap-3 sm:grid-cols-2"
                         aria-label={policyData.rulesList || policyData.title}
                     >
                         {policyData.rules.map((rule, idx) => (
-                            <li key={idx} className="flex items-center gap-2">
+                            <li key={idx} className="flex items-start gap-3 rounded-xl bg-color-for-layer-sec p-3">
                                 <span
-                                    className="bg-green-600 w-2 h-2 rotate-45 opacity-70 rounded-xs flex transition-opacity duration-300"
+                                    className="mt-2 h-2 w-2 shrink-0 rotate-45 rounded-xs bg-secound"
                                     aria-hidden="true"
                                 ></span>
-                                <span className="first-text-color-for-paragraph text-sm">
+                                <span className="text-sm leading-7 first-text-color-for-paragraph">
                                     {rule}
                                 </span>
                             </li>
@@ -87,7 +87,7 @@ const ReturnPolicy = () => {
 
             {/* Contact Section */}
             <section
-                className="bg-color-for-layer-on-body mt-8 lg:mt-16 flex flex-wrap justify-between items-center p-8 rounded-2xl gap-4"
+                className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-color-theme bg-color-for-layer-on-body p-5 shadow-dark-sm sm:p-8"
                 aria-labelledby="contact-heading"
             >
                 <div>
@@ -97,7 +97,7 @@ const ReturnPolicy = () => {
                 </div>
 
                 <Link
-                    className="bg-first w-full text-center lg:w-8/48 mt-3 lg:mt-0 px-4 py-2 text-base text-white rounded-md"
+                    className="inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-first px-5 py-2 text-center text-sm font-s-sbold text-white transition-colors hover:bg-first-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first sm:w-auto"
                     to={localizedPath("/contact-us")}
                 >
                     {policyData.contactButton}

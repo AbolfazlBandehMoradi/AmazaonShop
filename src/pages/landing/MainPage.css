@@ -1,6 +1,6 @@
 .hero-section-divider {
   height: 1px;
-  background: repeating-linear-gradient(90deg, #d9d9d9 0 8px, transparent 8px 16px);
+  background: repeating-linear-gradient(90deg, var(--color-border) 0 8px, transparent 8px 16px);
 }
 
 .first-slider__thumb-slider {
@@ -218,7 +218,7 @@ section[dir='ltr'] .best-products-panel__background {
   z-index: 2;
   inset-block: 0;
   inset-inline-end: 0;
-  background: linear-gradient(90deg, #FFFFFF 39.06%, rgba(255, 255, 255, 0) 88.57%);
+  background: linear-gradient(90deg, var(--bg-color-for-body) 39.06%, transparent 88.57%);
   pointer-events: none;
 }
 
@@ -292,7 +292,7 @@ section[dir='ltr'] .landing-slider-edge-fade {
   position: absolute;
   inset: 0 0 104px;
   border-radius: 32px;
-  background: radial-gradient(104.31% 368.59% at 121.8% -54.31%, #3f3fa4 0%, #18183e 100%);
+  background: var(--brand-violet-gradient);
   pointer-events: none;
 }
 

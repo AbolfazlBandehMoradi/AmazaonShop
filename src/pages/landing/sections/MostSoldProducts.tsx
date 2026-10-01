@@ -107,7 +107,7 @@ const MostSoldProducts = ({ showcase }: Props) => {
               <div
                 role="tablist"
                 aria-label={filterLabel}
-                className="hidden h-12 shrink-0 items-center gap-1 rounded-[18px] border border-border bg-white p-1 lg:flex"
+                className="hidden h-12 shrink-0 items-center gap-1 rounded-[18px] border border-border bg-color-for-layer-on-body p-1 lg:flex"
               >
                 {categoryFilters.map((category, index) => {
                   const active = category.id === activeCategoryId;
@@ -123,7 +123,7 @@ const MostSoldProducts = ({ showcase }: Props) => {
                       onKeyDown={(event) => handleTabKeyDown(event, index)}
                       className={cn(
                         'h-full shrink-0 rounded-2xl border border-transparent px-3 text-sm leading-5 font-f-sbold text-text transition-colors hover:text-first focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first',
-                        active && 'border-[#163F87] bg-[#F4F7F9] text-first',
+                        active && 'border-first bg-color-for-layer-sec text-first',
                       )}
                     >
                       {t(`mainpage.mostViewedProducts.categories.${category.labelKey}`)}

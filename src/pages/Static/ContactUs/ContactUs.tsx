@@ -55,8 +55,7 @@ export default function ContactUs() {
       <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
         <section aria-label={contact.eyebrow} className="flex flex-col gap-4">
           <div
-            className="rounded-3xl p-6 text-white shadow-first-sm sm:p-8"
-            style={{ background: 'var(--offer-background)' }}
+            className="brand-gradient rounded-3xl p-6 text-white shadow-first-sm sm:p-8"
           >
             <span
               className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/15"
@@ -74,7 +73,7 @@ export default function ContactUs() {
             </a>
             <a
               href={phoneHref}
-              className="mt-6 flex min-h-11 w-fit items-center justify-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-s-sbold text-first transition-colors hover:bg-first-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="mt-6 flex min-h-11 w-fit items-center justify-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-s-sbold text-[#18183e] transition-colors hover:bg-[#eeeefa] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               {contact.callButton}
               <ArrowUpLeft className="h-4 w-4" aria-hidden="true" />

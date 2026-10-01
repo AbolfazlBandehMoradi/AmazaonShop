@@ -26,7 +26,7 @@ function SlideBackground() {
       preserveAspectRatio="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d={slideShape} className="fill-white dark:fill-[#273242]" />
+      <path d={slideShape} className="fill-white dark:fill-[var(--bg-color-for-layer-sec)]" />
     </svg>
   );
 }
@@ -89,7 +89,7 @@ const Hero = ({ categories }: { categories: Category[] }) => {
       <div className="site-container rounded-[32px] bg-surface p-5 sm:p-6">
         <div className="relative isolate">
           <div
-            className="pointer-events-none absolute inset-0 rounded-[28px] bg-white dark:bg-[#273242] lg:hidden"
+            className="pointer-events-none absolute inset-0 rounded-[28px] bg-white dark:bg-color-for-layer-sec lg:hidden"
             aria-hidden="true"
           />
           <SlideBackground />

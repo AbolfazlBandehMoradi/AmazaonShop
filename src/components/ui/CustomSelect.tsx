@@ -131,7 +131,7 @@ export function CustomSelect({
           'flex h-12 w-full items-center justify-between gap-3 rounded-[18px] border px-4 text-start text-sm font-f-sbold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2',
           variant === 'glass'
             ? 'bg-white/15 text-white shadow-[0_8px_24px_rgba(8,8,35,0.18),inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-xl focus-visible:outline-white'
-            : 'bg-white text-text focus-visible:outline-first',
+            : 'bg-color-for-layer-on-body text-text focus-visible:outline-first',
           variant === 'glass'
             ? isOpen
               ? 'border-white/60'
@@ -162,7 +162,7 @@ export function CustomSelect({
             'absolute inset-x-0 top-full z-30 mt-2 rounded-[18px] border p-1.5',
             variant === 'glass'
               ? 'border-white/25 bg-[#18183e]/85 shadow-[0_12px_30px_rgba(8,8,35,0.3)] backdrop-blur-xl'
-              : 'border-border bg-white shadow-[0_8px_24px_#163F871A]',
+              : 'border-border bg-color-for-layer-on-body shadow-dark-sm',
           )}
         >
           {options.map((option, index) => (
@@ -184,7 +184,7 @@ export function CustomSelect({
                 option.value === value &&
                   (variant === 'glass'
                     ? 'bg-white/20 font-f-sbold text-white'
-                    : 'bg-[#F4F7F9] font-f-sbold text-first'),
+                    : 'bg-color-for-layer-sec font-f-sbold text-first'),
               )}
             >
               <span>{option.label}</span>

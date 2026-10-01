@@ -514,7 +514,7 @@ const ProfilePage = () => {
                     <ShieldCheck className="h-3.5 w-3.5" />
                     {translateOr('profile.accountCenter', 'Account center')}
                   </p>
-                  <h1 className="truncate text-2xl font-s-sbold first-text-color sm:text-3xl">
+                  <h1 className=" text-2xl font-s-sbold first-text-color sm:text-3xl">
                     {translateOr('profile.title', 'My Profile')}
                   </h1>
                   <p className="mt-1 max-w-2xl text-sm first-text-color-for-paragraph sm:text-base">

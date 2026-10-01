@@ -105,7 +105,7 @@ const NewestProducts = ({ showcase }: Props) => {
           <div
             role="tablist"
             aria-label={filterLabel}
-            className="hidden h-12 w-max min-w-[288px] max-w-full shrink-0 items-center justify-between gap-2 rounded-[18px] border border-border bg-white p-1 lg:flex"
+            className="hidden h-12 w-max min-w-[288px] max-w-full shrink-0 items-center justify-between gap-2 rounded-[18px] border border-border bg-color-for-layer-on-body p-1 lg:flex"
           >
             {categoryFilters.map((category, index) => {
               const active = category.id === activeCategoryId;
@@ -123,7 +123,7 @@ const NewestProducts = ({ showcase }: Props) => {
                   onKeyDown={(event) => handleTabKeyDown(event, index)}
                   className={cn(
                     'h-full shrink-0 whitespace-nowrap rounded-2xl border border-transparent px-3 py-2 text-center text-sm leading-5 font-f-sbold text-text transition-colors hover:text-first focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first',
-                    active && 'border-[#163F87] bg-[#F4F7F9] text-first',
+                    active && 'border-first bg-color-for-layer-sec text-first',
                   )}
                 >
                   {label}
@@ -141,7 +141,7 @@ const NewestProducts = ({ showcase }: Props) => {
               ))}
             </div>
           ) : (
-            <p className="rounded-[18px] border border-border bg-white px-6 py-12 text-center text-sm text-text-muted">
+            <p className="rounded-[18px] border border-border bg-color-for-layer-on-body px-6 py-12 text-center text-sm text-text-muted">
               {t('mainpage.newestProducts.empty')}
             </p>
           )}

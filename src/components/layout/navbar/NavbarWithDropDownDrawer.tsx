@@ -308,7 +308,7 @@ export function NavbarWithDropDownDrawer() {
   const renderSearchForm = (id: string, mobile = false) => (
     <form
       className={cn(
-        'flex h-14 w-full items-center overflow-hidden rounded-[24px] bg-white transition-shadow focus-within:ring-2 focus-within:ring-first',
+        'flex h-14 w-full items-center overflow-hidden rounded-[24px] bg-white transition-shadow focus-within:ring-2 focus-within:ring-first dark:border dark:border-color-theme dark:bg-color-for-layer-sec',
         !mobile && 'max-w-[34rem]',
       )}
       role="search"
@@ -326,13 +326,13 @@ export function NavbarWithDropDownDrawer() {
         value={searchValue}
         placeholder={labels.search}
         autoComplete="off"
-        className="no-clear-button h-full min-w-0 flex-1 bg-white px-4 text-sm text-[#1C1C1C] outline-none placeholder:text-[#1C1C1C] sm:px-6"
+        className="no-clear-button h-full min-w-0 flex-1 bg-white px-4 text-sm text-[#1C1C1C] outline-none placeholder:text-[#656464] dark:bg-color-for-layer-sec dark:text-text dark:placeholder:text-text-muted sm:px-6"
         onChange={(event) => handleSearchChange(event.target.value)}
       />
       {searchValue && (
         <button
           type="button"
-          className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface text-[#656464] transition-colors hover:bg-first/10 hover:text-first focus-visible:ring-2 focus-visible:ring-first"
+          className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface text-[#656464] transition-colors hover:bg-first/10 hover:text-first focus-visible:ring-2 focus-visible:ring-first dark:text-text-muted"
           aria-label={labels.clearSearch}
           title={labels.clearSearch}
           onClick={() => handleClearSearch(mobile)}
@@ -342,7 +342,7 @@ export function NavbarWithDropDownDrawer() {
       )}
       <button
         type="submit"
-        className="inline-flex h-full w-[54px] shrink-0 items-center justify-center px-4 text-[#1C1C1C] transition-colors hover:bg-first/10 hover:text-first"
+        className="inline-flex h-full w-[54px] shrink-0 items-center justify-center px-4 text-[#1C1C1C] transition-colors hover:bg-first/10 hover:text-first dark:text-text"
         aria-label={t('nav.search')}
       >
         <Search className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />

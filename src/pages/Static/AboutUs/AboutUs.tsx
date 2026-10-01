@@ -129,8 +129,7 @@ export default function AboutUs() {
 
       <section
         aria-labelledby="about-contact-heading"
-        className="mt-12 overflow-hidden rounded-3xl px-6 py-9 text-white sm:mt-16 sm:px-10 sm:py-11 lg:flex lg:items-center lg:justify-between lg:gap-8"
-        style={{ background: 'var(--offer-background)' }}
+        className="brand-gradient mt-12 overflow-hidden rounded-3xl px-6 py-9 text-white sm:mt-16 sm:px-10 sm:py-11 lg:flex lg:items-center lg:justify-between lg:gap-8"
       >
         <div className="max-w-2xl">
           <h2 id="about-contact-heading" className="text-2xl font-s-bold sm:text-3xl">
@@ -142,7 +141,7 @@ export default function AboutUs() {
         </div>
         <Link
           to={localizedPath('/contact-us')}
-          className="mt-6 inline-flex min-h-12 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-s-sbold text-first transition-colors hover:bg-first-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto lg:mt-0"
+          className="mt-6 inline-flex min-h-12 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-s-sbold text-[#18183e] transition-colors hover:bg-[#eeeefa] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto lg:mt-0"
         >
           {about.contactButton}
           <ArrowUpLeft className="h-4 w-4" aria-hidden="true" />

@@ -100,7 +100,7 @@ const HorizontalProductCard = ({ product }: Props) => {
           </div>
         </div>
 
-        <div className="horizontal-product-card__image relative flex items-center justify-center overflow-hidden bg-white p-2">
+        <div className="horizontal-product-card__image relative flex items-center justify-center overflow-hidden bg-white p-2 dark:bg-color-for-layer-on-body">
           {product.image && !imageFailed ? (
             <img
               src={product.image}

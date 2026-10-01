@@ -41,7 +41,7 @@ export default function WhyUs() {
             {features.map(({ key, icon }) => (
               <li
                 key={key}
-                className="min-w-0 overflow-hidden rounded-[28px] bg-white p-2 transition-[box-shadow,transform] duration-200 hover:shadow-md motion-safe:hover:-translate-y-1 dark:bg-[#273242] dark:hover:shadow-black/30"
+                className="min-w-0 overflow-hidden rounded-[28px] bg-white p-2 transition-[box-shadow,transform] duration-200 hover:shadow-md motion-safe:hover:-translate-y-1 dark:bg-color-for-layer-sec dark:hover:shadow-black/30"
               >
                 <div className="relative isolate flex h-[152px] items-center justify-center overflow-hidden rounded-[22px] bg-surface dark:bg-[#f4f7f9]">
                   <img

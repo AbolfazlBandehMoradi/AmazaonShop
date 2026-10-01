@@ -24,22 +24,22 @@ const Faq = () => {
 
   return (
     <section className="page-container page-section">
-      <div className="bg-color-for-layer-on-body p-8 rounded-2xl">
-        <div className="text-center mb-4">
-          <h1 className="font-s-sbold first-text-color text-2xl">
+      <div className="rounded-3xl border border-color-theme bg-color-for-layer-on-body p-5 shadow-dark-sm sm:p-8">
+        <div className="mb-6 text-center">
+          <h1 className="text-2xl font-s-bold first-text-color sm:text-3xl">
             {t("faq.title")}
           </h1>
           <p className="mt-3 text-sm sm:text-base first-text-color-for-paragraph">
             {t("faq.subtitle")}
           </p>
         </div>
-        <div className="divide-y divide-color-theme rounded-2xl border border-color-theme bg-color-for-layer-sec">
+        <div className="divide-y divide-color-theme overflow-hidden rounded-2xl border border-color-theme bg-color-for-layer-sec">
           {faqData.map((item, index) => (
             <div key={index} className="group">
               <button
                 onClick={() => toggle(index)}
-                className={`w-full flex items-center  justify-between px-6 py-4
-                  focus:outline-none focus-visible:ring-2 focus-visible:ring-primary
+                className={`flex min-h-14 w-full items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-color-for-layer-three sm:px-6
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-first
                   ${lang === "en" ? " flex-row-reverse" : "flex-row"}`}
                 aria-expanded={openIndex === index}
               >

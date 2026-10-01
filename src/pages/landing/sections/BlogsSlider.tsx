@@ -86,7 +86,7 @@ const BlogsSlider = ({ blogs }: BlogsSliderProps) => {
                 <SwiperSlide key={blog.id} className="!h-auto">
                   <Link
                     to={localizedPath(`/blogs/${blog.slug || blog.id}`)}
-                    className="group flex aspect-[421.333/476.222] min-h-[410px] w-full flex-col rounded-[32px] bg-surface p-2 text-start hover:shadow-sm focus-visible:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first motion-safe:transition-[transform,box-shadow] motion-safe:duration-300 motion-safe:ease-out motion-safe:hover:-translate-y-1 motion-safe:focus-visible:-translate-y-1 sm:min-h-[440px] lg:min-h-[476.222px] dark:bg-[#273242] dark:hover:shadow-black/30 dark:focus-visible:shadow-black/30"
+                    className="group flex aspect-[421.333/476.222] min-h-[410px] w-full flex-col rounded-[32px] bg-surface p-2 text-start hover:shadow-sm focus-visible:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first motion-safe:transition-[transform,box-shadow] motion-safe:duration-300 motion-safe:ease-out motion-safe:hover:-translate-y-1 motion-safe:focus-visible:-translate-y-1 sm:min-h-[440px] lg:min-h-[476.222px] dark:bg-color-for-layer-sec dark:hover:shadow-black/30 dark:focus-visible:shadow-black/30"
                   >
                     <span className="block aspect-[405.333/270.222] shrink-0 overflow-hidden rounded-[28px] bg-color-for-layer-three">
                       <img

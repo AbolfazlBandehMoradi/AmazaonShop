@@ -46,14 +46,19 @@ export function CheckoutAddressForm({
   } = form;
 
   return (
-    <motion.div
+    <motion.form
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-color-for-layer-on-body rounded-lg p-4"
+      noValidate
+      onSubmit={(event) => {
+        event.preventDefault();
+        onSave();
+      }}
+      className="rounded-2xl border border-color-theme bg-color-for-layer-on-body p-4 shadow-dark-sm sm:p-6"
     >
-      <div className="flex items-center gap-2 mb-4">
-        <div className="p-2 bg-linear-to-r from-blue-500 to-blue-600 rounded-lg">
-          <MapPinHouse className="h-5 w-5 text-white" />
+      <div className="mb-6 flex items-center gap-3 border-b border-color-theme pb-4">
+        <div className="rounded-xl bg-first/10 p-2.5 text-first">
+          <MapPinHouse className="h-5 w-5" />
         </div>
         <h2 className="text-lg font-s-bold first-text-color">
           {editingAddress
@@ -62,42 +67,46 @@ export function CheckoutAddressForm({
         </h2>
       </div>
 
-      <div className="space-y-2">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <div>
-            <label className="text-xs mb-2 flex items-center first-text-color-for-paragraph">
+            <label htmlFor="checkout-first-name" className="mb-2 flex items-center text-sm font-medium first-text-color">
               <span className="me-1">{t('checkout.firstName') || 'First Name'}</span>(
               <span className="first-text-color-red">{t('checkout.required') || 'required'})</span>
             </label>
             <Input
+              id="checkout-first-name"
               {...register('firstName')}
               required
+              aria-invalid={!!errors.firstName}
               placeholder={t('checkout.firstNamePlaceholder') || 'Enter first name'}
               className={errors.firstName ? 'border-red-500' : ''}
             />
             {errors.firstName?.message && (
-              <p className="text-xs text-red-500 mt-1">{String(errors.firstName.message)}</p>
+              <p role="alert" className="mt-1 text-xs text-red-500">{String(errors.firstName.message)}</p>
             )}
           </div>
 
           <div>
-            <label className="text-xs mb-2 flex items-center first-text-color-for-paragraph">
+            <label htmlFor="checkout-last-name" className="mb-2 flex items-center text-sm font-medium first-text-color">
               <span className="me-1">{t('checkout.lastName') || 'Last Name'}</span>(
               <span className="first-text-color-red">{t('checkout.required') || 'required'})</span>
             </label>
             <Input
+              id="checkout-last-name"
               {...register('lastName')}
               required
+              aria-invalid={!!errors.lastName}
               placeholder={t('checkout.lastNamePlaceholder') || 'Enter last name'}
               className={errors.lastName ? 'border-red-500' : ''}
             />
             {errors.lastName?.message && (
-              <p className="text-xs text-red-500 mt-1">{String(errors.lastName.message)}</p>
+              <p role="alert" className="mt-1 text-xs text-red-500">{String(errors.lastName.message)}</p>
             )}
           </div>
 
           <div>
-            <label className="text-xs mb-2 flex items-center first-text-color-for-paragraph">
+            <label htmlFor="checkout-province" className="mb-2 flex items-center text-sm font-medium first-text-color">
               <span className="me-1">{t('checkout.province') || 'Province'}</span>(
               <span className="first-text-color-red">{t('checkout.required') || 'required'})</span>
             </label>
@@ -106,6 +115,7 @@ export function CheckoutAddressForm({
               control={control}
               render={({ field }) => (
                 <SearchableSelect
+                  id="checkout-province"
                   options={provinces.map((province) => ({
                     value: province.id,
                     label: province.name,
@@ -124,12 +134,12 @@ export function CheckoutAddressForm({
               )}
             />
             {errors.provinceId?.message && (
-              <p className="text-xs text-red-500 mt-1">{String(errors.provinceId.message)}</p>
+              <p role="alert" className="mt-1 text-xs text-red-500">{String(errors.provinceId.message)}</p>
             )}
           </div>
 
           <div>
-            <label className="text-xs mb-2 flex items-center first-text-color">
+            <label htmlFor="checkout-city" className="mb-2 flex items-center text-sm font-medium first-text-color">
               <span className="me-1">{t('checkout.city') || 'city'}</span>(
               <span className="first-text-color-red">{t('checkout.required') || 'required'})</span>
             </label>
@@ -138,6 +148,7 @@ export function CheckoutAddressForm({
               control={control}
               render={({ field }) => (
                 <SearchableSelect
+                  id="checkout-city"
                   options={cities.map((city) => ({
                     value: city.id,
                     label: city.name,
@@ -154,32 +165,34 @@ export function CheckoutAddressForm({
               )}
             />
             {errors.cityId?.message && (
-              <p className="text-xs text-red-500 mt-1">{String(errors.cityId.message)}</p>
+              <p role="alert" className="mt-1 text-xs text-red-500">{String(errors.cityId.message)}</p>
             )}
           </div>
 
           <div className="md:col-span-2">
-            <label className="text-xs mt-4 mb-2 flex items-center first-text-color-for-paragraph">
+            <label htmlFor="checkout-street" className="mb-2 flex items-center text-sm font-medium first-text-color">
               <span className="me-1">{t('checkout.streetAddress') || 'Address Description'}</span>(
               <span className="first-text-color-red">{t('checkout.required') || 'required'}</span>)
             </label>
 
             <textarea
+              id="checkout-street"
               {...register('streetAddress1')}
               rows={3}
+              aria-invalid={!!errors.streetAddress1}
               placeholder={t('checkout.streetAddressPlaceholder') || 'Enter address description'}
-              className={`w-full resize-none rounded-md border bg-color-for-layer-sec px-3 py-2 text-sm first-text-color-for-paragraph transition-colors focus:outline-none focus:ring-2 focus:ring-first ${
+              className={`w-full resize-y rounded-xl border bg-color-for-layer-sec px-3.5 py-3 text-sm first-text-color placeholder:first-text-color-for-paragraph-low transition-[border-color,box-shadow] focus:border-first focus:outline-none focus:ring-2 focus:ring-first/20 ${
                 errors.streetAddress1 ? 'border-red-500' : 'border-color-theme'
               }`}
             />
 
             {errors.streetAddress1?.message && (
-              <p className="text-xs text-red-500 mt-1">{String(errors.streetAddress1.message)}</p>
+              <p role="alert" className="mt-1 text-xs text-red-500">{String(errors.streetAddress1.message)}</p>
             )}
           </div>
 
           <div className="md:col-span-2">
-            <label className="text-xs mb-2 flex items-center first-text-color-for-paragraph">
+            <label htmlFor="checkout-postal-code" className="mb-2 flex items-center text-sm font-medium first-text-color">
               <span className="me-1">{t('checkout.postalCode') || 'Postal Code'}</span>(
               <span className="first-text-color-red">{t('checkout.required') || 'required'})</span>
             </label>
@@ -188,8 +201,11 @@ export function CheckoutAddressForm({
               control={control}
               render={({ field }) => (
                 <Input
+                  id="checkout-postal-code"
                   {...field}
                   type="tel"
+                  dir="ltr"
+                  aria-invalid={!!errors.postalCode}
                   inputMode="numeric"
                   pattern="[0-9]*"
                   maxLength={10}
@@ -199,25 +215,26 @@ export function CheckoutAddressForm({
                     field.onChange(onlyNumbers);
                   }}
                   placeholder={t('checkout.postalCodePlaceholder') || 'Enter postal code'}
-                  className={errors.postalCode ? 'border-red-500' : 'text-right'}
+                  className="text-right"
                 />
               )}
             />
             {errors.postalCode?.message && (
-              <p className="text-xs text-red-500 mt-1">{String(errors.postalCode.message)}</p>
+              <p role="alert" className="mt-1 text-xs text-red-500">{String(errors.postalCode.message)}</p>
             )}
           </div>
         </div>
       </div>
 
-      <div className="pt-2 ">
+      <div className="pt-6">
         <button
           type="button"
           onClick={onToggleOptionalFields}
-          className="flex w-full items-center justify-between rounded-xl border border-color-theme px-4 py-3 transition-all hover:bg-color-for-layer-sec"
+          aria-expanded={showOptionalFields}
+          className="flex w-full items-center justify-between rounded-xl border border-color-theme bg-color-for-layer-sec px-4 py-3 transition-colors hover:border-first/35 hover:bg-color-for-layer-three focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first"
         >
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-blue-500" />
+            <Sparkles className="h-4 w-4 text-first" />
             <span className="text-sm font-semibold first-text-color-for-paragraph">
               {t('checkout.optionalInformation') || 'Optional Information'}
             </span>
@@ -242,10 +259,11 @@ export function CheckoutAddressForm({
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-4">
                 <div>
-                  <label className="text-xs mt-4 mb-2 flex items-center first-text-color-for-paragraph">
+                  <label htmlFor="checkout-address-title" className="mb-2 flex items-center text-sm font-medium first-text-color">
                     {t('checkout.addressTitle') || 'Address Title'}
                   </label>
                   <Input
+                    id="checkout-address-title"
                     {...register('title')}
                     placeholder={
                       t('checkout.addressTitlePlaceholder') || 'e.g., Home, Work, Office'
@@ -254,7 +272,7 @@ export function CheckoutAddressForm({
                 </div>
 
                 <div>
-                  <label className="text-xs mt-4 mb-2 flex items-center first-text-color-for-paragraph">
+                  <label htmlFor="checkout-phone" className="mb-2 flex items-center text-sm font-medium first-text-color">
                     {t('checkout.phoneNumber') || 'Phone Number'}
                   </label>
                   <Controller
@@ -262,19 +280,25 @@ export function CheckoutAddressForm({
                     control={control}
                     render={({ field }) => (
                       <Input
+                        id="checkout-phone"
                         {...field}
                         type="tel"
+                        dir="ltr"
+                        aria-invalid={!!errors.phoneNumber}
                         value={field.value ?? ''}
                         onChange={(event) => field.onChange(toEnglishNumbers(event.target.value))}
                         placeholder={t('checkout.phoneNumberPlaceholder') || 'Enter phone number'}
-                        className={errors.phoneNumber ? 'border-red-500' : ''}
+                        className="text-right"
                       />
                     )}
                   />
+                  {errors.phoneNumber?.message && (
+                    <p role="alert" className="mt-1 text-xs text-red-500">{String(errors.phoneNumber.message)}</p>
+                  )}
                 </div>
 
                 <div>
-                  <label className="text-xs mt-4 mb-2 flex items-center first-text-color-for-paragraph">
+                  <label htmlFor="checkout-alternative-phone" className="mb-2 flex items-center text-sm font-medium first-text-color">
                     {t('checkout.alternativePhoneNumber') || 'Alternative Phone Number'}
                   </label>
                   <Controller
@@ -282,8 +306,10 @@ export function CheckoutAddressForm({
                     control={control}
                     render={({ field }) => (
                       <Input
+                        id="checkout-alternative-phone"
                         {...field}
                         type="tel"
+                        dir="ltr"
                         value={field.value ?? ''}
                         onChange={(event) => field.onChange(toEnglishNumbers(event.target.value))}
                         placeholder={t('checkout.alternativePhoneNumberPlaceholder') || 'Optional'}
@@ -293,10 +319,11 @@ export function CheckoutAddressForm({
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="text-xs mt-4 mb-2 flex items-center first-text-color-for-paragraph">
+                  <label htmlFor="checkout-street-2" className="mb-2 flex items-center text-sm font-medium first-text-color">
                     {t('checkout.streetAddress2') || 'Street Address 2'}
                   </label>
                   <Input
+                    id="checkout-street-2"
                     {...register('streetAddress2')}
                     placeholder={
                       t('checkout.streetAddress2Placeholder') || 'Apartment, suite, etc.'
@@ -309,11 +336,11 @@ export function CheckoutAddressForm({
         </AnimatePresence>
       </div>
 
-      <div className="flex gap-3 pt-4">
+      <div className="flex flex-wrap gap-3 border-t border-color-theme pt-5 mt-6 sm:flex-nowrap">
         <Button
-          onClick={onSave}
+          type="submit"
           disabled={saving}
-          className="group relative w-full items-center rounded-lg bg-secound px-4 py-2 text-white"
+          className="group relative w-full items-center rounded-xl bg-first px-4 py-2 text-white hover:bg-first-600"
           size="md"
         >
           {saving ? (
@@ -330,14 +357,15 @@ export function CheckoutAddressForm({
         </Button>
 
         <Button
+          type="button"
           variant="outline"
           size="sm"
-          className="border border-red-500 first-text-color"
+          className="rounded-xl border border-color-theme first-text-color hover:bg-color-for-layer-sec"
           onClick={onCancel}
         >
           {t('checkout.cancel') || 'Cancel'}
         </Button>
       </div>
-    </motion.div>
+    </motion.form>
   );
 }

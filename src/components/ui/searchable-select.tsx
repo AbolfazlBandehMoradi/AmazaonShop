@@ -9,6 +9,7 @@ export interface SearchableSelectOption {
 }
 
 interface SearchableSelectProps {
+  id?: string;
   options: SearchableSelectOption[];
   value: number | string;
   onChange: (value: number | string) => void;
@@ -21,6 +22,7 @@ interface SearchableSelectProps {
 }
 
 export function SearchableSelect({
+  id,
   options,
   value,
   onChange,
@@ -136,8 +138,7 @@ export function SearchableSelect({
     }
   };
 
-  const handleClear = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleClear = () => {
     onChange(0);
     setSearchTerm('');
   };
@@ -146,14 +147,19 @@ export function SearchableSelect({
     <div ref={containerRef} className={cn('relative', className)}>
       {/* Trigger Button */}
       <button
+        id={id}
         type="button"
+        aria-invalid={error || undefined}
+        aria-expanded={isOpen}
+        aria-haspopup="listbox"
         onClick={handleToggle}
         disabled={disabled}
         className={cn(
-          'flex h-10 w-full items-center first-text-color-for-paragraph justify-between rounded-md border border-color-theme bg-color-for-layer-sec px-3 py-2 text-sm ring-offset-[var(--bg-color-for-layer-on-body)]',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-first focus-visible:ring-offset-2',
+          'flex h-11 w-full items-center first-text-color justify-between rounded-xl border border-color-theme bg-color-for-layer-sec px-3.5 py-2 text-sm ring-offset-[var(--bg-color-for-layer-on-body)] transition-[border-color,box-shadow]',
+          'focus-visible:border-first focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-first/20',
           'disabled:cursor-not-allowed disabled:opacity-50',
           error && 'border-red-500',
+          selectedOption && !disabled && 'pe-16',
           className,
         )}
       >
@@ -161,12 +167,6 @@ export function SearchableSelect({
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <div className="flex items-center gap-1">
-          {selectedOption && value !== 0 && value !== '' && !disabled && (
-            <X
-              className="h-4 w-4 cursor-pointer first-text-color-for-paragraph-low hover:first-text-color"
-              onClick={handleClear}
-            />
-          )}
           <ChevronDown
             className={cn(
               'h-4 w-4 first-text-color-for-paragraph-low transition-transform',
@@ -176,9 +176,20 @@ export function SearchableSelect({
         </div>
       </button>
 
+      {selectedOption && value !== 0 && value !== '' && !disabled && (
+        <button
+          type="button"
+          onClick={handleClear}
+          aria-label="Clear selection"
+          className="absolute end-9 top-1/2 z-10 -translate-y-1/2 rounded-md p-1 first-text-color-for-paragraph-low hover:first-text-color focus-visible:outline-2 focus-visible:outline-first"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      )}
+
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute z-50 mt-1 w-full rounded-md border border-color-theme bg-color-for-layer-on-body shadow-md">
+        <div className="absolute z-50 mt-1 w-full overflow-hidden rounded-xl border border-color-theme bg-color-for-layer-on-body shadow-md">
           {/* Search Input */}
           <div className="border-b border-color-theme p-2">
             <Input
@@ -211,11 +222,11 @@ export function SearchableSelect({
                   onClick={() => handleSelect(option.value)}
                   onMouseEnter={() => setHighlightedIndex(index)}
                   className={cn(
-                    'relative flex cursor-pointer  first-text-color-for-paragraph select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none',
+                    'relative flex min-h-10 cursor-pointer first-text-color-for-paragraph select-none items-center rounded-lg px-3 py-2 text-sm outline-none',
                     'transition-colors hover:bg-color-for-layer-three hover:first-text-color',
                     'focus:bg-color-for-layer-three focus:first-text-color',
                     value === option.value && 'bg-color-for-layer-three first-text-color',
-                    highlightedIndex === index && ' hover:bg-secound first-text-color font-f-sbold',
+                    highlightedIndex === index && 'bg-color-for-layer-three first-text-color font-f-sbold',
                   )}
                   role="option"
                   aria-selected={value === option.value}

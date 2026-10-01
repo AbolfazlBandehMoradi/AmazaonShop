@@ -45,7 +45,7 @@ export function CheckoutAddressList({
         initial={{ opacity: 0, y: 18, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        className="relative overflow-hidden rounded-xl border border-dashed border-red-300/50 bg-color-for-layer-on-body p-8 text-center backdrop-blur-xl"
+        className="relative overflow-hidden rounded-2xl border border-dashed border-color-theme bg-color-for-layer-on-body p-8 text-center shadow-dark-sm"
       >
         <motion.div
           className="absolute inset-0 pointer-events-none"
@@ -59,7 +59,7 @@ export function CheckoutAddressList({
           }}
         />
         <div className="w-full justify-center flex">
-          <MapPin className="h-9 w-9 text-red-500" />
+          <MapPin className="h-9 w-9 text-first" />
         </div>
         <h3 className="text-xl font-semibold tracking-tight first-text-color">
           {t('checkout.noAddresses') || 'No addresses found'}
@@ -70,7 +70,7 @@ export function CheckoutAddressList({
         <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="mt-4">
           <Button
             onClick={onAddAddress}
-            className="group relative inline-flex items-center rounded-lg bg-secound px-4 py-2 text-white"
+            className="group relative inline-flex items-center rounded-xl bg-first px-4 py-2 text-white hover:bg-first-600"
           >
             {t('checkout.addNewAddress') || 'Add New Address'}
           </Button>
@@ -92,26 +92,33 @@ export function CheckoutAddressList({
         <Button
           variant="primary"
           onClick={onAddAddress}
-          className="bg-first p-0 rounded-full flex items-center justify-center h-10 w-10"
+          aria-label={t('checkout.addNewAddress') || 'Add New Address'}
+          className="bg-first p-0 rounded-xl flex items-center justify-center h-11 w-11"
         >
           <MapPinPlus className="h-5 w-5" />
         </Button>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3">
         {addresses.map((address) => {
           const isSelected = selectedAddressId === address.id;
 
           return (
             <motion.div
               key={address.id}
-              onClick={() => onSelectAddress(address.id)}
               transition={{ duration: 0.22, ease: 'easeOut' }}
-              className={`group relative bg-color-for-layer-on-body rounded-lg cursor-pointer ${
-                isSelected ? 'opacity-100 border-2 border-first' : 'opacity-50 hover:opacity-100'
+              className={`group relative rounded-2xl border bg-color-for-layer-on-body transition-[border-color,box-shadow] focus-within:border-first ${
+                isSelected ? 'border-first shadow-first-sm' : 'border-color-theme hover:border-first/40'
               }`}
             >
-              <div className="relative w-full p-4">
+              <button
+                type="button"
+                onClick={() => onSelectAddress(address.id)}
+                aria-pressed={isSelected}
+                aria-label={`${t('checkout.selectAddress') || 'Select Address'}: ${address.title || address.streetAddress1}`}
+                className="absolute inset-0 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first"
+              />
+              <div className="pointer-events-none relative w-full p-4">
                 <div className="flex items-center gap-2 w-full justify-between flex-wrap">
                   <div className="flex items-center gap-2 flex-wrap">
                     <motion.div
@@ -142,34 +149,31 @@ export function CheckoutAddressList({
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger>
-                        <button
-                          type="button"
-                          className="rounded-xl border border-color-theme bg-color-for-layer-on-body p-2 transition hover:bg-color-for-layer-sec"
-                        >
-                          <MoreVertical className="h-4 w-4 first-text-color-svg" />
-                        </button>
-                      </DropdownMenuTrigger>
+                    <div className="pointer-events-auto relative z-10" onClick={(event) => event.stopPropagation()}>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <button
+                            type="button"
+                            aria-label={`${address.title || t('checkout.addressTitle') || 'Address'}: ${t('checkout.edit') || 'Edit'}`}
+                            className="rounded-xl border border-color-theme bg-color-for-layer-on-body p-2 transition hover:bg-color-for-layer-sec"
+                          >
+                            <MoreVertical className="h-4 w-4 first-text-color-svg" />
+                          </button>
+                        </DropdownMenuTrigger>
 
-                      <DropdownMenuContent>
-                        <DropdownMenuItem
-                          onClick={() => onEditAddress(address)}
-                          className="text-blue-600"
-                        >
-                          <Edit2 className="h-4 w-4" />
-                          {t('checkout.edit') || 'Edit'}
-                        </DropdownMenuItem>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem onClick={() => onEditAddress(address)} className="text-first">
+                            <Edit2 className="h-4 w-4" />
+                            {t('checkout.edit') || 'Edit'}
+                          </DropdownMenuItem>
 
-                        <DropdownMenuItem
-                          onClick={() => onDeleteAddress(address.id)}
-                          className="text-red-600"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                          {t('checkout.delete') || 'Delete'}
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                          <DropdownMenuItem onClick={() => onDeleteAddress(address.id)} className="text-red-600">
+                            <Trash2 className="h-4 w-4" />
+                            {t('checkout.delete') || 'Delete'}
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
 
                     {isSelected && (
                       <motion.div

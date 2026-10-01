@@ -54,7 +54,7 @@ function CategoryCard({
     <Link
       to={href}
       className={cn(
-        'group flex min-w-0 flex-col bg-white transition-[box-shadow,transform] duration-200 hover:-translate-y-1 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first dark:bg-[#273242]',
+        'group flex min-w-0 flex-col bg-white transition-[box-shadow,transform] duration-200 hover:-translate-y-1 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first dark:bg-color-for-layer-sec',
         variant === 'grid'
           ? 'aspect-[306/237] rounded-[32px] p-6'
           : 'h-[220px] rounded-[24px] p-5 sm:h-[237px]',
@@ -169,7 +169,7 @@ export default function HeroCategories({ categories }: HeroCategoriesProps) {
           </div>
         </>
       ) : (
-        <p className="mt-8 rounded-[24px] bg-white p-8 text-center first-text-color-for-paragraph dark:bg-[#273242]">
+        <p className="mt-8 rounded-[24px] bg-white p-8 text-center first-text-color-for-paragraph dark:bg-color-for-layer-sec">
           {t('mainpage.categories.empty')}
         </p>
       )}

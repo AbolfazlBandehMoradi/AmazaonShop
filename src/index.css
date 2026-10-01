@@ -2,6 +2,7 @@
 
 :root {
   --color-1f2633-const: #1f2633;
+  --brand-violet-gradient: radial-gradient(104.31% 368.59% at 121.8% -54.31%, #3f3fa4 0%, #18183e 100%);
 }
 
 a,
@@ -317,9 +318,9 @@ body.light {
 
 body.dark {
   color-scheme: dark;
-  --color-first-50: #24344e;
-  --color-first-100: #2a3f5c;
-  --color-first-200: #36557c;
+  --color-first-50: #292d37;
+  --color-first-100: #343b49;
+  --color-first-200: #48556a;
   --color-first-300: #a9c7ee;
   --color-first-400: #719cd6;
   --color-first-500: #5c88c9;
@@ -335,11 +336,11 @@ body.dark {
   --color-third-50: var(--color-secound-50);
   --color-third-100: var(--color-secound-100);
   --color-third-700: var(--color-secound-700);
-  --color-background: #181e29;
-  --color-surface: #222b39;
-  --color-text: #f1f4f8;
-  --color-text-muted: #b6bfcc;
-  --color-border: #465264;
+  --color-background: #15171c;
+  --color-surface: #22252b;
+  --color-text: #f3f2f0;
+  --color-text-muted: #b7b9c0;
+  --color-border: #41454f;
   --shadow-surface: 0px 8px 8px 2px #00000033;
   --brand-primary: var(--color-first);
   --brand-secondary: var(--color-secound);
@@ -357,11 +358,11 @@ body.dark {
   /* Start Bg Color For Theme */
   --bg-color-for-body: var(--color-background);
   --bg-color-for-layer-on-body: var(--color-surface);
-  --bg-color-for-layer-sec: #273242;
-  --bg-color-for-layer-three: #303d4f;
-  --bg-color-for-layer-on-body-rotate: #2a3648;
-  --bg-color-for-layer-sec-return: #1d2532;
-  --bg-color-for-layer-sec-prev: #303d4f;
+  --bg-color-for-layer-sec: #2b2e35;
+  --bg-color-for-layer-three: #353942;
+  --bg-color-for-layer-on-body-rotate: #2b2e35;
+  --bg-color-for-layer-sec-return: #1c1f25;
+  --bg-color-for-layer-sec-prev: #353942;
   --bg-color-for-layer-sec-fill: var(--color-surface);
 
   --bg-color-for-red: #ed1d24;
@@ -371,7 +372,7 @@ body.dark {
   --first-text-color-const: #1c1c1c;
   --first-text-color-svg: var(--color-text-muted);
   --first-text-color-svg-first: var(--color-first);
-  --first-text-color-hr: #344252;
+  --first-text-color-hr: #3c4049;
   --first-text-color-hr-on-secound-layer: #dfe8f229;
   --first-text-color-svg-const: #1c1c1c;
   --first-text-color-for-paragraph: var(--color-text-muted);
@@ -380,9 +381,9 @@ body.dark {
   /* Start Section Button */
   --first-style-button-bg: var(--color-first);
   --first-style-button-bg-hover: var(--color-first-600);
-  --button-style-icon-first-bg: #24344e;
-  --offer-background: linear-gradient(115deg, #28518e 0%, #1d3d6d 100%);
-  --first-bg-gradiant-for-section-one: linear-gradient(180deg, #222b39 0%, #181e29 100%);
+  --button-style-icon-first-bg: #303949;
+  --offer-background: var(--brand-violet-gradient);
+  --first-bg-gradiant-for-section-one: linear-gradient(180deg, #22252b 0%, #15171c 100%);
 }
 
 body.light section[aria-labelledby='landing-hero-title'] {
@@ -395,7 +396,7 @@ body.light section[aria-labelledby='landing-hero-title'] {
 body.dark section[aria-labelledby='landing-hero-title'] {
   background:
     radial-gradient(circle at 74% 16%,
-      color-mix(in srgb, var(--color-first) 18%, transparent) 0%,
+      color-mix(in srgb, #3f3fa4 14%, transparent) 0%,
       transparent 34%),
     linear-gradient(180deg,
       var(--bg-color-for-body) 0%,
@@ -408,8 +409,7 @@ body.dark section[aria-labelledby='landing-hero-title'] > img[aria-hidden='true'
   filter: brightness(0.66) saturate(0.8) contrast(0.96);
 }
 
-body.dark img[alt='logo'],
-body.dark img[alt='Pulak Shop logo'] {
+body.dark img[alt='logo'] {
   filter: brightness(0) invert(1);
   transition: filter 0.2s ease;
 }
@@ -764,7 +764,7 @@ html {
   }
 
   .navbar-desktop-divider {
-    background: repeating-linear-gradient(90deg, #d9d9d9 0 8px, transparent 8px 16px) left bottom /
+    background: repeating-linear-gradient(90deg, var(--color-border) 0 8px, transparent 8px 16px) left bottom /
       100% 1px no-repeat;
   }
 
@@ -1184,6 +1184,10 @@ html {
 }
 
 /* برای کنترل فاصله dash دقیق‌تر با border-image */
+  .brand-gradient {
+    background: var(--brand-violet-gradient);
+  }
+
   .product-detail-panel {
     border: 1px solid color-mix(in srgb, var(--first-text-color-svg) 14%, transparent);
     border-radius: 0.5rem;

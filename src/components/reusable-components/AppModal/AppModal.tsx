@@ -41,7 +41,9 @@ export function AppModal({
           onClick={onClose}
         >
           <motion.div
-            className="mx-4 w-full max-w-sm rounded-2xl bg-white p-8 text-center shadow-2xl dark:bg-gray-800"
+            role="dialog"
+            aria-modal="true"
+            className="mx-4 w-full max-w-sm rounded-2xl border border-color-theme bg-color-for-layer-on-body p-6 text-center shadow-2xl sm:p-8"
             initial={{ scale: 0.6, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.6, opacity: 0 }}
@@ -53,22 +55,22 @@ export function AppModal({
 
             {/* TITLE */}
             {title && (
-              <h3 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">{title}</h3>
+              <h3 className="mb-2 text-2xl font-bold first-text-color">{title}</h3>
             )}
 
             {/* DESCRIPTION */}
-            {description && <p className="mb-6 text-gray-600 dark:text-gray-300">{description}</p>}
+            {description && <p className="mb-6 first-text-color-for-paragraph">{description}</p>}
 
             {/* BUTTONS */}
             {buttons.length > 0 && (
               <div className="flex gap-3">
                 {buttons.map((btn, index) => {
-                  const base = 'flex-1 px-4 py-2 rounded-lg font-medium transition';
+                  const base = 'min-h-11 flex-1 rounded-xl px-4 py-2 font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first';
 
                   const styles = {
-                    primary: 'bg-blue-600 text-white hover:bg-blue-700',
-                    secondary: 'bg-gray-200 text-gray-900 hover:bg-gray-300',
-                    outline: 'border border-gray-300 text-gray-700 hover:bg-gray-100',
+                    primary: 'bg-first text-white hover:bg-first-600',
+                    secondary: 'bg-color-for-layer-sec first-text-color hover:bg-color-for-layer-three',
+                    outline: 'border border-color-theme first-text-color hover:bg-color-for-layer-sec',
                   };
 
                   return (

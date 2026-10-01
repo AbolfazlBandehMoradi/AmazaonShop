@@ -42,7 +42,7 @@ const DealsCardCountdown = ({ endDate, lang }: { endDate: string; lang: Language
       role="timer"
       aria-label={`${offerEndsIn}: ${units.map(({ value, label }) => `${formatter.format(value)} ${label}`).join(lang === 'fa' ? '، ' : ', ')}`}
       dir={lang === 'fa' ? 'rtl' : 'ltr'}
-      className="absolute top-4 left-4 z-10 inline-flex max-w-[calc(100%-1.5rem)] items-center gap-2 rounded-lg bg-white px-2 py-1.5"
+      className="absolute top-4 left-4 z-10 inline-flex max-w-[calc(100%-1.5rem)] items-center gap-2 rounded-lg bg-color-for-layer-on-body px-2 py-1.5 shadow-dark-sm"
     >
       <span
         dir="ltr"
@@ -121,7 +121,7 @@ const ShowcaseProductCard = ({
         />
         <div
           className={cn(
-            'relative shrink-0 overflow-hidden rounded-t-[32px] rounded-b-lg border border-border bg-white',
+            'relative shrink-0 overflow-hidden rounded-t-[32px] rounded-b-lg border border-border bg-color-for-layer-on-body',
             isDealsVariant ? 'flex h-[350px] items-center justify-center p-6' : 'aspect-square',
             isDealsVariant && saleEndDate && 'pt-14',
           )}

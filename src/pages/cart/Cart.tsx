@@ -43,7 +43,7 @@ const Cart = () => {
           <Button
             variant="ghost"
             onClick={() => navigate(`/products`)}
-            className="bg-status-danger text-status-danger hover:bg-status-danger"
+            className="rounded-xl border border-color-theme bg-color-for-layer-on-body first-text-color hover:bg-color-for-layer-sec"
           >
             <ArrowLeft className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
             {t('common.back') || 'Back'}
@@ -118,7 +118,7 @@ const Cart = () => {
         </motion.div>
       )}
 
-      {showMobileContinueBar && (
+      {showMobileContinueBar && cart && (
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
