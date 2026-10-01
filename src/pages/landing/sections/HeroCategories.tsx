@@ -80,7 +80,8 @@ function StockPanel({
   className?: string;
 }) {
   return (
-    <div
+    <Link
+    to={'/categories'}
       className={cn(
         'relative isolate flex min-w-0 w-full items-center justify-center overflow-hidden px-8 text-center',
         variant === 'grid'
@@ -98,7 +99,7 @@ function StockPanel({
       />
       <div className="absolute inset-0 bg-[#17173EE5]" aria-hidden="true" />
       <p className="relative z-10 max-w-sm text-lg leading-8 font-f-sbold text-white">{message}</p>
-    </div>
+    </Link>
   );
 }
 
