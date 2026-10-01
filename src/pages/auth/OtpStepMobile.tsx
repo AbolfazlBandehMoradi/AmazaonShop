@@ -44,7 +44,7 @@ export default function MobileStep({
     <div className="space-y-4">
       <div>
         <label className="mb-2 block text-sm font-s-medium first-text-color">{label}</label>
-        <div className="flex items-center rounded-xl border border-color-theme bg-color-for-layer-on-body px-3 transition-all focus-within:border-first focus-within:ring-2 focus-within:ring-first/20">
+        <div className="flex items-center rounded-xl border border-color-theme bg-input-surface px-3 transition-all focus-within:border-first focus-within:ring-2 focus-within:ring-first/20">
           <input
             className="h-13 w-full bg-transparent px-1 text-[15px] first-text-color outline-none placeholder:text-sm placeholder:first-text-color-for-paragraph-low"
             type="tel"

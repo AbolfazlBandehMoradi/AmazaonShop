@@ -8,12 +8,12 @@ import {
   Truck,
   Tags,
   ShoppingBag,
-  Smartphone,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useLangStore } from '@/stores/languageStore';
+import aboutShowroomImage from '@/assets/Images/Static/about-mobile-showroom.webp';
 
 const featureIcons = [Tags, ShieldCheck, PackageCheck, Truck, Headset, ShoppingBag];
 
@@ -75,13 +75,12 @@ export default function AboutUs() {
           </div>
         </div>
 
-        <figure className="relative flex min-h-[280px] items-center justify-center overflow-hidden bg-[linear-gradient(135deg,var(--color-first-50),var(--bg-color-for-layer-sec))] dark:bg-[linear-gradient(135deg,var(--color-first-950),var(--bg-color-for-layer-sec))] sm:min-h-[360px] lg:min-h-[500px]">
-          <span className="absolute h-64 w-64 rounded-full bg-first/15 blur-3xl" aria-hidden="true" />
-          <Smartphone
-            role="img"
-            aria-label={about.imageAlt}
-            className="relative h-36 w-36 text-first dark:text-first-300 sm:h-48 sm:w-48"
-            strokeWidth={1.2}
+        <figure className="relative min-h-[280px] overflow-hidden bg-color-for-layer-sec sm:min-h-[360px] lg:min-h-[500px]">
+          <img
+            src={aboutShowroomImage}
+            alt={about.imageAlt}
+            className="absolute inset-0 h-full w-full object-cover object-center"
+            loading="eager"
           />
           <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent px-6 pb-6 pt-20 sm:px-8 sm:pb-8">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/30 px-4 py-2 text-xs font-s-sbold text-white backdrop-blur-sm sm:text-sm">

@@ -3,6 +3,7 @@
 :root {
   --color-1f2633-const: #1f2633;
   --brand-violet-gradient: radial-gradient(104.31% 368.59% at 121.8% -54.31%, #3f3fa4 0%, #18183e 100%);
+  --input-surface: #ffffff;
 }
 
 a,
@@ -318,6 +319,8 @@ body.light {
 
 body.dark {
   color-scheme: dark;
+  --brand-violet-gradient: radial-gradient(110% 220% at 100% 0%, #2d548a 0%, #1c304e 52%, #172333 100%);
+  --input-surface: #353942;
   --color-first-50: #292d37;
   --color-first-100: #343b49;
   --color-first-200: #48556a;
@@ -514,6 +517,10 @@ body.dark img[alt='logo'] {
 
 @utility bg-color-for-layer-sec {
   background-color: var(--bg-color-for-layer-sec);
+}
+
+@utility bg-input-surface {
+  background-color: var(--input-surface);
 }
 
 @utility first-text-color-for-paragraph {
@@ -784,6 +791,29 @@ html {
   .navbar-category-scroll::-webkit-scrollbar-thumb {
     border-radius: 999px;
     background-color: color-mix(in srgb, var(--color-secound) 65%, transparent);
+  }
+
+  .searchable-select-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--color-first) 65%, transparent) transparent;
+  }
+
+  .searchable-select-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .searchable-select-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .searchable-select-scroll::-webkit-scrollbar-thumb {
+    border: 1px solid var(--bg-color-for-layer-sec);
+    border-radius: 999px;
+    background-color: color-mix(in srgb, var(--color-first) 65%, transparent);
+  }
+
+  .searchable-select-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-first);
   }
 
   .nav-search-submit:hover {

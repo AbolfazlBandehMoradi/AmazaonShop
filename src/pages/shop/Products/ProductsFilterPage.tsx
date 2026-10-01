@@ -16,8 +16,8 @@ import { type CatalogProduct } from '@/types/productView.types';
 import ProductCard from './sections/ProductCard';
 import MobileFiltersDrawer from './sections/MobileFiltersDrawer';
 import { cn } from '@/utils/cn';
-import notFoundImage from '@/assets/Images/Shop/Not found.png';
-import notFoundImageEn from '@/assets/Images/Shop/Not found En.png';
+import { formatPrice } from '@/utils/numberFormat';
+import emptyProductsImage from '@/assets/Images/Shop/products-empty.webp';
 import ProductsSortControls, {
   DEFAULT_PRODUCT_SORT_BY,
   PRODUCT_SORT_FIELDS,
@@ -504,10 +504,10 @@ export default function ProductsFilterPage() {
     Boolean(normalizedActiveFilters.search) ||
     Boolean(normalizedActiveFilters.hasOffer);
 
-  const urlParams = new URLSearchParams(location.search);
-  const activeSearchTerm = isUrlHydrated
-    ? normalizedActiveFilters.search
-    : normalizeSearchValue(urlParams.get('search') ?? urlParams.get('q') ?? undefined);
+  const noticeFilters = isUrlHydrated
+    ? normalizedActiveFilters
+    : parseFiltersFromSearch(location.search);
+  const activeSearchTerm = noticeFilters.search;
   const activeSearchNotice = activeSearchTerm ? (
     <div
       role="status"
@@ -532,6 +532,69 @@ export default function ProductsFilterPage() {
     </div>
   ) : null;
 
+  const hasSelectedFilters =
+    noticeFilters.categoryIds.length > 0 ||
+    noticeFilters.showcaseIds.length > 0 ||
+    typeof noticeFilters.minPrice === 'number' ||
+    typeof noticeFilters.maxPrice === 'number' ||
+    Boolean(noticeFilters.hasOffer);
+
+  const activeFilterNotice = hasSelectedFilters ? (
+    <div
+      role="status"
+      className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-first/20 bg-first/5 px-4 py-3"
+    >
+      <div className="flex flex-wrap items-center gap-2 text-sm first-text-color">
+        <SlidersHorizontal className="h-4 w-4 shrink-0 text-first" strokeWidth={1.8} aria-hidden="true" />
+        <span className="font-f-sbold">{t('productsFilter.filters')}:</span>
+        {noticeFilters.categoryIds.length > 0 && (
+          <span className="rounded-full border border-first/20 bg-input-surface px-2.5 py-1 text-first">
+            {t('productsFilter.activeCategoryLabel')} ({noticeFilters.categoryIds.length})
+          </span>
+        )}
+        {noticeFilters.showcaseIds.length > 0 && (
+          <span className="rounded-full border border-first/20 bg-input-surface px-2.5 py-1 text-first">
+            {t('productsFilter.showcases')} ({noticeFilters.showcaseIds.length})
+          </span>
+        )}
+        {(typeof noticeFilters.minPrice === 'number' ||
+          typeof noticeFilters.maxPrice === 'number') && (
+          <span className="rounded-full border border-first/20 bg-input-surface px-2.5 py-1 text-first">
+            {t('productsFilter.priceRange')}:
+            {typeof noticeFilters.minPrice === 'number' &&
+              ` ${t('productsFilter.fromPrice')} ${formatPrice(noticeFilters.minPrice, undefined, lang)}`}
+            {typeof noticeFilters.maxPrice === 'number' &&
+              ` ${t('productsFilter.toPrice')} ${formatPrice(noticeFilters.maxPrice, undefined, lang)}`}
+            {' '}{t('productsFilter.priceCurrency')}
+          </span>
+        )}
+        {noticeFilters.hasOffer && (
+          <span className="rounded-full border border-first/20 bg-input-surface px-2.5 py-1 text-first">
+            {t('productsFilter.onlyDiscountedProducts')}
+          </span>
+        )}
+      </div>
+      <button
+        type="button"
+        onClick={() =>
+          setFilters({
+            ...noticeFilters,
+            categoryIds: [],
+            showcaseIds: [],
+            minPrice: undefined,
+            maxPrice: undefined,
+            hasOffer: undefined,
+          })
+        }
+        className="inline-flex min-h-9 items-center gap-1.5 rounded-lg px-2 text-sm text-first transition-colors hover:bg-first/10 focus-visible:ring-2 focus-visible:ring-first"
+        aria-label={t('productsFilter.clear')}
+      >
+        <X className="h-4 w-4" strokeWidth={1.8} aria-hidden="true" />
+        {t('productsFilter.clear')}
+      </button>
+    </div>
+  ) : null;
+
   const sortOptions = useMemo(() => getProductSortOptions(lang), [lang]);
   const activeSortOption = useMemo(
     () => getActiveProductSortOption(sortOptions, sortBy) ?? sortOptions[0],
@@ -543,7 +606,6 @@ export default function ProductsFilterPage() {
   );
   const mobileSortLabel =
     lang === 'fa' ? '\u0645\u0631\u062a\u0628\u200c\u0633\u0627\u0632\u06cc' : 'Sort';
-  const emptyStateImage = lang === 'en' ? notFoundImageEn : notFoundImage;
 
   const handleSortChange = (nextSortBy?: string, nextSortDescending?: boolean) => {
     setSort(nextSortBy, nextSortDescending);
@@ -578,6 +640,7 @@ export default function ProductsFilterPage() {
     return (
       <main dir={dir} className="page-container page-section">
         {activeSearchNotice}
+        {activeFilterNotice}
         <div className="grid gap-6 lg:grid-cols-[minmax(220px,260px)_minmax(0,1fr)] lg:items-start">
           <aside className="hidden lg:block">
             <FilterPanelSkeleton />
@@ -593,6 +656,7 @@ export default function ProductsFilterPage() {
   return (
     <main dir={dir} className="page-container page-section">
       {activeSearchNotice}
+      {activeFilterNotice}
       <div className="mb-4 lg:hidden">
         <div className="flex items-center justify-between gap-3">
           <button
@@ -661,12 +725,13 @@ export default function ProductsFilterPage() {
               ))}
             </div>
           ) : (
-            <div className="flex justify-center rounded-xl border border-first-100/70 bg-color-for-layer-on-body p-6 sm:p-8">
+            <div className="flex flex-col items-center justify-center rounded-xl border border-first-100/70 bg-color-for-layer-on-body p-6 text-center sm:p-8">
               <img
-                src={emptyStateImage}
-                alt={t('product.notFound')}
-                className="h-auto w-full max-w-xs object-contain sm:max-w-md lg:max-w-xl"
+                src={emptyProductsImage}
+                alt=""
+                className="h-auto w-full max-w-64 object-contain sm:max-w-80"
               />
+              <p className="mt-4 text-base font-s-sbold first-text-color">{t('product.notFound')}</p>
             </div>
           )}
 

@@ -155,7 +155,7 @@ export function SearchableSelect({
         onClick={handleToggle}
         disabled={disabled}
         className={cn(
-          'flex h-11 w-full items-center first-text-color justify-between rounded-xl border border-color-theme bg-color-for-layer-sec px-3.5 py-2 text-sm ring-offset-[var(--bg-color-for-layer-on-body)] transition-[border-color,box-shadow]',
+          'flex h-11 w-full items-center first-text-color justify-between rounded-xl border border-color-theme bg-input-surface px-3.5 py-2 text-sm ring-offset-[var(--bg-color-for-layer-on-body)] transition-[border-color,box-shadow]',
           'focus-visible:border-first focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-first/20',
           'disabled:cursor-not-allowed disabled:opacity-50',
           error && 'border-red-500',
@@ -208,7 +208,7 @@ export function SearchableSelect({
           {/* Options List */}
           <div
             ref={listRef}
-            className="max-h-60 bg-color-for-layer-sec overflow-auto p-1"
+            className="searchable-select-scroll max-h-60 overflow-auto bg-color-for-layer-sec p-1"
             role="listbox"
           >
             {filteredOptions.length === 0 ? (

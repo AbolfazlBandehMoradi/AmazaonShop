@@ -181,7 +181,7 @@ export function CheckoutAddressForm({
               rows={3}
               aria-invalid={!!errors.streetAddress1}
               placeholder={t('checkout.streetAddressPlaceholder') || 'Enter address description'}
-              className={`w-full resize-y rounded-xl border bg-color-for-layer-sec px-3.5 py-3 text-sm first-text-color placeholder:first-text-color-for-paragraph-low transition-[border-color,box-shadow] focus:border-first focus:outline-none focus:ring-2 focus:ring-first/20 ${
+              className={`w-full resize-y rounded-xl border bg-input-surface px-3.5 py-3 text-sm first-text-color placeholder:first-text-color-for-paragraph-low transition-[border-color,box-shadow] focus:border-first focus:outline-none focus:ring-2 focus:ring-first/20 ${
                 errors.streetAddress1 ? 'border-red-500' : 'border-color-theme'
               }`}
             />

@@ -203,7 +203,7 @@ export default function OtpStep({
             onChange={(e) => handleOtpChange(index, e.target.value)}
             onKeyDown={(e) => handleOtpKeyDown(index, e)}
             onPaste={handlePaste}
-            className="h-13 w-12 rounded-xl border border-color-theme bg-color-for-layer-on-body text-center text-xl font-semibold first-text-color outline-none transition-all focus:border-first focus:ring-2 focus:ring-first/20 sm:w-14"
+            className="h-13 w-12 rounded-xl border border-color-theme bg-input-surface text-center text-xl font-semibold first-text-color outline-none transition-all focus:border-first focus:ring-2 focus:ring-first/20 sm:w-14"
             inputMode="numeric"
             autoComplete={index === 0 ? 'one-time-code' : 'off'}
             pattern="[0-9]*"

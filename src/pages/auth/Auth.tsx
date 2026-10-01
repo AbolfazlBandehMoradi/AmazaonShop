@@ -241,11 +241,11 @@ export default function Auth() {
               <h1 className="text-center text-2xl font-s-bold first-text-color md:text-3xl">
                 {lang === 'fa' ? (
                   <>
-                    به <span className="text-third"> بریس</span> خوش آمدید
+                    به <span className="text-third"> آمازون</span> خوش آمدید
                   </>
                 ) : (
                   <>
-                    Welcome to <span className="text-third">Beris</span>
+                    Welcome to <span className="text-third">Amazon</span>
                   </>
                 )}{' '}
               </h1>

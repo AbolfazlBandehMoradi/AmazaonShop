@@ -85,6 +85,7 @@ export function NavbarWithDropDownDrawer() {
   const drawerRef = useRef<HTMLElement>(null);
   const desktopSearchRef = useRef<HTMLInputElement>(null);
   const mobileSearchRef = useRef<HTMLInputElement>(null);
+  const searchDebounceRef = useRef<number | null>(null);
 
   const labels = {
     products: t('nav.products'),
@@ -175,6 +176,13 @@ export function NavbarWithDropDownDrawer() {
     setSearchValue(activeSearch);
   }, [activeSearch, basePath]);
 
+  useEffect(() => () => {
+    if (searchDebounceRef.current !== null) {
+      window.clearTimeout(searchDebounceRef.current);
+      searchDebounceRef.current = null;
+    }
+  }, [basePath]);
+
   useEffect(() => {
     if (!isDrawerOpen) return;
 
@@ -223,10 +231,27 @@ export function NavbarWithDropDownDrawer() {
 
   const handleSearchChange = (value: string) => {
     setSearchValue(value);
+
+    if (searchDebounceRef.current !== null) {
+      window.clearTimeout(searchDebounceRef.current);
+      searchDebounceRef.current = null;
+    }
+
+    if (basePath === '/products') {
+      searchDebounceRef.current = window.setTimeout(() => {
+        searchDebounceRef.current = null;
+        setSearchText(value.trim() || undefined);
+      }, 500);
+    }
   };
 
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (searchDebounceRef.current !== null) {
+      window.clearTimeout(searchDebounceRef.current);
+      searchDebounceRef.current = null;
+    }
 
     const normalizedSearch = searchValue.trim() || undefined;
     setSearchValue(normalizedSearch ?? '');
@@ -243,6 +268,10 @@ export function NavbarWithDropDownDrawer() {
   };
 
   const handleClearSearch = (mobile: boolean) => {
+    if (searchDebounceRef.current !== null) {
+      window.clearTimeout(searchDebounceRef.current);
+      searchDebounceRef.current = null;
+    }
     setSearchValue('');
     (mobile ? mobileSearchRef : desktopSearchRef).current?.focus();
 
@@ -308,7 +337,7 @@ export function NavbarWithDropDownDrawer() {
   const renderSearchForm = (id: string, mobile = false) => (
     <form
       className={cn(
-        'flex h-14 w-full items-center overflow-hidden rounded-[24px] bg-white transition-shadow focus-within:ring-2 focus-within:ring-first dark:border dark:border-color-theme dark:bg-color-for-layer-sec',
+        'flex h-14 w-full items-center overflow-hidden rounded-[24px] bg-input-surface transition-shadow focus-within:ring-2 focus-within:ring-first dark:border dark:border-color-theme',
         !mobile && 'max-w-[34rem]',
       )}
       role="search"
@@ -326,7 +355,7 @@ export function NavbarWithDropDownDrawer() {
         value={searchValue}
         placeholder={labels.search}
         autoComplete="off"
-        className="no-clear-button h-full min-w-0 flex-1 bg-white px-4 text-sm text-[#1C1C1C] outline-none placeholder:text-[#656464] dark:bg-color-for-layer-sec dark:text-text dark:placeholder:text-text-muted sm:px-6"
+        className="no-clear-button h-full min-w-0 flex-1 bg-input-surface px-4 text-sm text-[#1C1C1C] outline-none placeholder:text-[#656464] dark:text-text dark:placeholder:text-text-muted sm:px-6"
         onChange={(event) => handleSearchChange(event.target.value)}
       />
       {searchValue && (
@@ -389,7 +418,7 @@ export function NavbarWithDropDownDrawer() {
     }
 
     return (
-      <div className="relative" ref={profileMenuRef}>
+      <div className="relative z-50" ref={profileMenuRef}>
         <button
           type="button"
           className="inline-flex h-11 items-center gap-2 overflow-hidden rounded-xl px-2 text-sm text-[#1C1C1C] hover:text-first focus-visible:ring-2 focus-visible:ring-first dark:text-text"
@@ -414,10 +443,7 @@ export function NavbarWithDropDownDrawer() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.98 }}
               transition={{ duration: 0.16 }}
-              className={cn(
-                'absolute top-full z-50 mt-3 w-64 overflow-hidden rounded-2xl border border-secound/20 bg-color-for-layer-on-body p-2 shadow-dark-sm',
-                dir === 'rtl' ? 'left-0' : 'right-0',
-              )}
+              className="absolute end-0 top-full z-50 mt-2 w-64 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-color-theme bg-input-surface p-2 shadow-lg"
             >
               <Link
                 to={localizedPath('/profile')}

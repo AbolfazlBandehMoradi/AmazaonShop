@@ -503,7 +503,6 @@ const ProfilePage = () => {
           className="mb-5 overflow-hidden rounded-3xl border border-first-100/80 bg-color-for-layer-on-body shadow-dark-sm"
         >
           <div className="relative p-4 sm:p-6 lg:p-8">
-            <div className="absolute inset-x-0 top-0 h-24 bg-linear-to-r from-first-100/80 via-first-50/60 to-secound-100/70 dark:from-first-950/40 dark:via-first-900/20 dark:to-secound-950/20" />
             <div className="relative flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex min-w-0 items-center gap-4">
                 <div className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-linear-to-br from-first to-first-700 text-xl font-s-sbold text-white shadow-first-sm sm:h-20 sm:w-20 sm:text-2xl">
@@ -624,7 +623,7 @@ const ProfilePage = () => {
                 className="lg:col-span-4"
               >
                 <section className="overflow-hidden rounded-3xl border border-first-100/80 bg-color-for-layer-on-body shadow-dark-sm">
-                  <div className="bg-linear-to-br from-first/15 via-first-50/70 to-secound-50/80 p-5 dark:from-first-900/30 dark:via-first-950/20 dark:to-secound-950/20">
+                  <div className="border-b border-color-theme bg-color-for-layer-sec p-5">
                     <div className="flex items-center gap-3 sm:gap-4">
                       <div className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-color-for-layer-on-body text-xl font-s-sbold text-first shadow-dark-sm">
                         {accountInitials || <UserCircle2 className="h-8 w-8" />}
@@ -697,7 +696,7 @@ const ProfilePage = () => {
                                 }));
                                 setNameError(null);
                               }}
-                              className="h-11 w-full rounded-xl border border-gray-300/70 bg-color-for-layer-on-body px-3 text-sm first-text-color outline-none transition focus:border-first focus:ring-2 focus:ring-first/20 disabled:cursor-wait disabled:opacity-60"
+                              className="h-11 w-full rounded-xl border border-color-theme bg-input-surface px-3 text-sm first-text-color outline-none transition focus:border-first focus:ring-2 focus:ring-first/20 disabled:cursor-wait disabled:opacity-60"
                             />
                           </label>
 
@@ -722,7 +721,7 @@ const ProfilePage = () => {
                                 }));
                                 setNameError(null);
                               }}
-                              className="h-11 w-full rounded-xl border border-gray-300/70 bg-color-for-layer-on-body px-3 text-sm first-text-color outline-none transition focus:border-first focus:ring-2 focus:ring-first/20 disabled:cursor-wait disabled:opacity-60"
+                              className="h-11 w-full rounded-xl border border-color-theme bg-input-surface px-3 text-sm first-text-color outline-none transition focus:border-first focus:ring-2 focus:ring-first/20 disabled:cursor-wait disabled:opacity-60"
                             />
                           </label>
                         </div>
