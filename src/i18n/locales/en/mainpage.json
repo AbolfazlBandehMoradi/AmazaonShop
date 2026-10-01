@@ -1,4 +1,8 @@
 {
+  "brands": {
+    "title": "Most popular digital brands",
+    "description": "Discover the world's leading brands"
+  },
   "hero": {
     "label": "Amazon store highlights",
     "cta": "View and shop",
