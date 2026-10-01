@@ -1,5 +1,12 @@
 {
   "title": "Product Categories",
+  "subtitle": "Start exploring",
+  "mobileSubtitle": "What are you looking for?",
+  "parentCategories": "Main categories",
+  "back": "Back to previous page",
+  "loading": "Loading categories",
+  "retry": "Try again",
+  "browseParent": "Choose “View all products” to browse this category.",
   "productLabel": "Products",
   "viewMore": "View more",
   "moreCategories": "More categories",

@@ -1,354 +1,408 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useId, useMemo, useState, type KeyboardEvent } from 'react';
 import Masonry from 'react-masonry-css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Category } from '@/types';
+import { ArrowLeft, ChevronDown, ChevronLeft, Grid2x2, RefreshCw } from 'lucide-react';
+import type { Category } from '@/types';
 import useCategories from '@/hooks/useCategories';
 import { useLangStore } from '@/stores/languageStore';
-import PageLoader from '@/components/ui/PageLoader';
+import { SectionHeading } from '@/components/ui/SectionHeading';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { getCategoryChildren } from '@/utils/categoryHelpers';
-import { ChevronLeft, Smartphone } from 'lucide-react';
-
-const CATEGORY_FALLBACK_IMAGE = 'https://panell.pulakshop.ir/site-assets/gallery/no-image.png';
+import { cn } from '@/utils/cn';
+import './CategoriesPage.css';
 
 const hasProducts = (category: Category) => (category.productCount ?? 0) > 0;
-const sortByAvailability = (a: Category, b: Category) => Number(hasProducts(b)) - Number(hasProducts(a));
+const sortByAvailability = (a: Category, b: Category) =>
+  Number(hasProducts(b)) - Number(hasProducts(a));
+const categoryPath = (category: Category) =>
+  `/products?categoryIds=${encodeURIComponent(category.id)}`;
+const focusClass =
+  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first';
 
-const ChildCategoryCard: React.FC<{ category: Category }> = ({ category }) => {
-  const { t } = useTranslation();
-  const dir = useLangStore((s) => s.dir);
-  const localizedPath = useLocalizedPath();
-  const isClickable = hasProducts(category);
+function CategoryImage({ category, className }: { category: Category; className?: string }) {
+  const [failedImage, setFailedImage] = useState<string>();
 
   return (
-    <Link
-      to={isClickable ? localizedPath(`/products?categoryIds=${category.id}`) : '#'}
-      className={`mt-2 block w-full break-inside-avoid rounded-lg bg-color-for-layer-on-body ${
-        isClickable ? 'cursor-pointer hover:shadow-md' : 'pointer-events-none opacity-50'
-      }`}
+    <span
+      className={cn(
+        'grid size-11 shrink-0 place-items-center overflow-hidden rounded-xl border border-border/60 bg-background',
+        className,
+      )}
     >
-      <div className="flex h-full w-full items-center px-3 py-2">
-        <div className="h-full w-8/48">
-          <img
-            src={category.image || CATEGORY_FALLBACK_IMAGE}
-            alt={category.name}
-            className="h-full w-full rounded-lg object-cover"
-          />
-        </div>
-        <div className="mr-3 w-36/48">
-          <h4 className="first-text-color">{category.name}</h4>
-          <p
-            className={`text-xs font-f-light ${
-              category.productCount === 0
-                ? 'first-text-color-red'
-                : 'first-text-color-for-paragraph'
-            }`}
-          >
-            {category.productCount === 0
-              ? t('categories.noProductsInCategory')
-              : `${category.productCount} ${t('categories.productLabel')}`}
-          </p>
-        </div>
-        {isClickable && (
-          <span
-            className={`flex h-6 w-6 items-center justify-center rounded-full bg-first ${
-              dir === 'ltr' ? 'rotate-180' : 'rotate-0'
-            }`}
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M15 4L7 12L15 20"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-        )}
-      </div>
-    </Link>
+      {category.image && category.image !== failedImage ? (
+        <img
+          src={category.image}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="size-full object-contain p-1"
+          onError={() => setFailedImage(category.image)}
+        />
+      ) : (
+        <Grid2x2
+          aria-hidden="true"
+          className="size-5 text-first dark:text-first-300"
+          strokeWidth={1.6}
+        />
+      )}
+    </span>
   );
-};
+}
 
-const ParentCategoryCard: React.FC<{ category: Category }> = ({ category }) => {
+function ProductCount({ category }: { category: Category }) {
+  const { t, i18n } = useTranslation();
+
+  return (
+    <span className="block text-[11px] leading-5 text-text-muted md:text-xs">
+      {hasProducts(category)
+        ? `${(category.productCount ?? 0).toLocaleString(i18n.resolvedLanguage)} ${t('categories.productLabel')}`
+        : t('categories.noProductsInCategory')}
+    </span>
+  );
+}
+
+function ForwardChevron() {
+  const dir = useLangStore((s) => s.dir);
+  return (
+    <ChevronLeft
+      aria-hidden="true"
+      className={cn('size-4 shrink-0', dir === 'ltr' && 'rotate-180')}
+      strokeWidth={1.8}
+    />
+  );
+}
+
+function ChildCategoryCard({
+  category,
+  showImage = true,
+}: {
+  category: Category;
+  showImage?: boolean;
+}) {
+  const localizedPath = useLocalizedPath();
+  const isClickable = hasProducts(category);
+  const className = cn(
+    'flex min-h-19 w-full items-center gap-3 rounded-2xl border px-3 py-3 text-start',
+    isClickable
+      ? `border-border/70 bg-background transition-colors hover:border-first/40 hover:bg-first/5 ${focusClass}`
+      : 'border-border/40 bg-surface/60',
+  );
+  const content = (
+    <>
+      {showImage && <CategoryImage category={category} />}
+      <span className="min-w-0 flex-1">
+        <span className="block text-sm leading-6 font-f-sbold text-text [overflow-wrap:anywhere]">
+          {category.name}
+        </span>
+        <ProductCount category={category} />
+      </span>
+      {isClickable && (
+        <span className="grid size-6 shrink-0 place-items-center rounded-lg bg-first/8 text-first dark:text-first-300">
+          <ForwardChevron />
+        </span>
+      )}
+    </>
+  );
+
+  return isClickable ? (
+    <Link to={localizedPath(categoryPath(category))} className={className}>
+      {content}
+    </Link>
+  ) : (
+    <div className={className} aria-disabled="true">
+      {content}
+    </div>
+  );
+}
+
+function ParentCategoryCard({ category }: { category: Category }) {
   const { t } = useTranslation();
   const localizedPath = useLocalizedPath();
   const [isOpen, setIsOpen] = useState(false);
-  const children = getCategoryChildren(category);
+  const panelId = useId();
+  const children = getCategoryChildren(category).slice().sort(sortByAvailability);
   const hasChildren = children.length > 0;
+  const headerClass = `flex w-full items-center gap-3 rounded-xl text-start ${focusClass}`;
+  const headerContent = (
+    <>
+      <CategoryImage category={category} className="size-14 rounded-2xl" />
+      <span className="min-w-0 flex-1">
+        <span className="block text-base leading-7 font-f-sbold text-text [overflow-wrap:anywhere]">
+          {category.name}
+        </span>
+        <ProductCount category={category} />
+      </span>
+      {(hasChildren || hasProducts(category)) && (
+        <span className="grid size-9 shrink-0 place-items-center rounded-xl border border-border/60 bg-background text-text-muted">
+          {hasChildren ? (
+            <ChevronDown
+              aria-hidden="true"
+              className={cn(
+                'size-4 transition-transform motion-reduce:transition-none',
+                isOpen && 'rotate-180',
+              )}
+            />
+          ) : (
+            <ForwardChevron />
+          )}
+        </span>
+      )}
+    </>
+  );
 
   return (
-    <div className="parent-card w-full break-inside-avoid rounded-xl bg-color-for-layer-sec p-4">
-      <button
-        type="button"
-        className="flex w-full items-center"
-        onClick={() => hasChildren && setIsOpen(!isOpen)}
-      >
-        <div className="w-4/48 rounded-lg bg-color-for-layer-on-body">
-          <img
-            src={category.image || CATEGORY_FALLBACK_IMAGE}
-            alt={category.name}
-            className="h-full w-full object-cover"
-          />
-        </div>
-        <div className="flex w-42/48 flex-col">
-          <h3 className="first-text-color">{category.name}</h3>
-          <p
-            className={`text-xs font-f-light ${
-              category.productCount === 0
-                ? 'first-text-color-red'
-                : 'first-text-color-for-paragraph'
-            }`}
+    <div className="w-full break-inside-avoid rounded-2xl border border-border/80 bg-surface p-4 lg:p-5">
+      <h2>
+        {hasChildren ? (
+          <button
+            type="button"
+            className={headerClass}
+            onClick={() => setIsOpen(!isOpen)}
+            aria-expanded={isOpen}
+            aria-controls={panelId}
           >
-            {category.productCount === 0
-              ? t('categories.noProductsInCategory')
-              : `${category.productCount} ${t('categories.productLabel')}`}
-          </p>
-        </div>
-        <div className="w-2/48">
-          {hasChildren && (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className={`h-5 w-5 first-text-color-for-paragraph-low transition-transform duration-300 ${
-                isOpen ? 'rotate-180' : 'rotate-0'
-              }`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          )}
-        </div>
-        {!hasChildren && hasProducts(category) && (
-          <Link
-            to={localizedPath(`/products?categoryIds=${category.id}`)}
-            className="flex h-6 w-6 items-center justify-center rounded-full bg-first"
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M15 4L7 12L15 20"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            {headerContent}
+          </button>
+        ) : hasProducts(category) ? (
+          <Link to={localizedPath(categoryPath(category))} className={headerClass}>
+            {headerContent}
           </Link>
+        ) : (
+          <span className={headerClass}>{headerContent}</span>
         )}
-      </button>
+      </h2>
 
-      {hasChildren && isOpen && (
-        <div className="mt-4 grid grid-cols-1 gap-x-4 gap-y-2 md:grid-cols-2">
-          {children
-            ?.slice()
-            .sort(sortByAvailability)
-            .map((child) => (
+      {hasChildren && (
+        <div id={panelId} hidden={!isOpen}>
+          <div className="mt-4 grid grid-cols-1 gap-2.5 border-t border-border/70 pt-4 xl:grid-cols-2">
+            {children.map((child) => (
               <ChildCategoryCard key={child.id} category={child} />
             ))}
-          {hasProducts(category) && (
-            <Link
-              to={localizedPath(`/products?categoryIds=${category.id}`)}
-              className="col-span-full mt-2 rounded-lg bg-first py-3 text-center text-white"
-            >
-              {t('categories.viewAllProducts')}
-            </Link>
-          )}
+            {hasProducts(category) && (
+              <Link
+                to={localizedPath(categoryPath(category))}
+                className={`col-span-full mt-1 flex min-h-11 items-center justify-center gap-2 rounded-xl bg-first px-4 py-3 text-sm font-f-sbold text-white transition-colors hover:bg-first-600 ${focusClass}`}
+              >
+                {t('categories.viewAllProducts')}
+                <ForwardChevron />
+              </Link>
+            )}
+          </div>
         </div>
       )}
     </div>
   );
-};
+}
 
-const MobileCategoriesSplitView: React.FC<{ categories: Category[] }> = ({ categories }) => {
+function MobileCategoriesSplitView({ categories }: { categories: Category[] }) {
   const { t } = useTranslation();
-  const dir = useLangStore((s) => s.dir);
   const localizedPath = useLocalizedPath();
   const sortedParents = useMemo(() => categories.slice().sort(sortByAvailability), [categories]);
-  const [activeParentId, setActiveParentId] = useState<string | null>(sortedParents[0]?.id ?? null);
+  const [activeParentId, setActiveParentId] = useState<string | null>(null);
+  const activeParent =
+    sortedParents.find((category) => category.id === activeParentId) ?? sortedParents[0];
+  const activeChildren = activeParent
+    ? getCategoryChildren(activeParent).slice().sort(sortByAvailability)
+    : [];
+  const tabsId = useId();
+  const panelId = `${tabsId}-panel`;
 
-  useEffect(() => {
-    if (sortedParents.length === 0) {
-      setActiveParentId(null);
-      return;
-    }
+  const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    if (!['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    const nextIndex =
+      event.key === 'Home'
+        ? 0
+        : event.key === 'End'
+          ? sortedParents.length - 1
+          : (index + (event.key === 'ArrowDown' ? 1 : -1) + sortedParents.length) %
+            sortedParents.length;
+    setActiveParentId(sortedParents[nextIndex].id);
+    event.currentTarget.parentElement
+      ?.querySelectorAll<HTMLButtonElement>('[role="tab"]')
+      [nextIndex]?.focus();
+  };
 
-    if (!activeParentId || !sortedParents.some((category) => category.id === activeParentId)) {
-      setActiveParentId(sortedParents[0].id);
-    }
-  }, [activeParentId, sortedParents]);
-
-  const activeParent = sortedParents.find((category) => category.id === activeParentId) ?? sortedParents[0];
-  const activeChildren = useMemo(
-    () => (activeParent ? getCategoryChildren(activeParent).slice().sort(sortByAvailability) : []),
-    [activeParent],
-  );
+  if (!activeParent) return null;
 
   return (
-    <section className="md:hidden">
-      <p className="mb-2 border-y border-color-theme py-2 text-center text-xs first-text-color-for-paragraph">
-        {activeParent ? `${t('categories.title')} ${activeParent.name}` : t('categories.title')}
-      </p>
+    <section className="categories-split md:hidden" aria-label={t('categories.title')}>
+      <div
+        role="tablist"
+        aria-label={t('categories.parentCategories')}
+        aria-orientation="vertical"
+        className="categories-rail categories-scroll border-e border-border/70 bg-surface p-2"
+      >
+        {sortedParents.map((parent, index) => {
+          const isActive = parent.id === activeParent.id;
+          return (
+            <button
+              key={parent.id}
+              id={`${tabsId}-${parent.id}`}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              aria-controls={panelId}
+              tabIndex={isActive ? 0 : -1}
+              onClick={() => setActiveParentId(parent.id)}
+              onKeyDown={(event) => handleTabKeyDown(event, index)}
+              className={cn(
+                'relative mb-2 flex min-h-24 w-full flex-col items-center justify-center gap-2 rounded-2xl border px-2 py-3 text-center transition-colors last:mb-0',
+                focusClass,
+                isActive
+                  ? 'border-first/20 bg-background text-first shadow-sm dark:text-first-300'
+                  : 'border-transparent text-text-muted hover:bg-background/60',
+              )}
+            >
+              {isActive && (
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-y-5 start-0 w-0.5 rounded-full bg-first"
+                />
+              )}
+              <CategoryImage
+                category={parent}
+                className={cn('size-10', isActive && 'border-first/15 bg-first/5')}
+              />
+              <span
+                className={cn(
+                  'text-xs leading-5 [overflow-wrap:anywhere]',
+                  isActive && 'font-f-sbold',
+                )}
+              >
+                {parent.name}
+              </span>
+            </button>
+          );
+        })}
+      </div>
 
-      {activeParent && (
-        <div
-          className={`mb-3 flex items-center gap-1 text-[11px] text-first ${
-            dir === 'rtl' ? 'justify-end' : 'justify-start'
-          }`}
-        >
-          <ChevronLeft className={`h-3.5 w-3.5 ${dir === 'ltr' ? 'rotate-180' : ''}`} strokeWidth={1.7} />
-          <Link to={localizedPath(`/products?categoryIds=${activeParent.id}`)} className="truncate">
-            {t('categories.viewAllProducts')}
-          </Link>
+      <div
+        key={activeParent.id}
+        id={panelId}
+        role="tabpanel"
+        aria-labelledby={`${tabsId}-${activeParent.id}`}
+        tabIndex={0}
+        className="categories-scroll min-w-0 bg-background px-3 pt-4 pb-5 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-first sm:px-5"
+      >
+        <div className="mb-4 border-b border-border/60 pb-4">
+          <h2 className="mb-1 text-base leading-7 font-f-bold text-text [overflow-wrap:anywhere]">
+            {activeParent.name}
+          </h2>
+          <ProductCount category={activeParent} />
+          {hasProducts(activeParent) && (
+            <Link
+              to={localizedPath(categoryPath(activeParent))}
+              className={`mt-3 flex min-h-11 items-center justify-between gap-2 rounded-xl border border-first/15 bg-first/7 px-3 py-2 text-xs leading-5 font-f-sbold text-first dark:text-first-300 ${focusClass}`}
+            >
+              {t('categories.viewAllProducts')}
+              <ForwardChevron />
+            </Link>
+          )}
         </div>
-      )}
-
-      <div className="grid grid-cols-[8rem_1fr] gap-2">
-        <div className={dir === 'rtl' ? 'order-2' : 'order-1'}>
-          <div className="space-y-2">
-            {activeChildren.length > 0 ? (
-              activeChildren.map((child) =>
-                hasProducts(child) ? (
-                  <Link
-                    key={child.id}
-                    to={localizedPath(`/products?categoryIds=${child.id}`)}
-                    className="flex items-center justify-between rounded-lg bg-color-for-layer-sec px-3 py-3 text-sm first-text-color"
-                  >
-                    <span className="truncate">{child.name}</span>
-                    <ChevronLeft
-                      className={`h-4 w-4 shrink-0 first-text-color-for-paragraph-low ${
-                        dir === 'ltr' ? 'rotate-180' : ''
-                      }`}
-                      strokeWidth={1.9}
-                    />
-                  </Link>
-                ) : (
-                  <div
-                    key={child.id}
-                    className="flex items-center justify-between rounded-lg bg-color-for-layer-sec px-3 py-3 text-sm first-text-color-for-paragraph-low opacity-65"
-                  >
-                    <span className="truncate">{child.name}</span>
-                    <ChevronLeft
-                      className={`h-4 w-4 shrink-0 ${
-                        dir === 'ltr' ? 'rotate-180' : ''
-                      }`}
-                      strokeWidth={1.9}
-                    />
-                  </div>
-                ),
-              )
-            ) : (
-              <p className="rounded-lg bg-color-for-layer-sec px-3 py-3 text-sm first-text-color-for-paragraph">
-                {t('categories.noProductsInCategory')}
-              </p>
-            )}
-          </div>
-        </div>
-
-        <div className={dir === 'rtl' ? 'order-1' : 'order-2'}>
-          <div className="rounded-xl border border-color-theme bg-color-for-layer-on-body">
-            {sortedParents.map((parent, index) => {
-              const isActive = parent.id === activeParent?.id;
-
-              return (
-                <button
-                  key={parent.id}
-                  type="button"
-                  onClick={() => setActiveParentId(parent.id)}
-                  className={`flex w-full items-center gap-2 px-2 py-2 text-start transition-colors ${
-                    isActive ? 'bg-first/10' : ''
-                  } ${index !== sortedParents.length - 1 ? 'border-b border-color-theme' : ''}`}
-                >
-                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-color-theme bg-color-for-layer-sec">
-                    {parent.image ? (
-                      <img
-                        src={parent.image}
-                        alt={parent.name}
-                        className="h-5 w-5 rounded-full object-cover"
-                      />
-                    ) : (
-                      <Smartphone className="h-3.5 w-3.5 text-first" strokeWidth={1.8} />
-                    )}
-                  </span>
-                  <span
-                    className={`line-clamp-2 text-[11px] leading-4 ${
-                      isActive ? 'font-f-sbold text-first' : 'first-text-color-for-paragraph'
-                    }`}
-                  >
-                    {parent.name}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+        <div className="space-y-2.5">
+          {activeChildren.length > 0 ? (
+            activeChildren.map((child) => (
+              <ChildCategoryCard key={child.id} category={child} showImage={false} />
+            ))
+          ) : hasProducts(activeParent) ? (
+            <p className="text-xs leading-6 text-text-muted">{t('categories.browseParent')}</p>
+          ) : (
+            <p className="rounded-2xl border border-border/60 bg-surface p-4 text-xs leading-6 text-text-muted">
+              {t('categories.noProductsInCategory')}
+            </p>
+          )}
         </div>
       </div>
     </section>
   );
-};
+}
 
 const AllCategoriesPage = () => {
   const dir = useLangStore((s) => s.dir);
   const { t } = useTranslation();
-  const { data: categories, isLoading, isError } = useCategories();
+  const navigate = useNavigate();
+  const localizedPath = useLocalizedPath();
+  const { data: categories, isLoading, isError, refetch } = useCategories();
 
-  if (isLoading) return <PageLoader />;
-
-  const breakpointColumnsObj = {
-    default: 2,
-    1200: 2,
-    992: 2,
-    576: 1,
+  const goBack = () => {
+    // Router history excludes an external page when this route was opened directly.
+    if (typeof window.history.state?.idx === 'number' && window.history.state.idx > 0) {
+      navigate(-1);
+    } else {
+      navigate(localizedPath('/'), { replace: true });
+    }
   };
 
   return (
-    <main dir={dir} className="page-container page-section">
-      <div className="bg-color-for-layer-on-body p-2 md:rounded-3xl md:p-6">
-        <div className="mb-6 hidden w-full items-center gap-3 md:flex lg:w-6/12">
-          <span className="first-text-color-svg inline-block rounded-lg p-3">
-            <svg className="h-6 w-6 lg:h-16 lg:w-16" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M8 8H16M8 12H16M8 16H12M3.5 12C3.5 5.5 5.5 3.5 12 3.5C18.5 3.5 20.5 5.5 20.5 12C20.5 18.5 18.5 20.5 12 20.5C5.5 20.5 3.5 18.5 3.5 12Z"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-          <div>
-            <h2 className="text-2xl font-bold first-text-color">{t('categories.title')}</h2>
-          </div>
+    <main dir={dir} className="categories-page page-container page-section">
+      <header className="categories-mobile-header flex shrink-0 items-center gap-3 border-b border-border/70 bg-background px-4 pb-3 md:hidden">
+        <button
+          type="button"
+          onClick={goBack}
+          aria-label={t('categories.back')}
+          className={`grid size-11 shrink-0 place-items-center rounded-2xl border border-border/70 bg-surface text-text ${focusClass}`}
+        >
+          <ArrowLeft
+            aria-hidden="true"
+            className={cn('size-5', dir === 'rtl' && 'rotate-180')}
+            strokeWidth={1.8}
+          />
+        </button>
+        <div className="min-w-0">
+          <h1 className="text-lg leading-7 font-f-bold text-text">{t('categories.title')}</h1>
+          <p className="text-xs leading-5 text-text-muted">{t('categories.mobileSubtitle')}</p>
         </div>
+      </header>
 
-        {isError ? (
-          <p className="grid h-72 place-items-center rounded-2xl bg-color-for-layer-sec first-text-color-for-paragraph">
-            {t('categories.loadError')}
-          </p>
+      <div className="categories-content md:rounded-3xl md:border md:border-border/60 md:bg-background md:p-6 lg:p-8">
+        <div className="mb-7 hidden border-b border-border/60 pb-6 md:block">
+          <SectionHeading
+            as="h1"
+            title={t('categories.title')}
+            subtext={t('categories.subtitle')}
+            decoration="right"
+            titleClassName="text-2xl lg:text-3xl lg:leading-10"
+          />
+        </div>
+        {isLoading ? (
+          <div
+            role="status"
+            className="categories-state w-full"
+            aria-label={t('categories.loading')}
+          >
+            <span className="sr-only">{t('categories.loading')}</span>
+            <div
+              aria-hidden="true"
+              className="grid w-full animate-pulse grid-cols-[6rem_1fr] gap-3 motion-reduce:animate-none md:grid-cols-2 md:gap-4"
+            >
+              {[0, 1, 2, 3, 4, 5].map((item) => (
+                <div key={item} className="h-24 rounded-2xl border border-border/40 bg-surface" />
+              ))}
+            </div>
+          </div>
+        ) : isError ? (
+          <div role="alert" className="categories-state">
+            <Grid2x2 aria-hidden="true" className="size-9 text-text-muted" strokeWidth={1.4} />
+            <p className="text-sm leading-7 text-text-muted">{t('categories.loadError')}</p>
+            <button
+              type="button"
+              onClick={() => void refetch()}
+              className={`inline-flex min-h-11 items-center gap-2 rounded-xl bg-first px-5 py-3 text-sm text-white ${focusClass}`}
+            >
+              <RefreshCw aria-hidden="true" className="size-4" />
+              {t('categories.retry')}
+            </button>
+          </div>
         ) : categories && categories.length > 0 ? (
           <>
             <MobileCategoriesSplitView categories={categories} />
-
             <div className="hidden md:block">
               <Masonry
-                breakpointCols={breakpointColumnsObj}
+                breakpointCols={2}
                 className="flex gap-4"
-                columnClassName="flex flex-col gap-4"
+                columnClassName="flex min-w-0 flex-1 flex-col gap-4"
               >
                 {categories
                   .slice()
@@ -360,7 +414,10 @@ const AllCategoriesPage = () => {
             </div>
           </>
         ) : (
-          <p className="text-center first-text-color-for-paragraph-low">{t('categories.empty')}</p>
+          <div role="status" className="categories-state">
+            <Grid2x2 aria-hidden="true" className="size-9 text-text-muted" strokeWidth={1.4} />
+            <p className="text-sm leading-7 text-text-muted">{t('categories.empty')}</p>
+          </div>
         )}
       </div>
     </main>

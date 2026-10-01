@@ -1,0 +1,59 @@
+.categories-state {
+  display: flex;
+  min-height: 18rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .categories-page {
+    /* The shared bottom navigation stays visible, including the device safe area. */
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0;
+    padding-block: 0 calc(6.25rem + env(safe-area-inset-bottom, 0px));
+    padding-inline: env(safe-area-inset-left, 0px) env(safe-area-inset-right, 0px);
+    background: var(--color-background);
+  }
+
+  .categories-mobile-header {
+    padding-top: calc(0.75rem + env(safe-area-inset-top, 0px));
+  }
+
+  .categories-content {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .categories-split {
+    display: grid;
+    min-height: 0;
+    flex: 1;
+    grid-template-columns: clamp(6.5rem, 28vw, 8rem) minmax(0, 1fr);
+  }
+
+  .categories-scroll {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scroll-padding-block: 0.75rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+  }
+
+  .categories-state {
+    min-height: 0;
+    flex: 1;
+    overflow-y: auto;
+  }
+}

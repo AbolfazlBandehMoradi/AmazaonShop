@@ -29,6 +29,7 @@ const Layout = ({ children }: LayoutProps) => {
     basePath.startsWith('/payment/');
 
   const isProductDetailPage = /^\/products\/[^/]+$/.test(basePath);
+  const isCategoriesPage = basePath === '/categories';
 
   const isPaymentResultPage = basePath === '/payment/success' || basePath === '/payment/failure';
 
@@ -53,15 +54,31 @@ const Layout = ({ children }: LayoutProps) => {
     <>
       <SeoManager />
 
-      {!hideNavAndFooter && <NavbarWithDropDownDrawer />}
+      {!hideNavAndFooter && (
+        <div className={isCategoriesPage ? 'hidden md:contents' : 'contents'}>
+          <NavbarWithDropDownDrawer />
+        </div>
+      )}
 
-      <div className={shouldReserveBottomSpace ? 'pb-28 lg:pb-0' : undefined}>
+      <div
+        className={
+          shouldReserveBottomSpace
+            ? isCategoriesPage
+              ? 'md:pb-28 lg:pb-0'
+              : 'pb-28 lg:pb-0'
+            : undefined
+        }
+      >
         {children ?? <Outlet />}
       </div>
 
       {/* <GoftinoWidget isHidden={hideGoftinoWidget} /> */}
 
-      {!hideNavAndFooter && <Footer />}
+      {!hideNavAndFooter && (
+        <div className={isCategoriesPage ? 'hidden md:contents' : 'contents'}>
+          <Footer />
+        </div>
+      )}
 
       {showMobileBottomNav && <MobileBottomNav />}
 

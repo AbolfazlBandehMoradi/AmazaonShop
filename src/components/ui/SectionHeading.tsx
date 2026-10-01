@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { cn } from '@/utils/cn';
 
 type SectionHeadingProps = {
+  as?: 'h1' | 'h2';
   id?: string;
   title: ReactNode;
   subtext?: ReactNode;
@@ -17,6 +18,7 @@ function HeadingLine() {
 }
 
 export function SectionHeading({
+  as: Heading = 'h2',
   id,
   title,
   subtext,
@@ -43,9 +45,12 @@ export function SectionHeading({
           {(decoration === 'right' || decoration === 'both') && <HeadingLine />}
         </div>
       )}
-      <h2 id={id} className={cn('text-xl leading-7 font-f-bold first-text-color', titleClassName)}>
+      <Heading
+        id={id}
+        className={cn('text-xl leading-7 font-f-bold first-text-color', titleClassName)}
+      >
         {title}
-      </h2>
+      </Heading>
     </div>
   );
 }
