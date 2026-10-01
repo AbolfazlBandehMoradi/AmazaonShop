@@ -33,7 +33,7 @@ function getAssetUrl(filePath: string | null | undefined): string | undefined {
 }
 
 function titleWithBrand(title: string, lang: SeoLanguage): string {
-  const brand = lang === 'fa' ? 'بریس' : 'Beris';
+  const brand = lang === 'fa' ? 'آمازون' : 'Amazon Mobile Store';
   return title.includes(brand) ? title : `${title} | ${brand}`;
 }
 

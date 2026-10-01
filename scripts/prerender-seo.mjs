@@ -19,11 +19,13 @@ const htmlEscape = (value) =>
 
 const localizedUrl = (routePath, language) => {
   const normalizedPath = String(routePath || '').replace(/^\/+|\/+$/g, '');
+  if (language === 'fa') return `${siteUrl}${normalizedPath ? `/${normalizedPath}` : '/'}`;
   return `${siteUrl}/${language}${normalizedPath ? `/${normalizedPath}` : ''}`;
 };
 
 function replaceMeta(html, attribute, key, content) {
   const pattern = new RegExp(`<meta\\s+${attribute}="${key}"[^>]*>`, 'i');
+  if (content === undefined || content === '') return html.replace(pattern, '');
   const tag = `<meta ${attribute}="${key}" content="${htmlEscape(content)}">`;
   return pattern.test(html) ? html.replace(pattern, tag) : html.replace('</head>', `${tag}</head>`);
 }
@@ -53,12 +55,27 @@ function buildStructuredData({ canonicalUrl, description, language, routeId, sit
   return [
     {
       '@context': 'https://schema.org',
-      '@type': 'Organization',
+      '@type': 'Store',
       '@id': organizationId,
       name: siteName,
-      alternateName: language === 'fa' ? 'بریس' : 'Beris',
+      alternateName: language === 'fa' ? 'آمازون' : 'Amazon Mobile Store',
       url: siteUrl,
-      logo: { '@type': 'ImageObject', url: `${siteUrl}/MainLogo.svg` },
+      telephone: metadata.site.contact.phone,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: metadata.site.contact.address,
+        addressLocality: 'زاهدان',
+        addressCountry: 'IR',
+      },
+      sameAs: [metadata.site.contact.instagram],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: metadata.site.contact.phone,
+        url: metadata.site.contact.whatsapp,
+        contactType: 'customer service',
+        availableLanguage: ['fa'],
+      },
+      image: `${siteUrl}${metadata.site.image}`,
     },
     {
       '@context': 'https://schema.org',
@@ -80,7 +97,9 @@ function createLocalizedHtml(route, language) {
   const siteName =
     metadata.site.name[language] ?? metadata.site.name[metadata.site.defaultLanguage];
   const locale = language === 'fa' ? 'fa_IR' : 'en_US';
-  const alternateLocale = language === 'fa' ? 'en_US' : 'fa_IR';
+  const alternateLocale = metadata.site.languages
+    .filter((item) => item !== language)
+    .map((item) => (item === 'fa' ? 'fa_IR' : 'en_US'))[0];
   const imageUrl = `${siteUrl}${metadata.site.image}`;
   const direction = language === 'fa' ? 'rtl' : 'ltr';
   const alternates = metadata.site.languages
@@ -125,7 +144,7 @@ function createLocalizedHtml(route, language) {
       'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1',
     ],
     ['property', 'og:locale', locale],
-    ['property', 'og:locale:alternate', alternateLocale],
+    ['property', 'og:locale:alternate', alternateLocale ?? ''],
     ['property', 'og:type', 'website'],
     ['property', 'og:site_name', siteName],
     ['property', 'og:url', canonicalUrl],
@@ -158,7 +177,7 @@ await Promise.all(
     metadata.site.languages.map(async (language) => {
       const targetDirectory = path.join(
         distDirectory,
-        language,
+        ...(language === 'fa' ? [] : [language]),
         ...String(route.path || '')
           .split('/')
           .filter(Boolean),

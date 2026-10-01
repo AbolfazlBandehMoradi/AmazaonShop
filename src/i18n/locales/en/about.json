@@ -1,16 +1,22 @@
 {
-  "title": "About Bris",
-  "welcomeTo": "Welcome to Bris",
-  "description": "At Bris, we believe that handicrafts, especially the rich art of Balochi embroidery, should not be considered a luxury that is out of reach. Since 2018, we have been working with a clear vision: to transform the art of Balochi embroidery into valuable, high-quality, and affordable products that are accessible to everyone. Today, more than 60 Balochi women artisans work from their home-based workshops across Balochistan, weaving the essence of authenticity into every thread with passion and skill. Many of these talented women are heads of households or Balochi women without official identification documents, and embroidery provides a stable and sustainable source of income for them. At Bris, we are proud not only to preserve and introduce the authentic art of Balochistan, but also to contribute to the economic and social empowerment of these resilient women. While the art of embroidery comes to life in the heart of Balochistan, tailoring and product finishing are carried out in our workshops in Mashhad, ensuring the quality and consistency of every finished product. Each order is then carefully packaged and shipped from Mashhad to reach you safely. Our main goal at Bris is to make authentic handicrafts accessible to everyone. We carefully price our products to ensure that the exceptional quality and beauty of Balochi embroidery can be enjoyed by people from all walks of life, regardless of their financial circumstances. Bris represents our belief that authentic art belongs to everyone. We invite you to discover the beauty of our handmade creations and become part of a community that supports the art, artisans, and cultural heritage of Balochistan.",
+  "title": "About Amazon Mobile Store",
+  "welcomeTo": "Welcome to Amazon Mobile Store",
+  "description": "Amazon is a mobile phone and accessories store in Zahedan. Explore phones, accessories and digital products, and contact us for help choosing what suits your needs.",
   "features": [
-    "Working with authentic Balochi embroidery since 2018",
-    "Collaborating with more than 60 Balochi women artisans across Balochistan",
-    "Supporting economic empowerment and sustainable income opportunities for women artisans",
-    "Careful production and finishing under the supervision of Bris workshops in Mashhad",
-    "Offering authentic, high-quality products at fair and accessible prices",
-    "Preserving, introducing, and promoting Balochi embroidery while supporting the culture and artisans of Balochistan"
+    "Browse phones and accessories in one store",
+    "Review specifications and product details",
+    "Get help choosing for your needs and budget",
+    "Check price and availability on product pages",
+    "Ask us about purchases and orders",
+    "Reach us by phone, Instagram or WhatsApp"
   ],
-  "contactTitle": "Get in Touch with Bris",
-  "contactAddress": "Mashhad, Razavi Khorasan, Iran",
-  "contactButton": "Contact Us"
+  "contactTitle": "Get in touch",
+  "contactAddress": "Zahedan, before Beheshti, 15 Borj Melki, Amazon",
+  "contactButton": "Contact us",
+  "imageAlt": "Amazon Mobile Store in Zahedan",
+  "imageCaption": "Amazon Mobile Store, Zahedan",
+  "shopButton": "Browse products",
+  "valuesTitle": "Why Amazon?",
+  "valuesIntro": "Clear product information and guidance to help you choose phones and accessories.",
+  "contactDescription": "Contact us about a product or order."
 }

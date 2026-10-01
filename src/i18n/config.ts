@@ -17,20 +17,22 @@ i18n
           ...pageTranslations.fa,
         },
       },
-      en: {
-        translation: {
-          ...sharedTranslations.en,
-          ...shopTranslations.en,
-          ...pageTranslations.en,
-        },
-      },
+      // Enable this resource alongside the English route when the English site launches.
+      // en: {
+      //   translation: {
+      //     ...sharedTranslations.en,
+      //     ...shopTranslations.en,
+      //     ...pageTranslations.en,
+      //   },
+      // },
     },
     fallbackLng: 'fa',
-    supportedLngs: ['fa', 'en'],
+    supportedLngs: ['fa'],
+    // Restore ['fa', 'en'] here when English routes are enabled.
     load: 'currentOnly',
     detection: {
-      order: ['localStorage', 'navigator'],
-      caches: ['localStorage'],
+      order: [],
+      caches: [],
     },
     interpolation: {
       escapeValue: false,

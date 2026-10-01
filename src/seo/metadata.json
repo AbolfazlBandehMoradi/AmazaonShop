@@ -1,15 +1,23 @@
 {
   "site": {
-    "url": "https://berishandicrafts.com",
-    "image": "/og-image.png",
-    "imageWidth": 952,
-    "imageHeight": 500,
-    "themeColor": "#36566a",
+    "url": "https://gajet30.ir",
+    "image": "/og-amazon-mobile.png",
+    "imageWidth": 1727,
+    "imageHeight": 911,
+    "themeColor": "#163f87",
     "defaultLanguage": "fa",
-    "languages": ["fa", "en"],
+    "languages": [
+      "fa"
+    ],
     "name": {
-      "fa": "صنایع دستی بریس",
-      "en": "Beris Handicrafts"
+      "fa": "فروشگاه موبایل آمازون",
+      "en": "Amazon Mobile Store"
+    },
+    "contact": {
+      "phone": "09156304012",
+      "address": "قبل بهشتی، ۱۵ برج ملکی، آمازون",
+      "instagram": "https://www.instagram.com/amazon_zahedan",
+      "whatsapp": "https://wa.me/989306608299"
     }
   },
   "routes": [
@@ -21,12 +29,12 @@
       "changefreq": "weekly",
       "meta": {
         "fa": {
-          "title": "بریس | فروشگاه آنلاین صنایع دستی و سوزن‌دوزی بلوچی",
-          "description": "خرید آنلاین صنایع دستی اصیل ایرانی و محصولات دست‌ساز سوزن‌دوزی بلوچی از بریس؛ آثاری باکیفیت که با حمایت از بانوان هنرمند بلوچ تولید می‌شوند."
+          "title": "آمازون | خرید موبایل و لوازم جانبی در زاهدان",
+          "description": "در فروشگاه موبایل آمازون، گوشی موبایل و لوازم جانبی را بررسی و انتخاب کنید. برای راهنمایی خرید و اطلاع از محصولات با آمازون در زاهدان تماس بگیرید."
         },
         "en": {
-          "title": "Beris Handicrafts | Authentic Balochi Embroidery",
-          "description": "Shop authentic Iranian handicrafts and handmade Balochi embroidery from Beris, crafted with care while supporting women artisans across Balochistan."
+          "title": "Amazon Mobile Store | Phones & Accessories in Zahedan",
+          "description": "Explore mobile phones and accessories at Amazon Mobile Store in Zahedan. Compare product details and contact us for shopping guidance."
         }
       }
     },
@@ -38,12 +46,12 @@
       "changefreq": "weekly",
       "meta": {
         "fa": {
-          "title": "محصولات صنایع دستی و سوزن‌دوزی بلوچی | بریس",
-          "description": "محصولات دست‌ساز بریس را ببینید و از میان صنایع دستی ایرانی و آثار اصیل سوزن‌دوزی بلوچی، محصولی ماندگار و منحصربه‌فرد انتخاب کنید."
+          "title": "خرید موبایل و لوازم جانبی | آمازون",
+          "description": "محصولات فروشگاه موبایل آمازون را ببینید؛ از گوشی‌های موبایل تا هندزفری، شارژر، کابل، قاب و سایر لوازم جانبی دیجیتال."
         },
         "en": {
-          "title": "Handmade Products & Balochi Embroidery | Beris",
-          "description": "Browse Beris handmade products and discover authentic Iranian handicrafts and distinctive Balochi embroidery created by skilled women artisans."
+          "title": "Shop Phones & Accessories | Amazon Mobile Store",
+          "description": "Browse phones, chargers, headphones, cases, cables and other mobile accessories at Amazon Mobile Store."
         }
       }
     },
@@ -55,12 +63,12 @@
       "changefreq": "weekly",
       "meta": {
         "fa": {
-          "title": "محصول دست‌ساز | صنایع دستی بریس",
-          "description": "تصاویر، مشخصات، قیمت و موجودی این محصول دست‌ساز بریس را بررسی کنید و با اطمینان از هنر اصیل ایرانی حمایت کنید."
+          "title": "مشخصات و قیمت محصول | آمازون",
+          "description": "تصاویر، مشخصات، قیمت و وضعیت موجودی این محصول را در فروشگاه موبایل آمازون بررسی کنید و برای انتخاب مناسب اطلاعات بیشتری ببینید."
         },
         "en": {
-          "title": "Handmade Product | Beris Handicrafts",
-          "description": "View photos, details, price, and availability for this handmade Beris product and support authentic Iranian craftsmanship."
+          "title": "Product Details & Price | Amazon Mobile Store",
+          "description": "View this product’s images, specifications, price and availability at Amazon Mobile Store."
         }
       }
     },
@@ -72,12 +80,12 @@
       "changefreq": "weekly",
       "meta": {
         "fa": {
-          "title": "دسته‌بندی صنایع دستی ایرانی | بریس",
-          "description": "دسته‌بندی محصولات بریس را مرور کنید و سریع‌تر به صنایع دستی، محصولات دست‌ساز و آثار سوزن‌دوزی بلوچی مورد نظر خود برسید."
+          "title": "دسته‌بندی موبایل و لوازم جانبی | آمازون",
+          "description": "دسته‌بندی‌های فروشگاه آمازون را مرور کنید و گوشی موبایل، ساعت هوشمند و لوازم جانبی موردنیازتان را سریع‌تر پیدا کنید."
         },
         "en": {
-          "title": "Iranian Handicraft Categories | Beris",
-          "description": "Explore Beris product categories to find authentic Iranian handicrafts, handmade pieces, and Balochi embroidery more easily."
+          "title": "Phone & Accessory Categories | Amazon Mobile Store",
+          "description": "Explore phone, smartwatch and accessory categories to find the products you need at Amazon Mobile Store."
         }
       }
     },
@@ -89,12 +97,12 @@
       "changefreq": "weekly",
       "meta": {
         "fa": {
-          "title": "مجله بریس | صنایع دستی و هنر سوزن‌دوزی بلوچی",
-          "description": "در مجله بریس درباره صنایع دستی ایرانی، سوزن‌دوزی بلوچی، داستان هنرمندان و روش نگهداری و انتخاب محصولات دست‌ساز بخوانید."
+          "title": "مجله موبایل آمازون | راهنما و بررسی محصولات",
+          "description": "راهنماهای خرید، بررسی گوشی موبایل و مطالب کاربردی درباره لوازم جانبی و دنیای فناوری را در مجله آمازون بخوانید."
         },
         "en": {
-          "title": "Beris Journal | Handicrafts & Balochi Embroidery",
-          "description": "Read stories and guides about Iranian handicrafts, Balochi embroidery, artisan communities, and caring for handmade products."
+          "title": "Amazon Mobile Journal | Buying Guides & Reviews",
+          "description": "Read buying guides, phone reviews and practical articles about mobile accessories and technology."
         }
       }
     },
@@ -106,12 +114,12 @@
       "changefreq": "monthly",
       "meta": {
         "fa": {
-          "title": "مقاله صنایع دستی | مجله بریس",
-          "description": "مقاله‌های بریس درباره هنر دست ایرانی، سوزن‌دوزی بلوچی، هنرمندان محلی و فرهنگ غنی بلوچستان را بخوانید."
+          "title": "مقاله و راهنمای خرید موبایل | مجله آمازون",
+          "description": "این مقاله از مجله آمازون را برای آشنایی بیشتر با گوشی موبایل، لوازم جانبی و نکته‌های انتخاب و استفاده از محصولات دیجیتال بخوانید."
         },
         "en": {
-          "title": "Handicraft Article | Beris Journal",
-          "description": "Read Beris articles about Iranian handmade art, Balochi embroidery, local artisans, and the cultural heritage of Balochistan."
+          "title": "Mobile Buying Guide & Article | Amazon Mobile Journal",
+          "description": "Read this Amazon Mobile Store article for practical information about phones, accessories and digital products."
         }
       }
     },
@@ -123,12 +131,12 @@
       "changefreq": "monthly",
       "meta": {
         "fa": {
-          "title": "درباره بریس | حمایت از هنر و بانوان هنرمند بلوچ",
-          "description": "با داستان بریس، فعالیت ما از سال ۱۳۹۷ و همکاری با بیش از ۶۰ بانوی هنرمند بلوچ برای حفظ سوزن‌دوزی اصیل و ایجاد درآمد پایدار آشنا شوید."
+          "title": "درباره آمازون | فروشگاه موبایل در زاهدان",
+          "description": "با فروشگاه موبایل آمازون در زاهدان آشنا شوید؛ مجموعه‌ای برای انتخاب و خرید گوشی موبایل و لوازم جانبی با تمرکز بر تنوع و راهنمایی خرید."
         },
         "en": {
-          "title": "About Beris | Supporting Balochi Women Artisans",
-          "description": "Learn how Beris has worked since 2018 with more than 60 Balochi women artisans to preserve embroidery traditions and support sustainable incomes."
+          "title": "About Us | Amazon Mobile Store in Zahedan",
+          "description": "Learn about Amazon Mobile Store in Zahedan and our focus on helping customers choose phones and accessories."
         }
       }
     },
@@ -140,12 +148,12 @@
       "changefreq": "yearly",
       "meta": {
         "fa": {
-          "title": "تماس با بریس | پشتیبانی فروشگاه صنایع دستی",
-          "description": "برای راهنمایی خرید، پیگیری سفارش یا ارتباط با مجموعه صنایع دستی بریس، از راه‌های تماس و پشتیبانی با ما در ارتباط باشید."
+          "title": "تماس با آمازون | فروشگاه موبایل زاهدان",
+          "description": "برای پرسش درباره گوشی موبایل، لوازم جانبی و سفارش‌ها با فروشگاه آمازون در زاهدان تماس بگیرید یا از اینستاگرام و واتساپ پیام بدهید."
         },
         "en": {
-          "title": "Contact Beris | Handicraft Store Support",
-          "description": "Contact Beris for product guidance, order support, and questions about our handmade Iranian handicrafts and Balochi embroidery."
+          "title": "Contact Amazon Mobile Store | Zahedan",
+          "description": "Contact Amazon Mobile Store in Zahedan about phones, accessories or orders by phone, Instagram or WhatsApp."
         }
       }
     },
@@ -157,12 +165,12 @@
       "changefreq": "monthly",
       "meta": {
         "fa": {
-          "title": "سوالات متداول بریس | خرید، ارسال و بازگشت کالا",
-          "description": "پاسخ سوالات متداول درباره خرید از بریس، پرداخت، ارسال سفارش، بازگشت کالا و پشتیبانی فروشگاه صنایع دستی را ببینید."
+          "title": "سؤالات متداول خرید موبایل | آمازون",
+          "description": "پاسخ پرسش‌های رایج درباره انتخاب محصول، سفارش، پرداخت، ارسال و پشتیبانی فروشگاه موبایل آمازون را بخوانید."
         },
         "en": {
-          "title": "Beris FAQ | Shopping, Delivery & Returns",
-          "description": "Find answers to common questions about shopping at Beris, payment, order delivery, returns, and customer support."
+          "title": "Phone Shopping FAQ | Amazon Mobile Store",
+          "description": "Find answers to common questions about products, orders, payment, delivery and support at Amazon Mobile Store."
         }
       }
     },
@@ -174,12 +182,12 @@
       "changefreq": "yearly",
       "meta": {
         "fa": {
-          "title": "شرایط بازگشت کالا | صنایع دستی بریس",
-          "description": "شرایط بازگشت و بررسی سفارش‌های بریس را بخوانید و در صورت نیاز برای راهنمایی بیشتر با پشتیبانی فروشگاه در ارتباط باشید."
+          "title": "شرایط بازگشت کالا | فروشگاه موبایل آمازون",
+          "description": "اطلاعات مربوط به بازگشت کالا در فروشگاه موبایل آمازون را بخوانید و برای بررسی شرایط محصول یا سفارش خود با پشتیبانی تماس بگیرید."
         },
         "en": {
-          "title": "Return Policy | Beris Handicrafts",
-          "description": "Read the Beris return policy and order review conditions, and contact our support team if you need further assistance."
+          "title": "Return Policy | Amazon Mobile Store",
+          "description": "Read return information for Amazon Mobile Store and contact support to check the conditions for your product or order."
         }
       }
     },
@@ -192,12 +200,12 @@
       "changefreq": "yearly",
       "meta": {
         "fa": {
-          "title": "ورود یا ثبت‌نام | بریس",
-          "description": "ورود یا ایجاد حساب کاربری در فروشگاه بریس."
+          "title": "ورود یا ثبت‌نام | آمازون",
+          "description": "ورود یا ایجاد حساب کاربری در فروشگاه موبایل آمازون."
         },
         "en": {
-          "title": "Sign In or Register | Beris",
-          "description": "Sign in to your Beris account or create a new account."
+          "title": "Sign In or Register | Amazon Mobile Store",
+          "description": "Sign in to your Amazon Mobile Store account or create a new one."
         }
       }
     },
@@ -209,10 +217,13 @@
       "priority": 0,
       "changefreq": "yearly",
       "meta": {
-        "fa": { "title": "سبد خرید | بریس", "description": "محصولات انتخاب‌شده در سبد خرید بریس." },
+        "fa": {
+          "title": "سبد خرید | آمازون",
+          "description": "محصولات انتخاب‌شده در سبد خرید آمازون را بررسی کنید."
+        },
         "en": {
-          "title": "Shopping Cart | Beris",
-          "description": "Review the products in your Beris shopping cart."
+          "title": "Shopping Cart | Amazon Mobile Store",
+          "description": "Review the products in your Amazon Mobile Store cart."
         }
       }
     },
@@ -224,10 +235,13 @@
       "priority": 0,
       "changefreq": "yearly",
       "meta": {
-        "fa": { "title": "تکمیل سفارش | بریس", "description": "تکمیل اطلاعات ارسال و سفارش بریس." },
+        "fa": {
+          "title": "تکمیل سفارش | آمازون",
+          "description": "اطلاعات سفارش و ارسال خرید خود از آمازون را تکمیل کنید."
+        },
         "en": {
-          "title": "Checkout | Beris",
-          "description": "Complete delivery details for your Beris order."
+          "title": "Checkout | Amazon Mobile Store",
+          "description": "Complete your Amazon Mobile Store order and delivery details."
         }
       }
     },
@@ -239,10 +253,13 @@
       "priority": 0,
       "changefreq": "yearly",
       "meta": {
-        "fa": { "title": "پرداخت سفارش | بریس", "description": "پرداخت امن سفارش بریس." },
+        "fa": {
+          "title": "پرداخت سفارش | آمازون",
+          "description": "پرداخت سفارش خود در فروشگاه موبایل آمازون را انجام دهید."
+        },
         "en": {
-          "title": "Order Payment | Beris",
-          "description": "Secure payment for your Beris order."
+          "title": "Order Payment | Amazon Mobile Store",
+          "description": "Complete payment for your Amazon Mobile Store order."
         }
       }
     },
@@ -254,10 +271,13 @@
       "priority": 0,
       "changefreq": "yearly",
       "meta": {
-        "fa": { "title": "پرداخت موفق | بریس", "description": "تأیید پرداخت سفارش بریس." },
+        "fa": {
+          "title": "پرداخت موفق | آمازون",
+          "description": "نتیجه پرداخت سفارش خود در آمازون را مشاهده کنید."
+        },
         "en": {
-          "title": "Payment Successful | Beris",
-          "description": "Confirmation of your successful Beris order payment."
+          "title": "Payment Successful | Amazon Mobile Store",
+          "description": "View the result of your Amazon Mobile Store payment."
         }
       }
     },
@@ -269,10 +289,13 @@
       "priority": 0,
       "changefreq": "yearly",
       "meta": {
-        "fa": { "title": "پرداخت ناموفق | بریس", "description": "بررسی نتیجه پرداخت سفارش بریس." },
+        "fa": {
+          "title": "پرداخت ناموفق | آمازون",
+          "description": "نتیجه پرداخت سفارش خود در آمازون را بررسی کنید."
+        },
         "en": {
-          "title": "Payment Unsuccessful | Beris",
-          "description": "Review the result of your Beris order payment."
+          "title": "Payment Unsuccessful | Amazon Mobile Store",
+          "description": "Review the result of your Amazon Mobile Store payment."
         }
       }
     },
@@ -284,10 +307,13 @@
       "priority": 0,
       "changefreq": "yearly",
       "meta": {
-        "fa": { "title": "حساب کاربری | بریس", "description": "مدیریت حساب و سفارش‌های بریس." },
+        "fa": {
+          "title": "حساب کاربری | آمازون",
+          "description": "حساب کاربری و سفارش‌های خود در آمازون را مدیریت کنید."
+        },
         "en": {
-          "title": "Your Account | Beris",
-          "description": "Manage your Beris account and orders."
+          "title": "Your Account | Amazon Mobile Store",
+          "description": "Manage your Amazon Mobile Store account and orders."
         }
       }
     }

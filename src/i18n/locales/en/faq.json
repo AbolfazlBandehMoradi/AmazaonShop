@@ -4,35 +4,35 @@
   "items": [
     {
       "question": "How can I track my order?",
-      "answer": "After placing your order, a tracking code will be sent to you via email or SMS, and you can view the status in the 'Order Tracking' section."
+      "answer": "Check your orders in your account. Contact the store if you need help."
     },
     {
       "question": "What payment methods are available in the store?",
-      "answer": "You can choose online payment with bank cards, cash on delivery, or use the internal wallet of the website."
+      "answer": "Available payment methods appear during checkout."
     },
     {
       "question": "How are shipping costs and delivery time calculated?",
-      "answer": "Shipping costs are determined based on product weight and destination, and delivery time varies between 2 to 7 business days."
+      "answer": "Review shipping method, cost and estimated delivery time when placing an order. Contact the store for details about your destination."
     },
     {
       "question": "Is it possible to return or exchange a product?",
-      "answer": "For some products, return or exchange is possible within 7 days after receiving the item in case of issues or dissatisfaction, but some products are excluded due to hygiene conditions or their specific nature."
+      "answer": "Return or exchange conditions depend on the product and order. Contact Amazon support before sending an item back."
     },
     {
       "question": "How can I use discounts and coupons?",
-      "answer": "Enter your discount code at the checkout stage to have the amount deducted from your order."
+      "answer": "If you have an active discount code, enter it at checkout and check the final total before paying."
     },
     {
       "question": "Do the products come with a warranty?",
-      "answer": "Yes, most products come with an official manufacturer warranty, and detailed information is provided on the product page."
+      "answer": "Warranty type and duration, when available, are listed with each product. Contact the store for more details."
     },
     {
       "question": "How can I manage my user account?",
-      "answer": "By logging into your account, you can manage your addresses, orders, favorites, and personal information."
+      "answer": "Sign in to view and manage your account information and orders."
     },
     {
       "question": "Is wholesale or special ordering available?",
-      "answer": "For wholesale purchases or special orders, please contact the store support to receive special conditions."
+      "answer": "For special or larger orders, call 09156304012."
     }
   ]
 }

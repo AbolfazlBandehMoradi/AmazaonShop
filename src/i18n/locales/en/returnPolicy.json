@@ -1,15 +1,15 @@
 {
   "title": "Return Policy",
-  "description": "Your satisfaction is important to us. If you are not completely satisfied with your purchase, you may be eligible for a return under the terms outlined below.",
+  "description": "Please contact Amazon support before returning an item. Each request is reviewed based on the product and order status.",
   "imageAlt": "Return policy illustration",
   "rulesList": "Return policy rules",
   "rules": [
-    "Items must be returned within 1 days of delivery.",
-    "Products must be unused and in original packaging.",
-    "Customized or special-order items are not eligible for return.",
-    "Return shipping costs are the responsibility of the customer.",
-    "Refunds will be processed within 5–7 business days after inspection.",
-    "Damaged items must be reported within 24 hours of delivery."
+    "Contact store support before sending an item back.",
+    "Have your order number and product details ready when you contact us.",
+    "Keep the product, packaging and included accessories together.",
+    "Check product information for any warranty or return conditions.",
+    "Report any damage noticed on delivery to the store as soon as possible.",
+    "Support will explain the next steps and review outcome."
   ],
   "contactTitle": "Have questions about returns?",
   "contactButton": "Contact Support"

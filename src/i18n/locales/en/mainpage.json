@@ -1,7 +1,7 @@
 {
   "brands": {
     "title": "Most popular digital brands",
-    "description": "Discover the world's leading brands"
+    "description": "Explore familiar phone and accessory brands"
   },
   "hero": {
     "label": "Amazon store highlights",
@@ -18,7 +18,7 @@
     "title": "Quick access to categories",
     "intro": "Choose a product category to find what you need faster.",
     "viewProducts": "View products",
-    "stockMessage": "All products and stock information are kept up to date."
+    "stockMessage": "Check specifications and availability on each product page."
   },
   "categories": {
     "titlePrefix": "Product",
@@ -32,39 +32,39 @@
     "empty": "No categories found."
   },
   "about": {
-    "title": "Iranian craft, made for your home by Beris",
-    "description": "We began in 2019 with a simple belief: Iranian handmade art deserves to be seen. Today we work with more than 200 artists across the country, and every piece carries a life, a skill, and a culture.",
+    "title": "Amazon Mobile Store in Zahedan",
+    "description": "Explore mobile phones and accessories at Amazon, and contact us for help choosing a product that suits your needs.",
     "cta": "Learn more",
     "images": {
-      "artist": "Artist stitching traditional Iranian needlework",
-      "needlework": "Colorful Iranian needlework",
-      "workshop": "Handicraft workshop with colorful threads"
+      "artist": "Mobile phone at Amazon Mobile Store",
+      "needlework": "Mobile accessories",
+      "workshop": "Digital products at Amazon Mobile Store"
     },
     "features": {
       "handmade": {
-        "title": "Genuinely handmade",
-        "description": "Every piece is made by a local artist."
+        "title": "Product variety",
+        "description": "Browse phones and accessories in one place."
       },
       "quality": {
-        "title": "Quality guaranteed",
-        "description": "Return your order if it does not feel right."
+        "title": "Clear details",
+        "description": "Review specifications before making a choice."
       },
       "artists": {
-        "title": "Artist support",
-        "description": "Revenue goes directly to the maker."
+        "title": "Shopping guidance",
+        "description": "Contact us for help choosing the right device."
       }
     }
   },
   "promos": {
-    "label": "Beris featured collections",
+    "label": "Amazon Mobile Store highlights",
     "cta": "Explore more",
     "needlework": {
-      "title": "Authentic needlework woven into everyday life",
-      "description": "Discover hand-stitched designs inspired by the color and culture of Iran."
+      "title": "Find the right mobile phone",
+      "description": "Compare models and specifications before you choose."
     },
     "handmade": {
-      "title": "Delicacy created by hand",
-      "description": "Shop distinctive needlework pieces designed to remain beautiful for years."
+      "title": "Accessories for everyday use",
+      "description": "Explore chargers, cables, cases and headphones at Amazon."
     }
   },
   "landingBlogs": {
@@ -82,7 +82,7 @@
     "rating": "{{rating}} out of 5 stars"
   },
   "showcaseTabs": {
-    "title": "Beris products",
+    "title": "Amazon products",
     "more": "View all products",
     "previous": "Previous products",
     "next": "Next products",
@@ -119,9 +119,9 @@
   },
   "specials": {
     "titlePrefix": "",
-    "titleAccent": "Professional",
+    "titleAccent": "Selected",
     "titleSuffix": "Products",
-    "description": "Pulak with the highest quality",
+    "description": "Explore selected phones and accessories",
     "more": "More products...",
     "moreInPhone": "More",
     "discountBadge": "Discount",
@@ -155,16 +155,16 @@
     "buyThisProduct": "Buy this product"
   },
   "bestProducts": {
-    "titlePrefix": "A list of",
-    "titleAccent": "best",
-    "titleSuffix": "Pulak picks",
+    "titlePrefix": "Selected",
+    "titleAccent": "Amazon",
+    "titleSuffix": "products",
     "more": "More products"
   },
   "blogs": {
     "titlePrefix": "Latest",
     "titleAccent": "Blog",
     "titleSuffix": "posts",
-    "description": "Read the latest stories and updates from Pulak",
+    "description": "Read mobile buying guides and practical accessory articles from Amazon",
     "more": "More posts...",
     "imageAlt": "Blog image"
   },
@@ -191,8 +191,8 @@
         "description": "Compare product details and choose what suits you best."
       },
       "delivery": {
-        "title": "Fast delivery across Iran",
-        "description": "Your order is packed carefully and shipped as quickly as possible."
+        "title": "Delivery information",
+        "description": "Review shipping information before placing an order."
       }
     }
   }

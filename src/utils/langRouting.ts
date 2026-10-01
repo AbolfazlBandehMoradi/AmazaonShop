@@ -1,5 +1,7 @@
-export const SUPPORTED_LANGS = ['fa', 'en'] as const;
-export type SupportedLang = (typeof SUPPORTED_LANGS)[number];
+export type SupportedLang = 'fa' | 'en';
+export const SUPPORTED_LANGS: readonly SupportedLang[] = ['fa'];
+// English remains available for a future bilingual launch.
+// export const SUPPORTED_LANGS: readonly SupportedLang[] = ['fa', 'en'];
 export type LanguageDirection = 'rtl' | 'ltr';
 
 export const DEFAULT_LANG: SupportedLang = 'fa';
@@ -24,7 +26,7 @@ export function getLanguageLocale(lang: SupportedLang): string {
 
 export function getLocaleForLanguageCode(lang: string | null | undefined): string {
   const baseLang = lang?.toLowerCase().split('-')[0];
-  return isSupportedLang(baseLang) ? getLanguageLocale(baseLang) : LANGUAGE_LOCALES.en;
+  return isSupportedLang(baseLang) ? getLanguageLocale(baseLang) : LANGUAGE_LOCALES.fa;
 }
 
 export function isRtlLanguageCode(lang: string | null | undefined): boolean {
@@ -69,7 +71,7 @@ export function withLangPath(path: string, lang: SupportedLang): string {
   const hash = match[3] || '';
 
   const withoutLang = stripLangPrefix(pathname);
-  const localizedPath = withoutLang === '/' ? `/${lang}` : `/${lang}${withoutLang}`;
+  const localizedPath = lang === 'fa' ? withoutLang : withoutLang === '/' ? `/${lang}` : `/${lang}${withoutLang}`;
 
   return `${localizedPath}${search}${hash}`;
 }

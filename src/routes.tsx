@@ -1,9 +1,8 @@
-import { createBrowserRouter, Navigate, type LoaderFunction, useLocation } from 'react-router-dom';
+import { createBrowserRouter, type LoaderFunction } from 'react-router-dom';
 
 import { lazy, Suspense } from 'react';
 
-import { useLangStore } from '@/stores/languageStore';
-import { SUPPORTED_LANGS, SupportedLang, withLangPath } from '@/utils/langRouting';
+import type { SupportedLang } from '@/utils/langRouting';
 
 import Layout from './pages/Layout';
 import PrivateRoutes from './pages/PrivateRoutes';
@@ -53,22 +52,6 @@ function ErrorBoundary() {
   );
 }
 
-/* ---------------- Language redirect ---------------- */
-
-function RedirectToPreferredLanguage() {
-  const lang = useLangStore((s) => s.lang);
-  return <Navigate to={`/${lang}`} replace />;
-}
-
-function RedirectToLocalizedPath() {
-  const location = useLocation();
-  const lang = useLangStore((s) => s.lang);
-
-  const destination = withLangPath(`${location.pathname}${location.search}${location.hash}`, lang);
-
-  return <Navigate to={destination} replace />;
-}
-
 /* ---------------- Routes ---------------- */
 
 const getPublicChildren = () => [
@@ -100,7 +83,7 @@ const notFoundLoader: LoaderFunction = () => {
 
 function createLocalizedBranch(lang: SupportedLang) {
   return {
-    path: `/${lang}`,
+    path: lang === 'fa' ? '/' : `/${lang}`,
     element: <LayoutWrapper />,
     errorElement: <ErrorBoundary />,
     children: [
@@ -119,13 +102,7 @@ function createLocalizedBranch(lang: SupportedLang) {
 }
 
 export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <RedirectToPreferredLanguage />,
-  },
-  ...SUPPORTED_LANGS.map(createLocalizedBranch),
-  {
-    path: '*',
-    element: <RedirectToLocalizedPath />,
-  },
+  createLocalizedBranch('fa'),
+  // Restore this route when English pages are ready to publish.
+  // createLocalizedBranch('en'),
 ]);

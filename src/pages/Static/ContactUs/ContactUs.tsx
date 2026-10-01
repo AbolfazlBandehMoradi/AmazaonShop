@@ -3,10 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useLangStore } from '@/stores/languageStore';
-
-const phoneHref = 'tel:09153420740';
-const mapEmbedUrl =
-  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3472.9716700715194!2d60.8517875!3d29.4880244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ee7310052524349%3A0xae1b9dd0821cccdf!2z2KjZh9i02Kog2LLbjNio2KfbjNuMINm-2YjZhNqp!5e0!3m2!1sen!2s!4v1756555547210!5m2!1sen!2s';
+import { siteMetadata } from '@/seo/metadata';
 
 interface ContactTranslation {
   eyebrow: string;
@@ -30,7 +27,9 @@ export default function ContactUs() {
   const dir = useLangStore((state) => state.dir);
   const localizedPath = useLocalizedPath();
   const contact = t('contact', { returnObjects: true }) as ContactTranslation;
+  const phoneHref = `tel:${siteMetadata.contact.phone}`;
   const mapSearchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.location)}`;
+  const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(contact.location)}&output=embed`;
 
   return (
     <main dir={dir} className="page-container page-section">

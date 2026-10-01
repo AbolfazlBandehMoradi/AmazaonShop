@@ -1,7 +1,16 @@
 {
-  "phone": "Mobile: +98 936 184 4504",
-  "phoneFactory": "Store: +98 936 184 4504",
-  "phoneSound": "Instagram: Beris_handicrafts",
-  "email": "Email: arefarbabi71@gmail.com",
-  "location": "Iran, Mashhad, Vakilabad Blvd, Honarestan 31"
+  "eyebrow": "We are here to help",
+  "title": "Contact Amazon Mobile Store",
+  "intro": "Ask us about phones, accessories or your order, or visit our store in Zahedan.",
+  "phoneLabel": "Phone",
+  "phone": "09156304012",
+  "callButton": "Call us",
+  "supportLabel": "Shopping and order support",
+  "supportDescription": "Call the store for product guidance or order questions.",
+  "locationLabel": "Store address",
+  "location": "Zahedan, before Beheshti, 15 Borj Melki, Amazon",
+  "mapTitle": "Find us on the map",
+  "mapDescription": "Search for our store address on the map.",
+  "directionsButton": "Open Google Maps",
+  "aboutButton": "Learn more about our store"
 }

@@ -1,18 +1,11 @@
 User-agent: *
 Allow: /
-Disallow: /fa/auth
-Disallow: /en/auth
-Disallow: /fa/cart
-Disallow: /en/cart
-Disallow: /fa/checkout
-Disallow: /en/checkout
-Disallow: /fa/payment
-Disallow: /en/payment
-Disallow: /fa/payment/success
-Disallow: /en/payment/success
-Disallow: /fa/payment/failure
-Disallow: /en/payment/failure
-Disallow: /fa/profile
-Disallow: /en/profile
+Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
+Disallow: /payment
+Disallow: /payment/success
+Disallow: /payment/failure
+Disallow: /profile
 
-Sitemap: https://berishandicrafts.com/sitemap.xml
+Sitemap: https://gajet30.ir/sitemap.xml

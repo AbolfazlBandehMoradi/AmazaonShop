@@ -30,6 +30,12 @@ type SeoData = {
     defaultLanguage: SeoLanguage;
     languages: SeoLanguage[];
     name: Record<SeoLanguage, string>;
+    contact: {
+      phone: string;
+      address: string;
+      instagram: string;
+      whatsapp: string;
+    };
   };
   routes: SeoRouteEntry[];
 };
@@ -105,12 +111,14 @@ function isSeoLanguage(value: unknown): value is SeoLanguage {
 }
 
 export function getConfiguredSiteUrl(): string {
-  return (import.meta.env.VITE_SITE_URL || siteMetadata.url).replace(/\/+$/, '');
+  return siteMetadata.url.replace(/\/+$/, '');
 }
 
 export function getPathLanguage(pathname: string): SeoLanguage {
   const firstSegment = pathname.split('/').filter(Boolean)[0];
-  return isSeoLanguage(firstSegment) ? firstSegment : (DEFAULT_LANG as SeoLanguage);
+  return isSeoLanguage(firstSegment) && siteMetadata.languages.includes(firstSegment)
+    ? firstSegment
+    : (DEFAULT_LANG as SeoLanguage);
 }
 
 function normalizeRoutePath(path: string): string {
@@ -150,7 +158,7 @@ export function findSeoRoute(pathname: string): SeoRouteEntry | null {
 
 function localizePath(path: string, lang: SeoLanguage): string {
   const normalized = normalizeRoutePath(path);
-  return normalized === '/' ? `/${lang}` : `/${lang}${normalized}`;
+  return lang === 'fa' ? normalized : normalized === '/' ? `/${lang}` : `/${lang}${normalized}`;
 }
 
 export function toAbsoluteUrl(value: string, siteUrl = getConfiguredSiteUrl()): string {
@@ -164,7 +172,7 @@ function getCanonicalBasePath(route: SeoRouteEntry | null, pathname: string): st
 }
 
 function getAlternateLinks(basePath: string, siteUrl: string): AlternateLink[] {
-  const links = SEO_LANGUAGES.map((lang) => ({
+  const links = siteMetadata.languages.map((lang) => ({
     hrefLang: langToHtmlLocale[lang],
     href: toAbsoluteUrl(localizePath(basePath, lang), siteUrl),
   }));
@@ -214,15 +222,27 @@ function createDefaultStructuredData(meta: {
   return [
     {
       '@context': 'https://schema.org',
-      '@type': 'Organization',
+      '@type': 'Store',
       '@id': organizationId,
       name: meta.siteName,
-      alternateName: meta.lang === 'fa' ? 'بریس' : 'Beris',
+      alternateName: meta.lang === 'fa' ? 'آمازون' : 'Amazon Mobile Store',
       url: meta.siteUrl,
-      logo: {
-        '@type': 'ImageObject',
-        url: toAbsoluteUrl('/MainLogo.svg', meta.siteUrl),
+      telephone: siteMetadata.contact.phone,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: siteMetadata.contact.address,
+        addressLocality: 'زاهدان',
+        addressCountry: 'IR',
       },
+      sameAs: [siteMetadata.contact.instagram],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: siteMetadata.contact.phone,
+        url: siteMetadata.contact.whatsapp,
+        contactType: 'customer service',
+        availableLanguage: ['fa'],
+      },
+      image: meta.imageUrl,
     },
     {
       '@context': 'https://schema.org',
@@ -253,13 +273,13 @@ export function getRouteSeoMeta(pathname: string, preferredLang?: SeoLanguage): 
   const title = route
     ? languageMeta.title
     : lang === 'fa'
-      ? 'صفحه پیدا نشد | صنایع دستی بریس'
-      : 'Page Not Found | Beris Handicrafts';
+      ? 'صفحه پیدا نشد | آمازون'
+      : 'Page Not Found | Amazon Mobile Store';
   const description = route
     ? languageMeta.description
     : lang === 'fa'
-      ? 'صفحه مورد نظر در فروشگاه صنایع دستی بریس پیدا نشد.'
-      : 'The requested page could not be found on Beris Handicrafts.';
+      ? 'صفحه مورد نظر در فروشگاه موبایل آمازون پیدا نشد.'
+      : 'The requested page could not be found on Amazon Mobile Store.';
 
   return {
     routeId: route?.id ?? 'not-found',
@@ -274,7 +294,7 @@ export function getRouteSeoMeta(pathname: string, preferredLang?: SeoLanguage): 
     imageHeight: siteMetadata.imageHeight,
     siteName,
     locale: langToLocale[lang],
-    alternateLocales: SEO_LANGUAGES.filter((item) => item !== lang).map(
+    alternateLocales: siteMetadata.languages.filter((item) => item !== lang).map(
       (item) => langToLocale[item],
     ),
     type: 'website',

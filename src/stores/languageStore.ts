@@ -17,6 +17,7 @@ export const useLangStore = create<LangState>()(
       isReady: false,
 
       setLang: (newLang) => {
+        if (newLang !== 'fa') return;
         set({ isReady: false });
 
         i18n.changeLanguage(newLang).then(() => {
@@ -32,11 +33,7 @@ export const useLangStore = create<LangState>()(
       name: "lang-storage",
 
       onRehydrateStorage: () => (state) => {
-        if (state?.lang) {
-          i18n.changeLanguage(state.lang);
-        }
-
-        state?.setLang(state?.lang ?? "fa");
+        state?.setLang('fa');
       },
     }
   )
