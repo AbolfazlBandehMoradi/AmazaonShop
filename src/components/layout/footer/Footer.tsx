@@ -164,7 +164,7 @@ export const Footer = () => {
           <div
             role="group"
             aria-label={t('footer.trust.label')}
-            className="col-span-2 flex w-fit max-w-full items-center justify-center justify-self-center gap-4 rounded-3xl bg-white p-4 md:col-span-4 lg:col-span-1"
+            className="col-span-2 flex w-fit max-w-full items-center justify-center justify-self-center gap-4 rounded-3xl bg-white p-4 md:col-span-4 lg:col-span-1 lg:self-start"
           >
             {trustMarks.map((mark) => (
               <img
