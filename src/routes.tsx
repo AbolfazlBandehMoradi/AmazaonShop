@@ -1,4 +1,4 @@
-import { createBrowserRouter, type LoaderFunction } from 'react-router-dom';
+import { createBrowserRouter, type LoaderFunction } from 'react-router';
 
 import { lazy, Suspense } from 'react';
 
@@ -6,6 +6,7 @@ import type { SupportedLang } from '@/utils/langRouting';
 
 import Layout from './pages/Layout';
 import PrivateRoutes from './pages/PrivateRoutes';
+import IndexLoading from './components/ui/IndexLoading';
 
 // ⚡ Lazy Pages
 const MainPage = lazy(() => import('./pages/landing/MainPage'));
@@ -36,7 +37,7 @@ const ErrorPage = lazy(() => import('./pages/error/ErrorPage'));
 
 function LayoutWrapper() {
   return (
-    <Suspense fallback={<div></div>}>
+    <Suspense fallback={<IndexLoading />}>
       <Layout />
     </Suspense>
   );
@@ -44,7 +45,7 @@ function LayoutWrapper() {
 
 function ErrorBoundary() {
   return (
-    <Suspense fallback={<div></div>}>
+    <Suspense fallback={<IndexLoading />}>
       <Layout>
         <ErrorPage />
       </Layout>
@@ -86,6 +87,7 @@ function createLocalizedBranch(lang: SupportedLang) {
     path: lang === 'fa' ? '/' : `/${lang}`,
     element: <LayoutWrapper />,
     errorElement: <ErrorBoundary />,
+    HydrateFallback: IndexLoading,
     children: [
       ...getPublicChildren(),
       {

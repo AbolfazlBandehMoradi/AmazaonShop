@@ -13,6 +13,20 @@
     "error": "Highlights could not be loaded.",
     "retry": "Try again"
   },
+  "loading": {
+    "accessibleLabel": "Loading the {{brand}} store",
+    "eyebrow": "A fresh experience in mobile technology",
+    "tagline": "Buy and sell phones and accessories in Zahedan",
+    "preparing": "Loading the store",
+    "footer": "Buy and sell • Quality and variety",
+    "location": "Zahedan, Iran",
+    "devices": "Phones",
+    "accessories": "Accessories",
+    "quality": "Quality",
+    "variety": "Variety",
+    "buy": "Buy",
+    "sell": "Sell"
+  },
   "heroCategories": {
     "caption": "Product categories",
     "title": "Quick access to categories",

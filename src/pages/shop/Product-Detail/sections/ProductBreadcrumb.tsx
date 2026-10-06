@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from '@/i18n/useTranslation';
 import { Skeleton } from '@/components/ui/skeleton';

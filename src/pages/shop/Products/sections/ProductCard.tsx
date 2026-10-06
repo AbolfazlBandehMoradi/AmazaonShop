@@ -1,5 +1,5 @@
 import { Clock3, ImageOff, ShoppingCart, Star, Truck } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { useTranslation } from '@/i18n/useTranslation';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { PriceDisplay } from '@/components/ui/PriceDisplay';

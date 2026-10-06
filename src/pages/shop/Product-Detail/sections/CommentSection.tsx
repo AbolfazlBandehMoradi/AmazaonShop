@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, Send, Reply, Edit2, Trash2, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/IconButton';

@@ -1,4 +1,5 @@
 import useIndex from '@/hooks/useIndex';
+import useHeroSliders from '@/hooks/useHeroSliders';
 import useShowcases from '@/hooks/useShowcases';
 import IndexLoading from '@/components/ui/IndexLoading';
 import ApiError from '@/pages/error/ApiError';
@@ -17,6 +18,13 @@ import Brands from './sections/Brands';
 
 const MainPage = () => {
   const { data: index, isLoading, isError, refetch } = useIndex();
+  // Start the hero request alongside the index, before the loading screen returns.
+  const {
+    data: slides = [],
+    isPending: isHeroPending,
+    isError: isHeroError,
+    refetch: refetchHero,
+  } = useHeroSliders();
   const { data: showcases } = useShowcases();
 
   if (isLoading && !index) {
@@ -29,7 +37,13 @@ const MainPage = () => {
 
   return (
     <main>
-      <Hero categories={index?.categories ?? []} />
+      <Hero
+        categories={index?.categories ?? []}
+        slides={slides}
+        isPending={isHeroPending}
+        isError={isHeroError}
+        onRetry={() => void refetchHero()}
+      />
       <MostViewedProducts showcase={showcases?.[0]} />
       <LatestGallery />
       <WhyUs />

@@ -13,10 +13,17 @@
   inset: 0;
   z-index: 100;
   isolation: isolate;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   background: var(--bg-color-for-body);
   color: var(--loader-text);
+  font-family: var(--font-sans);
+  line-height: 1.75;
+}
+
+.dark .amazon-loading {
+  --loader-blue: var(--color-first-300);
 }
 
 .amazon-loading__scene {
@@ -169,30 +176,17 @@
 }
 
 .amazon-loading__brand-symbol {
-  display: grid;
-  place-items: center;
-
-  width: 2rem;
-  height: 2rem;
-
-  border: 1px solid var(--loader-blue);
-
-  color: var(--loader-blue);
-
-  font-family: Georgia, serif;
-  font-size: 0.9rem;
-
-  transform: rotate(45deg);
-}
-
-.amazon-loading__brand-symbol::first-letter {
-  display: block;
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  object-fit: contain;
 }
 
 .amazon-loading__brand-name {
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.32em;
+  color: var(--loader-blue);
+  font-size: clamp(1.125rem, 3vw, 1.5rem);
+  font-weight: 900;
+  line-height: 1.5;
 }
 
 .amazon-loading__header-meta {
@@ -202,9 +196,8 @@
 
   color: var(--loader-muted);
 
-  font-size: 0.55rem;
+  font-size: 0.75rem;
   line-height: 1.8;
-  letter-spacing: 0.16em;
 }
 
 /* =========================================================
@@ -233,8 +226,9 @@
 
   color: var(--loader-orange);
 
-  font-size: 0.65rem;
-  letter-spacing: 0.18em;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
 
   animation: amazon-loading-reveal 700ms
     cubic-bezier(0.22, 1, 0.36, 1)
@@ -347,11 +341,11 @@
   left: 50%;
 
   width: 1px;
-  height: 7px;
+  height: 50%;
 
-  transform-origin: 50% calc(12rem - 7px);
+  transform-origin: 50% 100%;
 
-  background: var(--loader-blue);
+  background: linear-gradient(to bottom, var(--loader-blue) 7px, transparent 7px);
 
   opacity: 0.35;
 }
@@ -686,15 +680,14 @@
 
   color: var(--loader-muted);
 
-  font-size: 0.46rem;
-  line-height: 1.5;
-  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  line-height: 1.8;
 }
 
 .amazon-loading__data strong {
   color: var(--loader-blue);
 
-  font-size: 0.52rem;
+  font-size: 0.8125rem;
   font-weight: 600;
 }
 
@@ -713,7 +706,7 @@
 
 .amazon-loading__data--top {
   top: 22%;
-  left: 12%;
+  left: 0;
   align-items: flex-start;
 }
 
@@ -723,7 +716,7 @@
 }
 
 .amazon-loading__data--right {
-  right: 4%;
+  right: 0;
   bottom: 28%;
   align-items: flex-end;
 }
@@ -735,7 +728,7 @@
 
 .amazon-loading__data--left {
   bottom: 17%;
-  left: 10%;
+  left: 2%;
 }
 
 .amazon-loading__data--left::before {
@@ -786,13 +779,12 @@
 
   color: var(--loader-text);
 
-  font-family: var(--font-heading);
-
-  font-size: clamp(1.65rem, 4vw, 2.3rem);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
 
   line-height: 1.4;
 
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
 }
 
 .amazon-loading__identity p {
@@ -800,7 +792,7 @@
 
   color: var(--loader-muted);
 
-  font-size: 0.72rem;
+  font-size: 0.9375rem;
 
   line-height: 1.9;
 }
@@ -810,7 +802,7 @@
    ========================================================= */
 
 .amazon-loading__status {
-  width: min(100%, 15rem);
+  width: min(100%, 18rem);
 
   margin-top: 1.7rem;
 
@@ -828,7 +820,7 @@
 
   color: var(--loader-muted);
 
-  font-size: 0.56rem;
+  font-size: 0.8125rem;
 }
 
 .amazon-loading__percentage {
@@ -902,9 +894,8 @@
 
   color: var(--loader-muted);
 
-  font-size: 0.52rem;
-
-  letter-spacing: 0.16em;
+  font-size: 0.75rem;
+  text-align: center;
 }
 
 .amazon-loading__footer-line {
@@ -1057,11 +1048,11 @@
   }
 
   .amazon-loading__header-meta {
-    font-size: 0.48rem;
+    font-size: 0.6875rem;
   }
 
   .amazon-loading__brand-name {
-    font-size: 0.68rem;
+    font-size: 1.125rem;
   }
 
   .amazon-loading__device {
@@ -1074,7 +1065,7 @@
   }
 
   .amazon-loading__data {
-    font-size: 0.4rem;
+    font-size: 0.6875rem;
   }
 }
 
@@ -1084,7 +1075,7 @@
   }
 
   .amazon-loading__device {
-    width: min(52vh, 19rem);
+    width: min(42dvh, 19rem);
   }
 
   .amazon-loading__phone {
@@ -1094,6 +1085,22 @@
 
   .amazon-loading__status {
     margin-top: 1rem;
+  }
+}
+
+@media (max-height: 540px) {
+  .amazon-loading__content {
+    gap: 0.75rem;
+    padding-block: 1rem;
+  }
+
+  .amazon-loading__device {
+    display: none;
+  }
+
+  .amazon-loading__identity,
+  .amazon-loading__status {
+    margin-top: 0;
   }
 }
 

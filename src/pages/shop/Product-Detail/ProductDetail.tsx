@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router';
 import { motion } from 'framer-motion';
 import { ChevronLeft } from 'lucide-react';
 import { useTranslation } from '@/i18n/useTranslation';

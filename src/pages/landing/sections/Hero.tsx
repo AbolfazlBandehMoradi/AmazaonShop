@@ -1,13 +1,13 @@
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import type { Swiper as SwiperType } from 'swiper';
 import { A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.css';
 
-import useHeroSliders, { type HeroSlider } from '@/hooks/useHeroSliders';
+import type { HeroSlider } from '@/hooks/useHeroSliders';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useLangStore } from '@/stores/languageStore';
 import type { Category } from '@/types';
@@ -71,11 +71,18 @@ function renderSlideTitle(title: string, isRtl: boolean) {
     );
 }
 
-const Hero = ({ categories }: { categories: Category[] }) => {
+interface HeroProps {
+  categories: Category[];
+  slides: HeroSlider[];
+  isPending: boolean;
+  isError: boolean;
+  onRetry: () => void;
+}
+
+const Hero = ({ categories, slides, isPending, isError, onRetry }: HeroProps) => {
   const { t } = useTranslation();
   const { dir } = useLangStore();
   const localizedPath = useLocalizedPath();
-  const { data: slides = [], isPending, isError, refetch } = useHeroSliders();
   const swiperRef = useRef<SwiperType | null>(null);
   const [activeSlide, setActiveSlide] = useState(0);
   const ForwardIcon = dir === 'rtl' ? ArrowLeft : ArrowRight;
@@ -111,7 +118,7 @@ const Hero = ({ categories }: { categories: Category[] }) => {
                   {isError && (
                     <button
                       type="button"
-                      onClick={() => void refetch()}
+                      onClick={onRetry}
                       className="rounded-xl bg-first px-5 py-2.5 text-sm font-f-bold text-white hover:bg-first-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-first"
                     >
                       {t('mainpage.hero.retry')}
@@ -162,7 +169,8 @@ const Hero = ({ categories }: { categories: Category[] }) => {
                               src={image}
                               alt={title || caption || ''}
                               loading={index === 0 ? 'eager' : 'lazy'}
-                              fetchPriority={index === 0 ? 'high' : undefined}
+                              // React 18 requires the lowercase DOM attribute.
+                              {...{ fetchpriority: index === 0 ? 'high' : undefined }}
                               className="max-h-[190px] w-full object-contain object-bottom sm:max-h-[240px] md:max-h-[280px] lg:max-h-[350px] xl:max-h-[360px]"
                             />
                           )}

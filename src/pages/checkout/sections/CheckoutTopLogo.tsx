@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import MainLogo from '@/assets/Images/Logo/MainLogo.webp';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 

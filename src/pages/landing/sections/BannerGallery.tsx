@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 import { useGalleriesByCategory, type GalleriesByCategoryResponse } from '@/hooks/useGalleries';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';

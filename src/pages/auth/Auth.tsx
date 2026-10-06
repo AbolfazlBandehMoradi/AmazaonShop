@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { AlertCircle, ShieldCheck } from 'lucide-react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import logo from '@/assets/Images/Logo/MainLogo.webp';
 import banner1 from '@/assets/Images/Auth/1.webp';

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import { ChevronLeft, ChevronRight, Grid, List, RefreshCw, Search } from 'lucide-react';
 import { Button } from '@/components/ui/IconButton';
 import { Skeleton } from '@/components/ui/skeleton';

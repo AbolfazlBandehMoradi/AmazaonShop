@@ -10,7 +10,7 @@ import {
   ShoppingBag,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useLangStore } from '@/stores/languageStore';
 import aboutShowroomImage from '@/assets/Images/Static/about-mobile-showroom.webp';

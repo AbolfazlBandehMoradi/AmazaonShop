@@ -1,4 +1,4 @@
-import { Outlet, ScrollRestoration, useLocation } from 'react-router-dom';
+import { Outlet, ScrollRestoration, useLocation } from 'react-router';
 import { Footer } from '@/components/layout/footer/Footer';
 import useCart from '@/hooks/cart/useCart';
 import { MobileBottomNav } from '@/components/layout/mobile-bottom-nav/MobileBottomNav';
@@ -29,7 +29,7 @@ const Layout = ({ children }: LayoutProps) => {
     basePath.startsWith('/payment/');
 
   const isProductDetailPage = /^\/products\/[^/]+$/.test(basePath);
-  const isCategoriesPage = basePath === '/categories';
+  const isCategoriesPage = /^\/categories\/?$/.test(basePath);
 
   const isPaymentResultPage = basePath === '/payment/success' || basePath === '/payment/failure';
 

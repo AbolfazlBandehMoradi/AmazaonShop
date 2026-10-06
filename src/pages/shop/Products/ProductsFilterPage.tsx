@@ -1,6 +1,6 @@
 import { ArrowDownWideNarrow, ChevronDown, Search, SlidersHorizontal, X } from 'lucide-react';
 import { useTranslation } from '@/i18n/useTranslation';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router';
 import { useInfiniteProducts } from '@/hooks/useInfiniteProducts';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useShopStore } from '@/stores/productsFilterStore';

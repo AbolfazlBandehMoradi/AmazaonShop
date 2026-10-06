@@ -1,5 +1,5 @@
 import { AlertTriangle, CreditCard, LifeBuoy, ShoppingCart, XCircle } from 'lucide-react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import { useTranslation } from '@/i18n/useTranslation';
 import { useLangStore } from '@/stores/languageStore';
 import { useLocalizedNavigate } from '@/hooks/useLocalizedNavigate';

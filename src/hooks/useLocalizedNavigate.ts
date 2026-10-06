@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useNavigate, type NavigateOptions } from "react-router-dom";
+import { useNavigate, type NavigateOptions } from "react-router";
 import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 
 export function useLocalizedNavigate() {

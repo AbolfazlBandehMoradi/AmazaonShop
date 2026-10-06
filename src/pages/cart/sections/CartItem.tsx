@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { motion } from 'framer-motion';
 import { Trash2, Plus, Minus, Shield, Store } from 'lucide-react';
 import { Button } from '@/components/ui/IconButton';

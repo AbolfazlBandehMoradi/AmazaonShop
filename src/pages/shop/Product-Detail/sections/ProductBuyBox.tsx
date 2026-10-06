@@ -25,7 +25,7 @@ import useDebouncedCartUpdate from '@/hooks/cart/useDebouncedCartUpdate';
 import { useEffect, useRef, useState } from 'react';
 import useCartStore from '@/stores/cartStore';
 import { useLangStore } from '@/stores/languageStore';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import RemainingTime from '@/components/ui/RemainingTime';
 import { resolveProductSaleOffer } from '@/utils/productOffer';

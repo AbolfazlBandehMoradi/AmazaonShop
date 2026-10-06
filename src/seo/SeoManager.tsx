@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import { getPathLanguage, getRouteSeoMeta, mergeSeoMeta } from './metadata';
 import { applySeoMeta } from './applySeoMeta';

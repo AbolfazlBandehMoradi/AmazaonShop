@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router";
 import { motion } from "framer-motion";
 import { getBlogs, type BlogListItem } from "@/utils/blogApi";
 import { Button } from "@/components/ui/IconButton";

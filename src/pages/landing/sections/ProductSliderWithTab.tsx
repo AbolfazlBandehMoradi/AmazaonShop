@@ -8,7 +8,7 @@ import {
   ShoppingBag,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import type { Swiper as SwiperType } from 'swiper';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';

@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 import { House, Grid2x2, LogIn, ShoppingCart, Newspaper, User2 } from 'lucide-react';
 import { useTranslation } from '@/i18n/useTranslation';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';

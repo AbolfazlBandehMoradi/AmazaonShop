@@ -1,6 +1,6 @@
 import { useId, useMemo, useState, type KeyboardEvent } from 'react';
 import Masonry from 'react-masonry-css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, ChevronDown, ChevronLeft, Grid2x2, RefreshCw } from 'lucide-react';
 import type { Category } from '@/types';

@@ -2,7 +2,7 @@ import { useInView } from '@/hooks/useInView';
 import { Category } from '@/types';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.css';

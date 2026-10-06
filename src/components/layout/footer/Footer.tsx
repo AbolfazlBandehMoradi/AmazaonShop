@@ -1,6 +1,6 @@
 import { MessageCircle, Phone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import EnamadLogo from '@/assets/Images/E-namd/E-namd-2.png';
 import ZibalLogo from '@/assets/Images/E-namd/E-namd.png';
 import MainLogo from '@/assets/Images/Logo/MainLogo.webp';

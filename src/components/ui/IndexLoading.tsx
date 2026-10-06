@@ -1,5 +1,6 @@
-import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
+import MainLogo from '@/assets/Images/Logo/MainLogo.webp';
+import { storeBrandName, storeContact } from '@/config/store';
 
 import './IndexLoading.css';
 
@@ -8,10 +9,6 @@ const SIGNALS = Array.from({ length: 3 }, (_, index) => index);
 
 export default function IndexLoading() {
   const { t, i18n } = useTranslation();
-
-  const id = useId();
-  const gradientId = `${id}-gradient`;
-  const glowId = `${id}-glow`;
 
   const language = i18n.resolvedLanguage ?? 'fa';
 
@@ -25,7 +22,7 @@ export default function IndexLoading() {
       aria-atomic="true"
     >
       <span className="sr-only">
-        {t('mainpage.loading.accessibleLabel')}
+        {t('mainpage.loading.accessibleLabel', { brand: storeBrandName })}
       </span>
 
       <div className="amazon-loading__scene" aria-hidden="true">
@@ -44,18 +41,16 @@ export default function IndexLoading() {
         {/* Header */}
         <header className="amazon-loading__header">
           <div className="amazon-loading__brand-mark">
-            <span className="amazon-loading__brand-symbol">
-              A
-            </span>
+            <img className="amazon-loading__brand-symbol" src={MainLogo} alt="" width={48} height={48} />
 
-            <span className="amazon-loading__brand-name">
-              AMAZON
+            <span className="amazon-loading__brand-name shop-brand-name">
+              {storeBrandName}
             </span>
           </div>
 
           <div className="amazon-loading__header-meta">
-            <span>EST. 2026</span>
-            <span>ZAHDAN / IR</span>
+            <span>{t('mainpage.loading.location')}</span>
+            <bdi dir="ltr">{storeContact.phone}</bdi>
           </div>
         </header>
 
@@ -140,18 +135,18 @@ export default function IndexLoading() {
 
             {/* Floating data points */}
             <div className="amazon-loading__data amazon-loading__data--top">
-              <span>DEVICE</span>
-              <strong>ONLINE</strong>
+              <span>{t('mainpage.loading.devices')}</span>
+              <strong>{t('mainpage.loading.accessories')}</strong>
             </div>
 
             <div className="amazon-loading__data amazon-loading__data--right">
-              <span>NETWORK</span>
-              <strong>READY</strong>
+              <span>{t('mainpage.loading.quality')}</span>
+              <strong>{t('mainpage.loading.variety')}</strong>
             </div>
 
             <div className="amazon-loading__data amazon-loading__data--left">
-              <span>STORE</span>
-              <strong>2026</strong>
+              <span>{t('mainpage.loading.buy')}</span>
+              <strong>{t('mainpage.loading.sell')}</strong>
             </div>
 
             {/* Orange accent point */}
@@ -162,7 +157,7 @@ export default function IndexLoading() {
 
           {/* Brand message */}
           <div className="amazon-loading__identity">
-            <h1>{t('mainpage.loading.brandName')}</h1>
+            <h1 className="shop-brand-name">{storeBrandName}</h1>
 
             <p>{t('mainpage.loading.tagline')}</p>
           </div>

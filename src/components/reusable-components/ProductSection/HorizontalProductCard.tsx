@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ImageOff, LoaderCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 import { CartIcon } from '@/components/ui/CartIcon';
 import { PriceDisplay } from '@/components/ui/PriceDisplay';

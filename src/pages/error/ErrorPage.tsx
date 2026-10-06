@@ -1,8 +1,8 @@
-import { useRouteError, isRouteErrorResponse } from "react-router-dom";
+import { useRouteError, isRouteErrorResponse } from "react-router";
 import { AlertTriangle, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useLangStore } from "@/stores/languageStore";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const RouterErrorPage = () => {
   const lang = useLangStore((s) => s.lang);

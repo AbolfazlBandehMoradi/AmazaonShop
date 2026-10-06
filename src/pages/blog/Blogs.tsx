@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import {
   ChevronLeft
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Blog } from "@/types";
 import { BlogCardSkeleton } from "@/components/ui/Skeletons";
 import { useLangStore } from "@/stores/languageStore";

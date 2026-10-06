@@ -1,7 +1,7 @@
 import React from 'react';
 import { Globe } from 'lucide-react';
 import { useLangStore } from '@/stores/languageStore';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { replacePathLanguage } from '@/utils/langRouting';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/utils/cn';

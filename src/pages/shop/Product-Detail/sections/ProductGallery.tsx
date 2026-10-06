@@ -136,7 +136,8 @@ export function ProductGallery({ images = [], mainImage, productName }: ProductG
                     height={900}
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03] p-2 rounded-2xl"
                     loading={index === 0 ? 'eager' : 'lazy'}
-                    fetchPriority={index === 0 ? 'high' : 'auto'}
+                    // React 18 requires the lowercase DOM attribute.
+                    {...{ fetchpriority: index === 0 ? 'high' : 'auto' }}
                     decoding="async"
                     sizes="(min-width: 1280px) 34rem, (min-width: 1024px) 40vw, calc(100vw - 2rem)"
                   />

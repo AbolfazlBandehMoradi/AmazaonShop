@@ -307,11 +307,6 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@remix-run/router@1.23.2":
-  version "1.23.2"
-  resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.23.2.tgz"
-  integrity sha512-Ic6m2U/rMjTkhERIa/0ZtXJP17QUi2CbWE7cqx4J58M8aA3QTfW+2UlQ4psvTX9IO1RfNVhK3pcpdjej7L+t2w==
-
 "@rolldown/pluginutils@1.0.0-beta.27":
   version "1.0.0-beta.27"
   resolved "https://registry.npmjs.org/@rolldown/pluginutils/-/pluginutils-1.0.0-beta.27.tgz"
@@ -818,6 +813,11 @@ convert-source-map@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/convert-source-map/-/convert-source-map-2.0.0.tgz"
   integrity sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==
+
+cookie@^1.0.1:
+  version "1.1.1"
+  resolved "https://registry.npmjs.org/cookie/-/cookie-1.1.1.tgz"
+  integrity sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ==
 
 cross-spawn@^7.0.6:
   version "7.0.6"
@@ -2753,7 +2753,7 @@ punycode@^2.1.0:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-"react-dom@^18.0.0 || ^19.0.0", react-dom@^18.3.1, react-dom@>=16.8, react-dom@>=18.0.0:
+"react-dom@^18.0.0 || ^19.0.0", react-dom@^18.3.1, react-dom@>=18, react-dom@>=18.0.0:
   version "18.3.1"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz"
   integrity sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==
@@ -2806,20 +2806,13 @@ react-refresh@^0.17.0:
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.17.0.tgz"
   integrity sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==
 
-react-router-dom@^6.26.0:
-  version "6.30.3"
-  resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.30.3.tgz"
-  integrity sha512-pxPcv1AczD4vso7G4Z3TKcvlxK7g7TNt3/FNGMhfqyntocvYKj+GCatfigGDjbLozC4baguJ0ReCigoDJXb0ag==
+react-router@^7.18.4:
+  version "7.18.4"
+  resolved "https://registry.npmjs.org/react-router/-/react-router-7.18.4.tgz"
+  integrity sha512-PUPQcMhMGRAslLcvtlPz/kmzBEWPhLdgLFrL7pLNepBL6dX0lWj4WD2cUYVgYCuT3jxvghYFg81cDTj44DhetQ==
   dependencies:
-    "@remix-run/router" "1.23.2"
-    react-router "6.30.3"
-
-react-router@6.30.3:
-  version "6.30.3"
-  resolved "https://registry.npmjs.org/react-router/-/react-router-6.30.3.tgz"
-  integrity sha512-XRnlbKMTmktBkjCLE8/XcZFlnHvr2Ltdr1eJX4idL55/9BbORzyZEaIkBFDhFGCEWBBItsVrDxwx3gnisMitdw==
-  dependencies:
-    "@remix-run/router" "1.23.2"
+    cookie "^1.0.1"
+    set-cookie-parser "^2.6.0"
 
 react-simple-typewriter@^5.0.1:
   version "5.0.1"
@@ -2831,7 +2824,7 @@ react-to-print@^3.3.0:
   resolved "https://registry.npmjs.org/react-to-print/-/react-to-print-3.3.0.tgz"
   integrity sha512-7j9GIeNZA9glZlbv9mIbIHDOOx+WYfRMbJzh04NiSKjdaeGkxJuKjJQrtRuNKtt5AvEVVjrLCPokZ9yJX51Fvg==
 
-"react@^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.8.0 || ^17 || ^18 || ^19", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ~19", "react@^18 || ^19", "react@^18.0.0 || ^19.0.0", react@^18.3.1, "react@>= 16 || ^19.0.0-rc", "react@>= 16.8.0", react@>=16.0.0, react@>=16.8, react@>=18, react@>=18.0.0:
+"react@^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.8.0 || ^17 || ^18 || ^19", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ~19", "react@^18 || ^19", "react@^18.0.0 || ^19.0.0", react@^18.3.1, "react@>= 16 || ^19.0.0-rc", "react@>= 16.8.0", react@>=16.0.0, react@>=18, react@>=18.0.0:
   version "18.3.1"
   resolved "https://registry.npmjs.org/react/-/react-18.3.1.tgz"
   integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
@@ -3013,6 +3006,11 @@ semver@^6.3.1:
   version "6.3.1"
   resolved "https://registry.npmjs.org/semver/-/semver-6.3.1.tgz"
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
+
+set-cookie-parser@^2.6.0:
+  version "2.7.2"
+  resolved "https://registry.npmjs.org/set-cookie-parser/-/set-cookie-parser-2.7.2.tgz"
+  integrity sha512-oeM1lpU/UvhTxw+g3cIfxXHyJRc/uidd3yK1P242gzHds0udQBYzs3y8j4gCCW+ZJ7ad0yctld8RYO+bdurlvw==
 
 set-function-length@^1.2.2:
   version "1.2.2"

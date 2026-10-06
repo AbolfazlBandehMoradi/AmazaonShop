@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router';
 import { ArrowLeft, Calendar, Clock3, Copy } from 'lucide-react';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import rehypeRaw from 'rehype-raw';

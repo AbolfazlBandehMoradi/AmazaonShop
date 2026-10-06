@@ -9,7 +9,7 @@
   text-align: center;
 }
 
-@media (max-width: 767px) {
+@media (width < 48rem) {
   .categories-page {
     /* The shared bottom navigation stays visible, including the device safe area. */
     display: flex;
