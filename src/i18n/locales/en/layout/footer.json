@@ -1,14 +1,14 @@
 {
   "footer": {
     "brand": {
-      "title": "Amazon",
+      "title": "Gajet 30",
       "description": "With more than 10 years of experience sourcing authentic digital products, our online store is committed to offering you the best prices, top quality, and a valid warranty."
     },
     "social": {
-      "label": "Contact Amazon",
-      "instagram": "Amazon on Instagram",
-      "whatsapp": "Amazon on WhatsApp",
-      "phone": "Call Amazon"
+      "label": "Contact Gajet 30",
+      "instagram": "Gajet 30 on Instagram",
+      "whatsapp": "Gajet 30 on WhatsApp",
+      "phone": "Call Gajet 30"
     },
     "trust": {
       "label": "Trust and payment",
@@ -31,7 +31,7 @@
         "title": "Shop",
         "categories": "Categories",
         "products": "All products",
-        "blogs": "Amazon blog",
+        "blogs": "Gajet 30 blog",
         "specialOffers": "Featured products"
       },
       "contact": {
@@ -42,7 +42,7 @@
         "faq": "Frequently asked questions"
       }
     },
-    "copyright": "© {{year}} Amazon. All rights reserved.",
+    "copyright": "© {{year}} Gajet 30. All rights reserved.",
     "credit": {
       "prefix": "Designed by",
       "company": "Ofogh Modern Innovation"

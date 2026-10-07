@@ -37,7 +37,7 @@ const getImageUrl = (filePath?: string) => {
 const getMockAuthor = (langCode: string): Author => {
   if (langCode === 'fa') {
     return {
-      name: 'پولک شاپ',
+      name: 'گجت 30',
       bio: 'نویسندگان متخصص ما آخرین بینش‌ها، نکات و روندها در زمینه فناوری، سبک زندگی و موارد دیگر را برای شما به ارمغان می‌آورند.',
       role: 'نویسنده محتوا',
       avatar: undefined,
@@ -52,7 +52,7 @@ const getMockAuthor = (langCode: string): Author => {
     };
   }
   return {
-    name: 'Pulak Shop',
+    name: 'Gajet 30',
     bio: 'Our expert writers bring you the latest insights, tips, and trends in technology, lifestyle, and more.',
     role: 'Content Writer',
     avatar: undefined,

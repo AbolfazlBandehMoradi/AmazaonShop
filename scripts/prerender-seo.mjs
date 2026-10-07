@@ -58,7 +58,7 @@ function buildStructuredData({ canonicalUrl, description, language, routeId, sit
       '@type': 'Store',
       '@id': organizationId,
       name: siteName,
-      alternateName: language === 'fa' ? 'آمازون' : 'Amazon Mobile Store',
+      alternateName: language === 'fa' ? 'گجت 30' : 'Gajet 30 Mobile Store',
       url: siteUrl,
       telephone: metadata.site.contact.phone,
       address: {

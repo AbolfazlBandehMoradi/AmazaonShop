@@ -223,7 +223,7 @@ export default function Auth() {
           <div className="p-4 sm:p-6 md:p-8">
             <div className="flex items-center justify-between gap-3">
               <Link to={localizedPath('/')} className="inline-flex items-center">
-                <img src={logo} className="h-10 w-auto md:h-11" alt="logo" />
+                <img src={logo} className="h-10 w-auto md:h-11" alt={lang === 'fa' ? 'گجت 30' : 'Gajet 30'} />
               </Link>
 
               <Link
@@ -241,11 +241,11 @@ export default function Auth() {
               <h1 className="text-center text-2xl font-s-bold first-text-color md:text-3xl">
                 {lang === 'fa' ? (
                   <>
-                    به <span className="text-third"> آمازون</span> خوش آمدید
+                    به <span className="text-third"> گجت 30</span> خوش آمدید
                   </>
                 ) : (
                   <>
-                    Welcome to <span className="text-third">Amazon</span>
+                    Welcome to <span className="text-third">Gajet 30</span>
                   </>
                 )}{' '}
               </h1>

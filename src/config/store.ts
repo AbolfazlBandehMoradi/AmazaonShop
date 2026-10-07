@@ -1,4 +1,4 @@
-export const storeBrandName = 'موبایل آمازون';
+export const storeBrandName = 'گجت 30';
 
 export const storeContact = {
   phone: '09156304012',

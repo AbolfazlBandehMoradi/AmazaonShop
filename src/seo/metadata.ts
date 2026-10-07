@@ -225,7 +225,7 @@ function createDefaultStructuredData(meta: {
       '@type': 'Store',
       '@id': organizationId,
       name: meta.siteName,
-      alternateName: meta.lang === 'fa' ? 'آمازون' : 'Amazon Mobile Store',
+      alternateName: meta.lang === 'fa' ? 'گجت 30' : 'Gajet 30 Mobile Store',
       url: meta.siteUrl,
       telephone: siteMetadata.contact.phone,
       address: {
@@ -273,13 +273,13 @@ export function getRouteSeoMeta(pathname: string, preferredLang?: SeoLanguage): 
   const title = route
     ? languageMeta.title
     : lang === 'fa'
-      ? 'صفحه پیدا نشد | آمازون'
-      : 'Page Not Found | Amazon Mobile Store';
+      ? 'صفحه پیدا نشد | گجت 30'
+      : 'Page Not Found | Gajet 30 Mobile Store';
   const description = route
     ? languageMeta.description
     : lang === 'fa'
-      ? 'صفحه مورد نظر در فروشگاه موبایل آمازون پیدا نشد.'
-      : 'The requested page could not be found on Amazon Mobile Store.';
+      ? 'صفحه مورد نظر در فروشگاه موبایل گجت 30 پیدا نشد.'
+      : 'The requested page could not be found on Gajet 30 Mobile Store.';
 
   return {
     routeId: route?.id ?? 'not-found',

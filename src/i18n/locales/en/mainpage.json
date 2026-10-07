@@ -4,7 +4,7 @@
     "description": "Explore familiar phone and accessory brands"
   },
   "hero": {
-    "label": "Amazon store highlights",
+    "label": "Gajet 30 store highlights",
     "cta": "View and shop",
     "pagination": "Choose a slide",
     "goToSlide": "Show slide {{number}}",
@@ -46,13 +46,13 @@
     "empty": "No categories found."
   },
   "about": {
-    "title": "Amazon Mobile Store in Zahedan",
-    "description": "Explore mobile phones and accessories at Amazon, and contact us for help choosing a product that suits your needs.",
+    "title": "Gajet 30 Mobile Store in Zahedan",
+    "description": "Explore mobile phones and accessories at Gajet 30, and contact us for help choosing a product that suits your needs.",
     "cta": "Learn more",
     "images": {
-      "artist": "Mobile phone at Amazon Mobile Store",
+      "artist": "Mobile phone at Gajet 30 Mobile Store",
       "needlework": "Mobile accessories",
-      "workshop": "Digital products at Amazon Mobile Store"
+      "workshop": "Digital products at Gajet 30 Mobile Store"
     },
     "features": {
       "handmade": {
@@ -70,7 +70,7 @@
     }
   },
   "promos": {
-    "label": "Amazon Mobile Store highlights",
+    "label": "Gajet 30 Mobile Store highlights",
     "cta": "Explore more",
     "needlework": {
       "title": "Find the right mobile phone",
@@ -78,7 +78,7 @@
     },
     "handmade": {
       "title": "Accessories for everyday use",
-      "description": "Explore chargers, cables, cases and headphones at Amazon."
+      "description": "Explore chargers, cables, cases and headphones at Gajet 30."
     }
   },
   "landingBlogs": {
@@ -96,7 +96,7 @@
     "rating": "{{rating}} out of 5 stars"
   },
   "showcaseTabs": {
-    "title": "Amazon products",
+    "title": "Gajet 30 products",
     "more": "View all products",
     "previous": "Previous products",
     "next": "Next products",
@@ -126,7 +126,7 @@
   },
   "newestProducts": {
     "title": "Newest products",
-    "description": "Explore the latest arrivals at Amazon",
+    "description": "Explore the latest arrivals at Gajet 30",
     "filterLabel": "Filter newest products by category",
     "empty": "No new products are available in this category.",
     "more": "See products"
@@ -170,7 +170,7 @@
   },
   "bestProducts": {
     "titlePrefix": "Selected",
-    "titleAccent": "Amazon",
+    "titleAccent": "Gajet 30",
     "titleSuffix": "products",
     "more": "More products"
   },
@@ -178,7 +178,7 @@
     "titlePrefix": "Latest",
     "titleAccent": "Blog",
     "titleSuffix": "posts",
-    "description": "Read mobile buying guides and practical accessory articles from Amazon",
+    "description": "Read mobile buying guides and practical accessory articles from Gajet 30",
     "more": "More posts...",
     "imageAlt": "Blog image"
   },
@@ -188,7 +188,7 @@
   },
   "whyUs": {
     "caption": "Shop with confidence",
-    "title": "Why shop with Amazon?",
+    "title": "Why shop with Gajet 30?",
     "intro": "A reliable, informed way to choose and buy",
     "introEnd": "electronic devices.",
     "features": {
@@ -201,7 +201,7 @@
         "description": "Pay for your order online with confidence."
       },
       "direct": {
-        "title": "Shop directly with Amazon",
+        "title": "Shop directly with Gajet 30",
         "description": "Compare product details and choose what suits you best."
       },
       "delivery": {

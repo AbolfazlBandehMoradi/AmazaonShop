@@ -1,4 +1,4 @@
-.amazon-loading {
+.gajet30-loading {
   --loader-blue: var(--brand-primary);
   --loader-orange: var(--brand-secondary);
   --loader-text: var(--first-text-color);
@@ -22,11 +22,11 @@
   line-height: 1.75;
 }
 
-.dark .amazon-loading {
+.dark .gajet30-loading {
   --loader-blue: var(--color-first-300);
 }
 
-.amazon-loading__scene {
+.gajet30-loading__scene {
   position: relative;
 
   display: grid;
@@ -47,7 +47,7 @@
    ATMOSPHERE
    ========================================================= */
 
-.amazon-loading__atmosphere {
+.gajet30-loading__atmosphere {
   position: absolute;
   inset: 0;
   z-index: -3;
@@ -73,7 +73,7 @@
     );
 }
 
-.amazon-loading__grid {
+.gajet30-loading__grid {
   position: absolute;
   inset: 0;
   z-index: -2;
@@ -104,7 +104,7 @@
    FRAME
    ========================================================= */
 
-.amazon-loading__frame {
+.gajet30-loading__frame {
   position: absolute;
   inset: 5.5rem 2rem;
 
@@ -115,7 +115,7 @@
   opacity: 0.7;
 }
 
-.amazon-loading__frame span {
+.gajet30-loading__frame span {
   position: absolute;
 
   width: 18px;
@@ -127,28 +127,28 @@
   opacity: 0.55;
 }
 
-.amazon-loading__frame span:nth-child(1) {
+.gajet30-loading__frame span:nth-child(1) {
   top: -1px;
   left: -1px;
 
   border-width: 1px 0 0 1px;
 }
 
-.amazon-loading__frame span:nth-child(2) {
+.gajet30-loading__frame span:nth-child(2) {
   top: -1px;
   right: -1px;
 
   border-width: 1px 1px 0 0;
 }
 
-.amazon-loading__frame span:nth-child(3) {
+.gajet30-loading__frame span:nth-child(3) {
   bottom: -1px;
   left: -1px;
 
   border-width: 0 0 1px 1px;
 }
 
-.amazon-loading__frame span:nth-child(4) {
+.gajet30-loading__frame span:nth-child(4) {
   right: -1px;
   bottom: -1px;
 
@@ -159,7 +159,7 @@
    HEADER
    ========================================================= */
 
-.amazon-loading__header {
+.gajet30-loading__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -167,7 +167,7 @@
   gap: 1rem;
 }
 
-.amazon-loading__brand-mark {
+.gajet30-loading__brand-mark {
   display: flex;
   align-items: center;
   gap: 0.7rem;
@@ -175,21 +175,21 @@
   color: var(--loader-text);
 }
 
-.amazon-loading__brand-symbol {
+.gajet30-loading__brand-symbol {
   width: 3rem;
   height: 3rem;
   flex-shrink: 0;
   object-fit: contain;
 }
 
-.amazon-loading__brand-name {
+.gajet30-loading__brand-name {
   color: var(--loader-blue);
   font-size: clamp(1.125rem, 3vw, 1.5rem);
   font-weight: 900;
   line-height: 1.5;
 }
 
-.amazon-loading__header-meta {
+.gajet30-loading__header-meta {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -204,7 +204,7 @@
    CONTENT
    ========================================================= */
 
-.amazon-loading__content {
+.gajet30-loading__content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -217,7 +217,7 @@
   padding-block: 1rem;
 }
 
-.amazon-loading__eyebrow {
+.gajet30-loading__eyebrow {
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -230,12 +230,12 @@
   font-weight: 500;
   text-align: center;
 
-  animation: amazon-loading-reveal 700ms
+  animation: gajet30-loading-reveal 700ms
     cubic-bezier(0.22, 1, 0.36, 1)
     both;
 }
 
-.amazon-loading__eyebrow span {
+.gajet30-loading__eyebrow span {
   width: 1.8rem;
   height: 1px;
 
@@ -248,7 +248,7 @@
    DEVICE SYSTEM
    ========================================================= */
 
-.amazon-loading__device {
+.gajet30-loading__device {
   position: relative;
 
   width: min(82vw, 24rem);
@@ -259,7 +259,7 @@
 
 /* Halo */
 
-.amazon-loading__halo {
+.gajet30-loading__halo {
   position: absolute;
   inset: 20%;
 
@@ -275,12 +275,12 @@
     transparent 68%
   );
 
-  animation: amazon-loading-breathe 4s ease-in-out infinite;
+  animation: gajet30-loading-breathe 4s ease-in-out infinite;
 }
 
 /* Rings */
 
-.amazon-loading__ring {
+.gajet30-loading__ring {
   position: absolute;
 
   border-radius: 50%;
@@ -288,7 +288,7 @@
   border: 1px solid var(--loader-line);
 }
 
-.amazon-loading__ring--outer {
+.gajet30-loading__ring--outer {
   inset: 3%;
 
   border-color: color-mix(
@@ -297,10 +297,10 @@
     transparent
   );
 
-  animation: amazon-loading-rotate 22s linear infinite;
+  animation: gajet30-loading-rotate 22s linear infinite;
 }
 
-.amazon-loading__ring--middle {
+.gajet30-loading__ring--middle {
   inset: 12%;
 
   border-style: dashed;
@@ -311,10 +311,10 @@
     transparent
   );
 
-  animation: amazon-loading-rotate-reverse 15s linear infinite;
+  animation: gajet30-loading-rotate-reverse 15s linear infinite;
 }
 
-.amazon-loading__ring--inner {
+.gajet30-loading__ring--inner {
   inset: 23%;
 
   border-color: color-mix(
@@ -326,16 +326,16 @@
 
 /* Ring ticks */
 
-.amazon-loading__marks {
+.gajet30-loading__marks {
   position: absolute;
   inset: 3%;
 
   border-radius: 50%;
 
-  animation: amazon-loading-rotate 25s linear infinite;
+  animation: gajet30-loading-rotate 25s linear infinite;
 }
 
-.amazon-loading__marks span {
+.gajet30-loading__marks span {
   position: absolute;
   top: 0;
   left: 50%;
@@ -354,16 +354,16 @@
    SCANNER
    ========================================================= */
 
-.amazon-loading__scanner {
+.gajet30-loading__scanner {
   position: absolute;
   inset: 8%;
 
   border-radius: 50%;
 
-  animation: amazon-loading-rotate 8s linear infinite;
+  animation: gajet30-loading-rotate 8s linear infinite;
 }
 
-.amazon-loading__scanner span {
+.gajet30-loading__scanner span {
   position: absolute;
   top: -1px;
   left: 50%;
@@ -396,7 +396,7 @@
    SIGNAL WAVES
    ========================================================= */
 
-.amazon-loading__signals {
+.gajet30-loading__signals {
   position: absolute;
 
   top: 7%;
@@ -408,7 +408,7 @@
   transform: rotate(-45deg);
 }
 
-.amazon-loading__signals span {
+.gajet30-loading__signals span {
   position: absolute;
 
   right: 0;
@@ -423,14 +423,14 @@
 
   opacity: 0;
 
-  animation: amazon-loading-signal 1.8s ease-out infinite;
+  animation: gajet30-loading-signal 1.8s ease-out infinite;
 }
 
 /* =========================================================
    PHONE
    ========================================================= */
 
-.amazon-loading__phone {
+.gajet30-loading__phone {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -442,10 +442,10 @@
     translate(-50%, -50%)
     rotate(-7deg);
 
-  animation: amazon-loading-phone 4s ease-in-out infinite;
+  animation: gajet30-loading-phone 4s ease-in-out infinite;
 }
 
-.amazon-loading__phone-frame {
+.gajet30-loading__phone-frame {
   position: absolute;
   inset: 0;
 
@@ -479,7 +479,7 @@
       );
 }
 
-.amazon-loading__phone-screen {
+.gajet30-loading__phone-screen {
   position: relative;
 
   width: 100%;
@@ -511,7 +511,7 @@
 
 /* Screen glow */
 
-.amazon-loading__screen-glow {
+.gajet30-loading__screen-glow {
   position: absolute;
   inset: 15% 10%;
 
@@ -527,12 +527,12 @@
     transparent 65%
   );
 
-  animation: amazon-loading-breathe 2.5s ease-in-out infinite;
+  animation: gajet30-loading-breathe 2.5s ease-in-out infinite;
 }
 
 /* Camera */
 
-.amazon-loading__camera {
+.gajet30-loading__camera {
   position: absolute;
   top: 0.45rem;
   left: 50%;
@@ -549,7 +549,7 @@
   background: var(--bg-color-for-body);
 }
 
-.amazon-loading__camera span {
+.gajet30-loading__camera span {
   width: 4px;
   height: 4px;
 
@@ -560,13 +560,13 @@
   opacity: 0.7;
 }
 
-.amazon-loading__camera span:nth-child(2) {
+.gajet30-loading__camera span:nth-child(2) {
   background: var(--loader-orange);
 }
 
 /* Screen scan */
 
-.amazon-loading__screen-scan {
+.gajet30-loading__screen-scan {
   position: absolute;
   inset-inline: 0;
 
@@ -585,12 +585,12 @@
     transparent
   );
 
-  animation: amazon-loading-scan 2.8s ease-in-out infinite;
+  animation: gajet30-loading-scan 2.8s ease-in-out infinite;
 }
 
 /* Interface */
 
-.amazon-loading__screen-interface {
+.gajet30-loading__screen-interface {
   position: absolute;
   top: 32%;
   left: 50%;
@@ -604,7 +604,7 @@
   transform: translateX(-50%);
 }
 
-.amazon-loading__screen-interface span {
+.gajet30-loading__screen-interface span {
   height: 3px;
 
   border-radius: 4px;
@@ -614,20 +614,20 @@
   opacity: 0.45;
 }
 
-.amazon-loading__screen-interface span:nth-child(2) {
+.gajet30-loading__screen-interface span:nth-child(2) {
   width: 70%;
   align-self: center;
 
   background: var(--loader-orange);
 }
 
-.amazon-loading__screen-interface span:nth-child(3) {
+.gajet30-loading__screen-interface span:nth-child(3) {
   width: 85%;
 }
 
 /* Home indicator */
 
-.amazon-loading__home-indicator {
+.gajet30-loading__home-indicator {
   position: absolute;
   bottom: 0.55rem;
   left: 50%;
@@ -646,7 +646,7 @@
 
 /* Side buttons */
 
-.amazon-loading__button {
+.gajet30-loading__button {
   position: absolute;
   left: -3px;
 
@@ -657,12 +657,12 @@
   background: var(--loader-blue);
 }
 
-.amazon-loading__button--one {
+.gajet30-loading__button--one {
   top: 3.3rem;
   height: 1.6rem;
 }
 
-.amazon-loading__button--two {
+.gajet30-loading__button--two {
   top: 5.4rem;
   height: 2rem;
 }
@@ -671,7 +671,7 @@
    DATA LABELS
    ========================================================= */
 
-.amazon-loading__data {
+.gajet30-loading__data {
   position: absolute;
 
   display: flex;
@@ -684,14 +684,14 @@
   line-height: 1.8;
 }
 
-.amazon-loading__data strong {
+.gajet30-loading__data strong {
   color: var(--loader-blue);
 
   font-size: 0.8125rem;
   font-weight: 600;
 }
 
-.amazon-loading__data::before {
+.gajet30-loading__data::before {
   position: absolute;
 
   width: 4px;
@@ -704,41 +704,41 @@
   content: '';
 }
 
-.amazon-loading__data--top {
+.gajet30-loading__data--top {
   top: 22%;
   left: 0;
   align-items: flex-start;
 }
 
-.amazon-loading__data--top::before {
+.gajet30-loading__data--top::before {
   top: 0;
   right: -0.7rem;
 }
 
-.amazon-loading__data--right {
+.gajet30-loading__data--right {
   right: 0;
   bottom: 28%;
   align-items: flex-end;
 }
 
-.amazon-loading__data--right::before {
+.gajet30-loading__data--right::before {
   bottom: 0;
   left: -0.7rem;
 }
 
-.amazon-loading__data--left {
+.gajet30-loading__data--left {
   bottom: 17%;
   left: 2%;
 }
 
-.amazon-loading__data--left::before {
+.gajet30-loading__data--left::before {
   top: 0;
   right: -0.7rem;
 }
 
 /* Accent point */
 
-.amazon-loading__accent-point {
+.gajet30-loading__accent-point {
   position: absolute;
   right: 17%;
   bottom: 15%;
@@ -750,10 +750,10 @@
 
   transform: rotate(45deg);
 
-  animation: amazon-loading-pulse 2s ease-in-out infinite;
+  animation: gajet30-loading-pulse 2s ease-in-out infinite;
 }
 
-.amazon-loading__accent-point span {
+.gajet30-loading__accent-point span {
   position: absolute;
   inset: 2px;
 
@@ -764,17 +764,17 @@
    IDENTITY
    ========================================================= */
 
-.amazon-loading__identity {
+.gajet30-loading__identity {
   margin-top: -0.3rem;
 
   text-align: center;
 
-  animation: amazon-loading-reveal 800ms 150ms
+  animation: gajet30-loading-reveal 800ms 150ms
     cubic-bezier(0.22, 1, 0.36, 1)
     both;
 }
 
-.amazon-loading__identity h1 {
+.gajet30-loading__identity h1 {
   margin: 0;
 
   color: var(--loader-text);
@@ -787,7 +787,7 @@
   letter-spacing: normal;
 }
 
-.amazon-loading__identity p {
+.gajet30-loading__identity p {
   margin: 0.45rem 0 0;
 
   color: var(--loader-muted);
@@ -801,17 +801,17 @@
    STATUS
    ========================================================= */
 
-.amazon-loading__status {
+.gajet30-loading__status {
   width: min(100%, 18rem);
 
   margin-top: 1.7rem;
 
-  animation: amazon-loading-reveal 800ms 280ms
+  animation: gajet30-loading-reveal 800ms 280ms
     cubic-bezier(0.22, 1, 0.36, 1)
     both;
 }
 
-.amazon-loading__status-top {
+.gajet30-loading__status-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -823,12 +823,12 @@
   font-size: 0.8125rem;
 }
 
-.amazon-loading__percentage {
+.gajet30-loading__percentage {
   display: flex;
   gap: 3px;
 }
 
-.amazon-loading__percentage i {
+.gajet30-loading__percentage i {
   width: 3px;
   height: 3px;
 
@@ -836,18 +836,18 @@
 
   background: var(--loader-blue);
 
-  animation: amazon-loading-dot 1.3s ease-in-out infinite;
+  animation: gajet30-loading-dot 1.3s ease-in-out infinite;
 }
 
-.amazon-loading__percentage i:nth-child(2) {
+.gajet30-loading__percentage i:nth-child(2) {
   animation-delay: 160ms;
 }
 
-.amazon-loading__percentage i:nth-child(3) {
+.gajet30-loading__percentage i:nth-child(3) {
   animation-delay: 320ms;
 }
 
-.amazon-loading__progress {
+.gajet30-loading__progress {
   position: relative;
 
   height: 2px;
@@ -861,7 +861,7 @@
   );
 }
 
-.amazon-loading__progress span {
+.gajet30-loading__progress span {
   position: absolute;
   inset-block: 0;
 
@@ -876,7 +876,7 @@
     var(--loader-orange)
   );
 
-  animation: amazon-loading-progress 2.2s
+  animation: gajet30-loading-progress 2.2s
     cubic-bezier(0.4, 0, 0.2, 1)
     infinite;
 }
@@ -885,7 +885,7 @@
    FOOTER
    ========================================================= */
 
-.amazon-loading__footer {
+.gajet30-loading__footer {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -898,7 +898,7 @@
   text-align: center;
 }
 
-.amazon-loading__footer-line {
+.gajet30-loading__footer-line {
   width: 2.2rem;
   height: 1px;
 
@@ -909,7 +909,7 @@
    ANIMATIONS
    ========================================================= */
 
-@keyframes amazon-loading-reveal {
+@keyframes gajet30-loading-reveal {
   from {
     opacity: 0;
     transform: translateY(8px);
@@ -921,7 +921,7 @@
   }
 }
 
-@keyframes amazon-loading-phone {
+@keyframes gajet30-loading-phone {
   0%,
   100% {
     transform:
@@ -938,19 +938,19 @@
   }
 }
 
-@keyframes amazon-loading-rotate {
+@keyframes gajet30-loading-rotate {
   to {
     transform: rotate(360deg);
   }
 }
 
-@keyframes amazon-loading-rotate-reverse {
+@keyframes gajet30-loading-rotate-reverse {
   to {
     transform: rotate(-360deg);
   }
 }
 
-@keyframes amazon-loading-breathe {
+@keyframes gajet30-loading-breathe {
   0%,
   100% {
     opacity: 0.35;
@@ -961,7 +961,7 @@
   }
 }
 
-@keyframes amazon-loading-pulse {
+@keyframes gajet30-loading-pulse {
   0%,
   100% {
     opacity: 0.35;
@@ -974,7 +974,7 @@
   }
 }
 
-@keyframes amazon-loading-signal {
+@keyframes gajet30-loading-signal {
   0% {
     opacity: 0;
     transform: scale(0.5);
@@ -990,7 +990,7 @@
   }
 }
 
-@keyframes amazon-loading-scan {
+@keyframes gajet30-loading-scan {
   0% {
     transform: translateY(-100%);
     opacity: 0;
@@ -1010,7 +1010,7 @@
   }
 }
 
-@keyframes amazon-loading-progress {
+@keyframes gajet30-loading-progress {
   0% {
     transform: translateX(0);
   }
@@ -1020,7 +1020,7 @@
   }
 }
 
-@keyframes amazon-loading-dot {
+@keyframes gajet30-loading-dot {
   0%,
   70%,
   100% {
@@ -1039,67 +1039,67 @@
    ========================================================= */
 
 @media (max-width: 600px) {
-  .amazon-loading__scene {
+  .gajet30-loading__scene {
     padding-inline: 1.25rem;
   }
 
-  .amazon-loading__frame {
+  .gajet30-loading__frame {
     inset-inline: 1rem;
   }
 
-  .amazon-loading__header-meta {
+  .gajet30-loading__header-meta {
     font-size: 0.6875rem;
   }
 
-  .amazon-loading__brand-name {
+  .gajet30-loading__brand-name {
     font-size: 1.125rem;
   }
 
-  .amazon-loading__device {
+  .gajet30-loading__device {
     width: min(84vw, 21rem);
   }
 
-  .amazon-loading__phone {
+  .gajet30-loading__phone {
     width: 6.4rem;
     height: 12.7rem;
   }
 
-  .amazon-loading__data {
+  .gajet30-loading__data {
     font-size: 0.6875rem;
   }
 }
 
 @media (max-height: 700px) {
-  .amazon-loading__content {
+  .gajet30-loading__content {
     padding-block: 0;
   }
 
-  .amazon-loading__device {
+  .gajet30-loading__device {
     width: min(42dvh, 19rem);
   }
 
-  .amazon-loading__phone {
+  .gajet30-loading__phone {
     width: 5.8rem;
     height: 11.5rem;
   }
 
-  .amazon-loading__status {
+  .gajet30-loading__status {
     margin-top: 1rem;
   }
 }
 
 @media (max-height: 540px) {
-  .amazon-loading__content {
+  .gajet30-loading__content {
     gap: 0.75rem;
     padding-block: 1rem;
   }
 
-  .amazon-loading__device {
+  .gajet30-loading__device {
     display: none;
   }
 
-  .amazon-loading__identity,
-  .amazon-loading__status {
+  .gajet30-loading__identity,
+  .gajet30-loading__status {
     margin-top: 0;
   }
 }
@@ -1108,7 +1108,7 @@
    RTL
    ========================================================= */
 
-.amazon-loading[dir='rtl'] .amazon-loading__status-top {
+.gajet30-loading[dir='rtl'] .gajet30-loading__status-top {
   direction: rtl;
 }
 
@@ -1117,13 +1117,13 @@
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .amazon-loading *,
-  .amazon-loading *::before,
-  .amazon-loading *::after {
+  .gajet30-loading *,
+  .gajet30-loading *::before,
+  .gajet30-loading *::after {
     animation: none !important;
   }
 
-  .amazon-loading__progress span {
+  .gajet30-loading__progress span {
     left: 25%;
     width: 50%;
   }
@@ -1134,7 +1134,7 @@
    ========================================================= */
 
 @media (forced-colors: active) {
-  .amazon-loading {
+  .gajet30-loading {
     --loader-blue: CanvasText;
     --loader-orange: CanvasText;
     --loader-text: CanvasText;
@@ -1142,11 +1142,11 @@
     --loader-line: CanvasText;
   }
 
-  .amazon-loading__phone-frame {
+  .gajet30-loading__phone-frame {
     background: CanvasText;
   }
 
-  .amazon-loading__progress span {
+  .gajet30-loading__progress span {
     background: Highlight;
     forced-color-adjust: none;
   }

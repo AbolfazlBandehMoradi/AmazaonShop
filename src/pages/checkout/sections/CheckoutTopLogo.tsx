@@ -11,7 +11,7 @@ export function CheckoutTopLogo() {
         to={localizedPath('/')}
         className="inline-flex items-center rounded-2xl p-2 transition-transform duration-200 hover:scale-[1.02]"
       >
-        <img src={MainLogo} alt="Pulak Shop logo" className="h-12 w-auto sm:h-14" />
+        <img src={MainLogo} alt="گجت 30" className="h-12 w-auto sm:h-14" />
       </Link>
     </div>
   );

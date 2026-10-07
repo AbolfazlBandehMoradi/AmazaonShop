@@ -119,7 +119,7 @@ const structuredData = [
     '@type': 'Store',
     '@id': organizationId,
     name: site.name.fa,
-    alternateName: 'آمازون',
+    alternateName: 'گجت 30',
     url: siteUrl,
     telephone: site.contact.phone,
     address: {

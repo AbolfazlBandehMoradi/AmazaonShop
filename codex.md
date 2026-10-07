@@ -1,4 +1,4 @@
-# Codex Project Instructions — Amazon Mobile Store
+# Codex Project Instructions — Gajet 30 Mobile Store
 
 ## Project Identity
 
@@ -8,7 +8,7 @@ The previous project was used only as a technical starting point. Do NOT treat t
 
 The new project is:
 
-**Amazon — Mobile Store**
+**Gajet 30 — Mobile Store**
 
 A modern Iranian mobile phone and accessories store focused on buying and selling mobile devices and related products.
 
@@ -17,7 +17,9 @@ A modern Iranian mobile phone and accessories store focused on buying and sellin
 ## Business Information
 
 ### Brand
-**Amazon**
+**Gajet 30 / گجت 30**
+
+Use «گجت 30» as the customer-facing Persian shop name and “Gajet 30” in English. Preserve the former shop name only as part of the physical address. Keep the existing Instagram handle as a contact URL.
 
 ### Business Type
 Mobile phone store / e-commerce
@@ -55,14 +57,14 @@ When modifying the project:
 - Remove previous addresses and contact information.
 - Remove previous social media links.
 - Remove previous logos and brand assets when applicable.
-- Remove previous product-specific content that does not belong to Amazon.
+- Remove previous product-specific content that does not belong to Gajet 30.
 - Remove previous marketing copy.
 - Do not preserve old shop-specific assumptions in components.
 - Do not rename the new business to match the previous project.
 - Do not reference the previous project in user-facing UI.
-- Do not assume existing categories, products, banners, or content belong to Amazon.
+- Do not assume existing categories, products, banners, or content belong to Gajet 30.
 
-If old content is found, replace it with Amazon-specific content rather than simply hiding it.
+If old content is found, replace it with Gajet 30-specific content rather than simply hiding it.
 
 ---
 
@@ -298,9 +300,9 @@ When encountering assets from the previous project:
 1. Determine whether they are generic/reusable.
 2. If they are shop-specific, replace them.
 3. Do not expose old branding in the new website.
-4. Prefer meaningful filenames for new Amazon assets.
+4. Prefer meaningful filenames for new Gajet 30 assets.
 
-The new project should eventually contain only assets relevant to Amazon.
+The new project should eventually contain only assets relevant to Gajet 30.
 
 ---
 
@@ -312,7 +314,7 @@ For every significant feature:
 2. Understand why it was built the way it was.
 3. Determine whether it can be reused.
 4. Remove old business assumptions.
-5. Implement the Amazon-specific version.
+5. Implement the Gajet 30-specific version.
 6. Check desktop and mobile behavior.
 7. Check RTL behavior.
 8. Check loading, empty, and error states.
@@ -325,11 +327,11 @@ Do not simply "rename the old shop."
 
 This is a **new product built on an existing codebase**.
 
-The final result should look and behave as though Amazon was designed and developed specifically as its own e-commerce product.
+The final result should look and behave as though Gajet 30 was designed and developed specifically as its own e-commerce product.
 
 Technical reuse is encouraged.
 
-Visual, content, and business-logic reuse should only happen when it genuinely makes sense for Amazon.
+Visual, content, and business-logic reuse should only happen when it genuinely makes sense for Gajet 30.
 
 ---
 
