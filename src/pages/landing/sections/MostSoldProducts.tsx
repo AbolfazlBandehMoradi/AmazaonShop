@@ -11,6 +11,7 @@ import type { Showcase } from '@/hooks/useShowcases';
 import { useSlideEdgeFade } from '@/hooks/useSlideEdgeFade';
 import { useLangStore } from '@/stores/languageStore';
 import { cn } from '@/utils/cn';
+import cleanText from '@/utils/cleanText';
 
 interface Props {
   showcase?: Showcase;
@@ -89,9 +90,9 @@ const MostSoldProducts = ({ showcase }: Props) => {
                 id="most-sold-products-title"
                 className="text-xl leading-8 font-f-bold text-white sm:text-2xl sm:leading-9"
               >
-                {title}
+                {cleanText(title)}
               </h2>
-              <p className="mt-1 text-sm leading-6 font-f-normal text-white/85">{description}</p>
+              <p className="mt-1 text-sm leading-6 font-f-normal text-white/85">{cleanText(description)}</p>
             </div>
 
             <div className="best-products-panel__actions">

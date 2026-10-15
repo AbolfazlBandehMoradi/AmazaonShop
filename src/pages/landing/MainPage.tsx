@@ -48,10 +48,10 @@ const MainPage = () => {
       <LatestGallery />
       <WhyUs />
       <DiscountedProducts discountedProduct={index?.discountProducts ?? []} />
-      <NewestProducts showcase={showcases?.[0]} />
+      <NewestProducts showcase={showcases?.[1]} />
       <BannerGallery />
       <Brands />
-      <MostSoldProducts showcase={showcases?.[0]} />
+      <MostSoldProducts showcase={showcases?.[2]} />
       <BlogsSlider blogs={index?.blogs ?? []} />
       <TestimonialsSlider testimonials={index?.testimonials ?? []} />
     </main>

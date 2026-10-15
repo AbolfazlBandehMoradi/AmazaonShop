@@ -10,6 +10,7 @@ import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useLangStore } from '@/stores/languageStore';
 import type { Showcase } from '@/hooks/useShowcases';
 import { cn } from '@/utils/cn';
+import cleanText from '@/utils/cleanText';
 
 interface Props {
   showcase?: Showcase;
@@ -88,8 +89,8 @@ const NewestProducts = ({ showcase }: Props) => {
         <div className="flex flex-col gap-5 px-4 sm:px-0 lg:flex-row lg:items-end lg:justify-between lg:gap-8">
           <SectionHeading
             id="newest-products-title"
-            title={title}
-            subtext={description}
+              title={cleanText(title)}
+            subtext={cleanText(description)}
             decoration="right"
             titleClassName="sm:text-2xl"
           />
