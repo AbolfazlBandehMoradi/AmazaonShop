@@ -81,10 +81,6 @@ export const Footer = () => {
 
   const trustMarks = [
     {
-      key: 'enamad',
-      src: EnamadLogo,
-    },
-    {
       key: 'zibal',
       src: ZibalLogo,
     },
@@ -175,6 +171,18 @@ export const Footer = () => {
                 loading="lazy"
               />
             ))}
+            <a
+              referrerPolicy="origin"
+              target="_blank"
+              href="https://trustseal.enamad.ir/?id=8165727&Code=RHZVKWdr6SiL4LAr911Mdp9PC6B0TdIW"
+            >
+              <img
+                referrerPolicy="origin"
+                src="https://trustseal.enamad.ir/logo.aspx?id=8165727&Code=RHZVKWdr6SiL4LAr911Mdp9PC6B0TdIW"
+                alt=""
+                code="RHZVKWdr6SiL4LAr911Mdp9PC6B0TdIW"
+              />
+            </a>
           </div>
         </div>
 
