@@ -32,8 +32,18 @@ export function CartItem({ item }: CartItemProps) {
   const imageUrl = getImageUrl(item.productImage?.thumbnailPath || item.productImage?.filePath);
   const [openConfirm, setOpenConfirm] = useState(false);
   const navigate = useNavigate();
-  const hasReachedStockLimit = item.stockQuantity != null && item.quantity >= item.stockQuantity;
+  const maxAvailableQuantity = item.stock?.allowBackorders
+    ? Number.POSITIVE_INFINITY
+    : Math.max(item.stock?.availableQuantity ?? Number.POSITIVE_INFINITY, 0);
+  const hasReachedStockLimit = item.quantity >= maxAvailableQuantity;
+  const canIncreaseQuantity = !isMutating && !hasReachedStockLimit;
   const productDetailsPath = localizedPath(`/products/${item.productSlug}`);
+
+  const handleIncrease = () => {
+    if (!canIncreaseQuantity) return;
+
+    updateCartItem.mutate({ itemId: item.id, quantity: item.quantity + 1 });
+  };
 
   const openProductDetailsConfirm = () => {
     setOpenConfirm(true);
@@ -272,22 +282,16 @@ export function CartItem({ item }: CartItemProps) {
                 variant="ghost"
                 className="w-full text-white hover:bg-white/15"
                 size="icon"
-                onClick={() =>
-                  updateCartItem.mutate({ itemId: item.id, quantity: item.quantity + 1 })
-                }
-                disabled={isMutating || hasReachedStockLimit}
+                onClick={handleIncrease}
+                disabled={!canIncreaseQuantity}
+                aria-label={t('cart.increase') || 'Increase quantity'}
               >
                 <Plus className="h-4 w-4" />
               </Button>
             </div>
           </div>
         </div>
-        {hasReachedStockLimit && (
-          <span className="text-xs w-full flex justify-center mt-2 first-text-color-red">
-            {t('cart.maximum') || 'Maximum'}{' '}
-            {isPersian ? toPersianNumbers(item.quantity) : item.quantity}
-          </span>
-        )}
+        
       </motion.div>
       <AppModal
         isOpen={openConfirm}

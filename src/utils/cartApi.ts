@@ -39,7 +39,10 @@ export interface CartItem {
   vendorName?: string;
   currencyCode: string;
   currencySymbol: string;
-  stockQuantity?: number | null;
+  stock?: {
+    allowBackorders: boolean;
+    availableQuantity: number;
+  } | null;
 }
 
 export interface Cart {
