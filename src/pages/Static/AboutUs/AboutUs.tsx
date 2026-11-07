@@ -79,7 +79,7 @@ export default function AboutUs() {
           <img
             src={aboutShowroomImage}
             alt={about.imageAlt}
-            className="absolute inset-0 h-full w-full object-cover object-center"
+            className="absolute inset-0 h-full object-top w-full object-cover object-center"
             loading="eager"
           />
           <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent px-6 pb-6 pt-20 sm:px-8 sm:pb-8">
