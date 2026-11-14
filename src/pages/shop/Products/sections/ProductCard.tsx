@@ -174,7 +174,9 @@ const OfferCountdown = memo(function OfferCountdown({
 
   return (
     <div
-      className={'absolute bottom-3 z-20 left-3 flex-row inline-flex max-w-[calc(100%-1.5rem)] items-center gap-1.5'}
+      className={
+        'absolute bottom-3 z-20 left-3 flex-row inline-flex max-w-[calc(100%-1.5rem)] items-center gap-1.5'
+      }
       dir="ltr"
       aria-label={`${labels.timeLeft}: ${countdownText}`}
     >
@@ -319,7 +321,7 @@ export default function ProductCard({ product, lang, getImageUrl }: ProductCardP
               src={imageUrl ?? undefined}
               alt={product.mainImage?.alt || productName}
               loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
               onError={() => setImageFailed(true)}
             />
           ) : (

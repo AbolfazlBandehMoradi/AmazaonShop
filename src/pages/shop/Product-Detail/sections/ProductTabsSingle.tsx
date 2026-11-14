@@ -3,7 +3,9 @@ import { useTranslation } from '@/i18n/useTranslation';
 import type { ProductDetail } from '@/utils/shopApi';
 import cleanText from '@/utils/cleanText';
 import { cn } from '@/utils/cn';
-
+import cleanFaqHtml from '@/utils/cleanFaqHtml';
+import '../../../../assets/styles/tiptap-content.css';
+import { ProductFaqs } from '@/components/reusable-components/ProductSection/ProductFaq';
 interface ProductTabsProps {
   product: ProductDetail | null;
 }
@@ -111,11 +113,14 @@ export function ProductTabsSingle({ product }: ProductTabsProps) {
             <h2 className="w-full text-xl font-s-bold first-text-color">
               {t('product.description')}
             </h2>
-            <p className="mt-2 whitespace-normal break-words leading-7 first-text-color-for-paragraph [overflow-wrap:anywhere]">
-              {translation?.description
-                ? cleanText(translation.description)
-                : t('product.noDescription') || 'No description available.'}
-            </p>
+            <div
+              className="tiptap-content mt-2 whitespace-normal break-words leading-7 first-text-color-for-paragraph [overflow-wrap:anywhere]"
+              dangerouslySetInnerHTML={{
+                __html: translation?.description
+                  ? cleanFaqHtml(translation.description)
+                  : t('product.noDescription') || 'No description available.',
+              }}
+            />
           </div>
 
           <h3 className="mb-2 mt-4 w-full text-lg font-s-medium first-text-color">
@@ -140,6 +145,11 @@ export function ProductTabsSingle({ product }: ProductTabsProps) {
               </div>
             ))}
           </div>
+          <ProductFaqs
+            faqs={product?.faqs}
+            title={t('product.faq') || 'Frequently Asked Questions'}
+            subtitle="پاسخ به سوالات متداول درباره این محصول"
+          />
         </div>
       </div>
     </div>
